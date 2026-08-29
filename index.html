@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="GPU / 芯片功耗验证工程师个人主页。关注功耗状态、时钟电压域、门控、遥测与负载驱动功耗行为。"
+    />
+    <title>功耗验证 · Power Verification</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-id" data-i18n="brand">PWR_VERIFY</span>
+      </div>
+      <nav class="nav" aria-label="主导航">
+        <a href="#about" data-i18n="nav.about">方向</a>
+        <a href="#method" data-i18n="nav.method">方法</a>
+        <a href="#domains" data-i18n="nav.domains">功耗域</a>
+        <a href="#stack" data-i18n="nav.stack">能力</a>
+        <a href="#contact" data-i18n="nav.contact">联系</a>
+      </nav>
+      <div class="header-actions">
+        <button
+          type="button"
+          class="lang-toggle"
+          id="lang-toggle"
+          aria-pressed="false"
+          aria-label="切换语言"
+        >
+          EN
+        </button>
+        <button
+          type="button"
+          class="menu-toggle"
+          id="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span data-i18n="nav.menu">菜单</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <a href="#about" data-i18n="nav.about">方向</a>
+      <a href="#method" data-i18n="nav.method">方法</a>
+      <a href="#domains" data-i18n="nav.domains">功耗域</a>
+      <a href="#stack" data-i18n="nav.stack">能力</a>
+      <a href="#contact" data-i18n="nav.contact">联系</a>
+    </div>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <p class="eyebrow">
+          <span class="dot live" aria-hidden="true"></span>
+          <span data-i18n="hero.eyebrow">GPU / 芯片功耗验证</span>
+        </p>
+        <h1 data-i18n="hero.title">把功耗行为做成可观测、可判定、可回归的证据</h1>
+        <p class="lede" data-i18n="hero.lede">
+          时钟域、电压域、功耗域、门控、遥测与负载驱动功耗。先看架构机制，再落到可执行的验证闭环。
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#domains" data-i18n="hero.cta.domains">查看功耗域</a>
+          <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">取得联系</a>
+        </div>
+        <dl class="metrics" aria-label="关注指标">
+          <div>
+            <dt data-i18n="metric.pstate">功耗状态机</dt>
+            <dd>P-state / C-state</dd>
+          </div>
+          <div>
+            <dt data-i18n="metric.iso">隔离与保持</dt>
+            <dd>isolation / retention</dd>
+          </div>
+          <div>
+            <dt data-i18n="metric.cg">时钟门控</dt>
+            <dd>clock gating</dd>
+          </div>
+          <div>
+            <dt data-i18n="metric.tel">遥测一致性</dt>
+            <dd>telemetry vs RTL</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="panel" id="about">
+        <header class="section-head">
+          <p class="kicker" data-i18n="about.kicker">01 / 方向</p>
+          <h2 data-i18n="about.title">验证对象是芯片上的能量路径，不只是功能正确</h2>
+        </header>
+        <div class="split">
+          <p data-i18n="about.body">
+            我做 GPU / 芯片功耗验证：关注不同负载下功耗如何随时钟、电压、门控和电源状态变化，以及这些变化能否被测试、记分板和覆盖率抓住。此前做过 SoC 验证、高速互连验证、回归基础设施与验证工具。熟悉 PCIe、RDMA、存储层次、MMU、虚存、序、重试与调度。当前优先项是功耗与性能的交叉、时钟/电压/功耗域、门控、遥测，以及工作负载驱动的功耗行为。
+          </p>
+          <ul class="facts">
+            <li>
+              <span data-i18n="about.fact1.label">主战场</span>
+              <strong data-i18n="about.fact1.value">GPU / 芯片功耗</strong>
+            </li>
+            <li>
+              <span data-i18n="about.fact2.label">方法偏好</span>
+              <strong data-i18n="about.fact2.value">需求 → 用例 → 可观测量 → 结果 → 覆盖</strong>
+            </li>
+            <li>
+              <span data-i18n="about.fact3.label">调试原则</span>
+              <strong data-i18n="about.fact3.value">证据优先，先找第一处有效失败</strong>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="panel" id="method">
+        <header class="section-head">
+          <p class="kicker" data-i18n="method.kicker">02 / 方法</p>
+          <h2 data-i18n="method.title">先分清 DUT、用例、环境、记分板和基础设施</h2>
+        </header>
+        <ol class="steps">
+          <li>
+            <h3 data-i18n="method.s1.title">需求落到可观测点</h3>
+            <p data-i18n="method.s1.body">
+              每个功耗需求都要有明确可观测量：轨电压、时钟使能、隔离应答、遥测计数、进入/退出延迟。没有观测点的需求不算可验证。
+            </p>
+          </li>
+          <li>
+            <h3 data-i18n="method.s2.title">症状与根因分开</h3>
+            <p data-i18n="method.s2.body">
+              高功耗可能是门控失效，也可能是用例没把域关干净，或记分板把 retention 当成 off。没有证据不宣称根因。
+            </p>
+          </li>
+          <li>
+            <h3 data-i18n="method.s3.title">假设必须带验证步骤</h3>
+            <p data-i18n="method.s3.body">
+              每个假设对应波形、日志或覆盖点。大日志先抽结构化证据再分析：域状态、事件序列、时序窗口。
+            </p>
+          </li>
+          <li>
+            <h3 data-i18n="method.s4.title">回归要能抓住功耗路径</h3>
+            <p data-i18n="method.s4.body">
+              功能回归通过不等于功耗路径被覆盖。状态转换、非法请求、跨域时序、遥测漂移都要进回归。
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel" id="domains">
+        <header class="section-head">
+          <p class="kicker" data-i18n="domains.kicker">03 / 功耗域</p>
+          <h2 data-i18n="domains.title">点选一个域，看验证关注点</h2>
+        </header>
+        <div class="floorplan-layout">
+          <div class="floorplan-wrap">
+            <canvas id="floorplan" width="720" height="460" role="img" aria-label="功耗域平面图"></canvas>
+            <p class="hint" data-i18n="domains.hint">点击色块；键盘可用 Tab / Enter。</p>
+          </div>
+          <article class="inspect" id="inspect">
+            <p class="inspect-meta" id="inspect-meta">SM_ARRAY · VDD_GFX</p>
+            <h3 id="inspect-title">计算阵列</h3>
+            <p id="inspect-body"></p>
+            <ul class="checks" id="inspect-checks"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="stack">
+        <header class="section-head">
+          <p class="kicker" data-i18n="stack.kicker">04 / 能力</p>
+          <h2 data-i18n="stack.title">验证栈与架构交叉点</h2>
+        </header>
+        <div class="cards">
+          <article>
+            <h3 data-i18n="stack.c1.title">功耗与性能交叉</h3>
+            <p data-i18n="stack.c1.body">
+              同一负载在不同 P-state、电压点和门控策略下的功耗/性能权衡。关注进入退出延迟对吞吐和延迟的影响。
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="stack.c2.title">时钟 / 电压 / 功耗域</h3>
+            <p data-i18n="stack.c2.body">
+              跨域隔离、复位释放顺序、retention 内容完整性、非法跨域访问。时钟树与电源树必须一起看。
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="stack.c3.title">高速互连</h3>
+            <p data-i18n="stack.c3.body">
+              PCIe、RDMA 链路功耗状态与重试、序、调度的交叉。低功耗进入不得破坏 outstanding 事务语义。
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="stack.c4.title">存储层次与 MMU</h3>
+            <p data-i18n="stack.c4.body">
+              虚存、页表走访、缓存一致性流量如何抬升动态功耗。关注空转时不该发生的探听与回填。
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="stack.c5.title">回归与工具</h3>
+            <p data-i18n="stack.c5.body">
+              Python / C++ / SystemVerilog。可调试的回归：pathlib、logging、类型提示；生成代码用确定性工具校验。
+            </p>
+          </article>
+          <article>
+            <h3 data-i18n="stack.c6.title">遥测闭环</h3>
+            <p data-i18n="stack.c6.body">
+              RTL 计数、采样窗口与软件读数对齐。遥测延迟、饱和、时钟域跨越都是独立失败模式。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel contact" id="contact">
+        <header class="section-head">
+          <p class="kicker" data-i18n="contact.kicker">05 / 联系</p>
+          <h2 data-i18n="contact.title">讨论功耗验证问题</h2>
+        </header>
+        <p class="contact-copy" data-i18n="contact.body">
+          适合聊：功耗状态机、门控正确性、遥测对齐、跨域时序，以及如何把这些问题放进可回归的验证环境。
+        </p>
+        <a class="btn primary" href="https://github.com/caesarvan" rel="noopener noreferrer">
+          github.com/caesarvan
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-i18n="footer.copy">静态站点 · 本地可直接打开</span>
+      <a href="#top" data-i18n="footer.top">回到顶部</a>
+    </footer>
+
+    <script src="assets/i18n.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
