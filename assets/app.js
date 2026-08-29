@@ -98,7 +98,7 @@ function drawFloorplan() {
     ctx.strokeRect(rect.x + 0.5, rect.y + 0.5, rect.w - 1, rect.h - 1);
 
     ctx.fillStyle = "#10120c";
-    ctx.font = "500 12px 'IBM Plex Mono', monospace";
+    ctx.font = "500 12px ui-monospace, monospace";
     ctx.fillText(domain.id.toUpperCase(), rect.x + 10, rect.y + 22);
   });
 }

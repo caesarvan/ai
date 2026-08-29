@@ -6,8 +6,10 @@
   --line: #2a2d22;
   --copper: #c4783a;
   --teal: #3d9b8f;
-  --font: "Noto Sans SC", "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei",
+    "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Sarasa Gothic SC",
+    "Noto Sans Mono CJK SC", monospace;
 }
 
 * {
@@ -178,7 +180,6 @@ main {
 .eyebrow,
 .kicker,
 .inspect-meta,
-.hint,
 .facts span {
   font-family: var(--mono);
   font-size: 12px;
