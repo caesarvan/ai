@@ -248,11 +248,9 @@ main {
 .hero {
   position: relative;
   min-height: calc(100vh - var(--header-h));
-  display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 28px;
-  align-items: end;
-  padding: 56px 0 48px;
+  display: flex;
+  align-items: flex-end;
+  padding: 56px 0 64px;
   overflow: hidden;
 }
 
@@ -352,30 +350,28 @@ main {
   margin-top: 28px;
 }
 
-.hero-rail {
-  position: relative;
-  z-index: 1;
+.metrics-band {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
-  align-self: center;
+  margin-top: 8px;
 }
 
-.hero-rail div {
-  padding: 16px 18px;
+.metrics-band div {
+  padding: 18px 20px;
   border: 1px solid var(--line);
-  background: linear-gradient(160deg, rgba(15, 22, 34, 0.92), rgba(12, 18, 28, 0.7));
-  backdrop-filter: blur(8px);
+  background: linear-gradient(160deg, rgba(15, 22, 34, 0.95), rgba(12, 18, 28, 0.75));
 }
 
-.hero-rail strong {
+.metrics-band strong {
   display: block;
   font-family: var(--mono);
-  font-size: 28px;
+  font-size: 30px;
   color: var(--cyan);
   letter-spacing: -0.02em;
 }
 
-.hero-rail span {
+.metrics-band span {
   font-size: 12.5px;
   color: var(--muted);
 }
@@ -681,13 +677,16 @@ main {
     display: flex;
   }
 
-  .hero,
   .profile-grid,
   .stack-layout,
   .edu-awards,
   .project-grid,
   .skill-bands {
     grid-template-columns: 1fr;
+  }
+
+  .metrics-band {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .hero {
@@ -698,10 +697,6 @@ main {
   #die-canvas {
     opacity: 0.35;
     inset: -20px -40px auto auto;
-  }
-
-  .hero-rail {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -714,7 +709,7 @@ main {
     padding-right: 16px;
   }
 
-  .hero-rail {
+  .metrics-band {
     grid-template-columns: 1fr;
   }
 
