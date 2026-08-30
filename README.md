@@ -1,33 +1,31 @@
-# 个人主页
+# 范高一格 · Silicon Validation
 
-GPU / 芯片功耗验证方向的静态个人站点。中文为默认语言，右上角可切到英文。
+个人主页：系统级硅验证 / 昇腾 NPU 组网 / 预硅与验证平台工程。默认中文，可切英文。
 
 ## 本地预览
-
-仓库根目录就是站点根目录，任选一种方式：
 
 ```bash
 python3 -m http.server 8080
 ```
 
-浏览器打开 `http://127.0.0.1:8080`。
-
-也可直接打开 `index.html`（部分浏览器对本地 `file://` 的字体请求更严，建议用本地 HTTP）。
+打开 `http://127.0.0.1:8080`。
 
 ## 结构
 
 | 路径 | 作用 |
 | --- | --- |
 | `index.html` | 页面结构 |
-| `assets/styles.css` | 样式 |
-| `assets/i18n.js` | 中英文案与功耗域数据 |
-| `assets/app.js` | 语言切换、菜单、平面图交互 |
+| `assets/styles.css` | 半导体风格样式与动效 |
+| `assets/i18n.js` | 中英文案、经历、项目、验证栈数据 |
+| `assets/app.js` | 语言切换、晶圆交互、die 动画、滚动进度 |
 | `assets/favicon.svg` | 图标 |
+
+## 在线访问（GitHub Pages）
+
+仓库 Settings → Pages → Source 选 `main` / `(root)`。  
+发布后地址一般为：`https://caesarvan.github.io/ai/`
 
 ## 改内容
 
-- 自我介绍、方法、能力：改 `assets/i18n.js` 里 `I18N` 的 `zh` / `en`。
-- 功耗域平面图：改同一文件里的 `DOMAINS`（位置用 0–1 相对坐标）。
-- 联系方式：改 `index.html` 里 GitHub 链接。
-
-GitHub Pages 可直接以仓库根为发布源。
+- 经历 / 项目 / 能力文案：`assets/i18n.js`
+- 联系方式：`index.html` 中 `mailto` / `tel` / GitHub 链接
