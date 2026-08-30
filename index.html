@@ -5,36 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="GPU / 芯片功耗验证工程师个人主页。关注功耗状态、时钟电压域、门控、遥测与负载驱动功耗行为。"
+      content="范高一格 · 数字芯片验证 / 系统级硅验证。昇腾 NPU 组网验证、FPGA/EMU/ESL 预硅验证、验证平台工程。"
     />
-    <title>功耗验证 · Power Verification</title>
+    <meta name="theme-color" content="#06090f" />
+    <title>范高一格 · Silicon Validation</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
-    <div class="grain" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
 
-    <header class="site-header">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span class="brand-id" data-i18n="brand">PWR_VERIFY</span>
-      </div>
+    <header class="site-header" id="site-header">
+      <a class="brand" href="#top">
+        <span class="brand-die" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name" data-i18n="brand.name">范高一格</span>
+          <span class="brand-tag" data-i18n="brand.tag">SILICON · VALIDATE</span>
+        </span>
+      </a>
       <nav class="nav" aria-label="主导航">
-        <a href="#about" data-i18n="nav.about">方向</a>
-        <a href="#method" data-i18n="nav.method">方法</a>
-        <a href="#domains" data-i18n="nav.domains">功耗域</a>
+        <a href="#profile" data-i18n="nav.profile">简介</a>
+        <a href="#experience" data-i18n="nav.experience">经历</a>
+        <a href="#projects" data-i18n="nav.projects">项目</a>
         <a href="#stack" data-i18n="nav.stack">能力</a>
         <a href="#contact" data-i18n="nav.contact">联系</a>
       </nav>
       <div class="header-actions">
-        <button
-          type="button"
-          class="lang-toggle"
-          id="lang-toggle"
-          aria-pressed="false"
-          aria-label="切换语言"
-        >
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-pressed="false" aria-label="切换语言">
           EN
         </button>
         <button
@@ -47,189 +46,152 @@
           <span data-i18n="nav.menu">菜单</span>
         </button>
       </div>
+      <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     </header>
 
     <div class="mobile-nav" id="mobile-nav" hidden>
-      <a href="#about" data-i18n="nav.about">方向</a>
-      <a href="#method" data-i18n="nav.method">方法</a>
-      <a href="#domains" data-i18n="nav.domains">功耗域</a>
+      <a href="#profile" data-i18n="nav.profile">简介</a>
+      <a href="#experience" data-i18n="nav.experience">经历</a>
+      <a href="#projects" data-i18n="nav.projects">项目</a>
       <a href="#stack" data-i18n="nav.stack">能力</a>
       <a href="#contact" data-i18n="nav.contact">联系</a>
     </div>
 
     <main id="main">
       <section class="hero" id="top">
-        <p class="eyebrow">
-          <span class="dot live" aria-hidden="true"></span>
-          <span data-i18n="hero.eyebrow">GPU / 芯片功耗验证</span>
-        </p>
-        <h1 data-i18n="hero.title">把功耗行为做成可观测、可判定、可回归的证据</h1>
-        <p class="lede" data-i18n="hero.lede">
-          时钟域、电压域、功耗域、门控、遥测与负载驱动功耗。先看架构机制，再落到可执行的验证闭环。
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#domains" data-i18n="hero.cta.domains">查看功耗域</a>
-          <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">取得联系</a>
+        <canvas id="die-canvas" aria-hidden="true"></canvas>
+        <div class="hero-frame">
+          <p class="hero-signal">
+            <span class="pulse" aria-hidden="true"></span>
+            <span data-i18n="hero.signal">System-level Silicon Validation</span>
+          </p>
+          <h1>
+            <span class="hero-name" data-i18n="hero.name">范高一格</span>
+            <span class="hero-en" data-i18n="hero.nameEn">Gaoyige Fan</span>
+          </h1>
+          <p class="hero-role" data-i18n="hero.role">
+            昇腾芯片验证经理 / PL · NPU 组网 · 预硅验证 · 验证平台工程
+          </p>
+          <p class="hero-lede" data-i18n="hero.lede">
+            四年数字芯片与系统级硅验证。把 FPGA / EMU / ESL 多层预硅、高速互连与超节点组网、压测与可观测性，收敛成可交付的验证体系。
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#experience" data-i18n="hero.cta.exp">查看经历</a>
+            <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">取得联系</a>
+          </div>
         </div>
-        <dl class="metrics" aria-label="关注指标">
-          <div>
-            <dt data-i18n="metric.pstate">功耗状态机</dt>
-            <dd>P-state / C-state</dd>
-          </div>
-          <div>
-            <dt data-i18n="metric.iso">隔离与保持</dt>
-            <dd>isolation / retention</dd>
-          </div>
-          <div>
-            <dt data-i18n="metric.cg">时钟门控</dt>
-            <dd>clock gating</dd>
-          </div>
-          <div>
-            <dt data-i18n="metric.tel">遥测一致性</dt>
-            <dd>telemetry vs RTL</dd>
-          </div>
-        </dl>
       </section>
 
-      <section class="panel" id="about">
+      <section class="metrics-band reveal" aria-label="关键指标">
+        <div>
+          <strong data-count="4">0</strong>
+          <span data-i18n="hero.m1">年验证经验</span>
+        </div>
+        <div>
+          <strong data-count="100" data-suffix="+">0</strong>
+          <span data-i18n="hero.m2">RTL / 集成问题闭环</span>
+        </div>
+        <div>
+          <strong data-count="3">0</strong>
+          <span data-i18n="hero.m3">预硅层级 FPGA·EMU·ESL</span>
+        </div>
+      </section>
+
+      <section class="panel reveal" id="profile">
         <header class="section-head">
-          <p class="kicker" data-i18n="about.kicker">01 / 方向</p>
-          <h2 data-i18n="about.title">验证对象是芯片上的能量路径，不只是功能正确</h2>
+          <p class="kicker" data-i18n="profile.kicker">01 / 简介</p>
+          <h2 data-i18n="profile.title">验证对象是整机级硅路径，而不只是单 IP 功能</h2>
         </header>
-        <div class="split">
-          <p data-i18n="about.body">
-            我做 GPU / 芯片功耗验证：关注不同负载下功耗如何随时钟、电压、门控和电源状态变化，以及这些变化能否被测试、记分板和覆盖率抓住。此前做过 SoC 验证、高速互连验证、回归基础设施与验证工具。熟悉 PCIe、RDMA、存储层次、MMU、虚存、序、重试与调度。当前优先项是功耗与性能的交叉、时钟/电压/功耗域、门控、遥测，以及工作负载驱动的功耗行为。
+        <div class="profile-grid">
+          <p class="profile-body" data-i18n="profile.body">
+            现任华为计算产品线昇腾芯片验证经理 / PL，负责 NPU 组网验证、预硅验证方法、原型验证团队建设与验证平台工程。覆盖 IP 级验证、SoC 集成、多芯片组网、FPGA/EMU/ESL 预硅、DFX、压测与自动化平台。目标方向：System-level Silicon Validation、HW ArchDev、Pre-silicon Bring-up、Emulation & FPGA Validation、Validation Methodology。
           </p>
-          <ul class="facts">
+          <ul class="profile-points">
             <li>
-              <span data-i18n="about.fact1.label">主战场</span>
-              <strong data-i18n="about.fact1.value">GPU / 芯片功耗</strong>
+              <span data-i18n="profile.p1.l">当前角色</span>
+              <strong data-i18n="profile.p1.v">昇腾芯片验证经理 / PL</strong>
             </li>
             <li>
-              <span data-i18n="about.fact2.label">方法偏好</span>
-              <strong data-i18n="about.fact2.value">需求 → 用例 → 可观测量 → 结果 → 覆盖</strong>
+              <span data-i18n="profile.p2.l">主战场</span>
+              <strong data-i18n="profile.p2.v">NPU 组网 · 超节点 · 高速 IO/UB</strong>
             </li>
             <li>
-              <span data-i18n="about.fact3.label">调试原则</span>
-              <strong data-i18n="about.fact3.value">证据优先，先找第一处有效失败</strong>
+              <span data-i18n="profile.p3.l">方法偏好</span>
+              <strong data-i18n="profile.p3.v">Stress / Concurrency / PVT 矩阵收敛</strong>
+            </li>
+            <li>
+              <span data-i18n="profile.p4.l">平台栈</span>
+              <strong data-i18n="profile.p4.v">FPGA · Palladium · FastModel/QEMU</strong>
             </li>
           </ul>
         </div>
       </section>
 
-      <section class="panel" id="method">
+      <section class="panel reveal" id="experience">
         <header class="section-head">
-          <p class="kicker" data-i18n="method.kicker">02 / 方法</p>
-          <h2 data-i18n="method.title">先分清 DUT、用例、环境、记分板和基础设施</h2>
+          <p class="kicker" data-i18n="exp.kicker">02 / 经历</p>
+          <h2 data-i18n="exp.title">从基带调度到昇腾超节点组网</h2>
         </header>
-        <ol class="steps">
-          <li>
-            <h3 data-i18n="method.s1.title">需求落到可观测点</h3>
-            <p data-i18n="method.s1.body">
-              每个功耗需求都要有明确可观测量：轨电压、时钟使能、隔离应答、遥测计数、进入/退出延迟。没有观测点的需求不算可验证。
-            </p>
-          </li>
-          <li>
-            <h3 data-i18n="method.s2.title">症状与根因分开</h3>
-            <p data-i18n="method.s2.body">
-              高功耗可能是门控失效，也可能是用例没把域关干净，或记分板把 retention 当成 off。没有证据不宣称根因。
-            </p>
-          </li>
-          <li>
-            <h3 data-i18n="method.s3.title">假设必须带验证步骤</h3>
-            <p data-i18n="method.s3.body">
-              每个假设对应波形、日志或覆盖点。大日志先抽结构化证据再分析：域状态、事件序列、时序窗口。
-            </p>
-          </li>
-          <li>
-            <h3 data-i18n="method.s4.title">回归要能抓住功耗路径</h3>
-            <p data-i18n="method.s4.body">
-              功能回归通过不等于功耗路径被覆盖。状态转换、非法请求、跨域时序、遥测漂移都要进回归。
-            </p>
-          </li>
-        </ol>
+        <ol class="timeline" id="timeline"></ol>
       </section>
 
-      <section class="panel" id="domains">
+      <section class="panel reveal" id="projects">
         <header class="section-head">
-          <p class="kicker" data-i18n="domains.kicker">03 / 功耗域</p>
-          <h2 data-i18n="domains.title">点选一个域，看验证关注点</h2>
+          <p class="kicker" data-i18n="proj.kicker">03 / 项目</p>
+          <h2 data-i18n="proj.title">把方法、平台与工具做成可复用交付物</h2>
         </header>
-        <div class="floorplan-layout">
-          <div class="floorplan-wrap">
-            <canvas id="floorplan" width="720" height="460" role="img" aria-label="功耗域平面图"></canvas>
-            <p class="hint" data-i18n="domains.hint">点击色块；键盘可用 Tab / Enter。</p>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <section class="panel reveal" id="stack">
+        <header class="section-head">
+          <p class="kicker" data-i18n="stack.kicker">04 / 能力</p>
+          <h2 data-i18n="stack.title">点选一层验证栈，看职责边界</h2>
+        </header>
+        <div class="stack-layout">
+          <div class="wafer-wrap">
+            <canvas id="wafer" width="640" height="640" role="img" aria-label="验证栈晶圆图"></canvas>
+            <p class="hint" data-i18n="stack.hint">点击扇区；聚焦后可用方向键切换。</p>
           </div>
           <article class="inspect" id="inspect">
-            <p class="inspect-meta" id="inspect-meta">SM_ARRAY · VDD_GFX</p>
-            <h3 id="inspect-title">计算阵列</h3>
+            <p class="inspect-meta" id="inspect-meta"></p>
+            <h3 id="inspect-title"></h3>
             <p id="inspect-body"></p>
             <ul class="checks" id="inspect-checks"></ul>
           </article>
         </div>
+        <div class="skill-bands" id="skill-bands"></div>
       </section>
 
-      <section class="panel" id="stack">
+      <section class="panel reveal" id="awards">
         <header class="section-head">
-          <p class="kicker" data-i18n="stack.kicker">04 / 能力</p>
-          <h2 data-i18n="stack.title">验证栈与架构交叉点</h2>
+          <p class="kicker" data-i18n="awards.kicker">05 / 教育与荣誉</p>
+          <h2 data-i18n="awards.title">半导体与系统背景，验证交付被组织认可</h2>
         </header>
-        <div class="cards">
-          <article>
-            <h3 data-i18n="stack.c1.title">功耗与性能交叉</h3>
-            <p data-i18n="stack.c1.body">
-              同一负载在不同 P-state、电压点和门控策略下的功耗/性能权衡。关注进入退出延迟对吞吐和延迟的影响。
-            </p>
-          </article>
-          <article>
-            <h3 data-i18n="stack.c2.title">时钟 / 电压 / 功耗域</h3>
-            <p data-i18n="stack.c2.body">
-              跨域隔离、复位释放顺序、retention 内容完整性、非法跨域访问。时钟树与电源树必须一起看。
-            </p>
-          </article>
-          <article>
-            <h3 data-i18n="stack.c3.title">高速互连</h3>
-            <p data-i18n="stack.c3.body">
-              PCIe、RDMA 链路功耗状态与重试、序、调度的交叉。低功耗进入不得破坏 outstanding 事务语义。
-            </p>
-          </article>
-          <article>
-            <h3 data-i18n="stack.c4.title">存储层次与 MMU</h3>
-            <p data-i18n="stack.c4.body">
-              虚存、页表走访、缓存一致性流量如何抬升动态功耗。关注空转时不该发生的探听与回填。
-            </p>
-          </article>
-          <article>
-            <h3 data-i18n="stack.c5.title">回归与工具</h3>
-            <p data-i18n="stack.c5.body">
-              Python / C++ / SystemVerilog。可调试的回归：pathlib、logging、类型提示；生成代码用确定性工具校验。
-            </p>
-          </article>
-          <article>
-            <h3 data-i18n="stack.c6.title">遥测闭环</h3>
-            <p data-i18n="stack.c6.body">
-              RTL 计数、采样窗口与软件读数对齐。遥测延迟、饱和、时钟域跨越都是独立失败模式。
-            </p>
-          </article>
+        <div class="edu-awards">
+          <div class="edu" id="edu"></div>
+          <ul class="award-list" id="award-list"></ul>
         </div>
       </section>
 
-      <section class="panel contact" id="contact">
+      <section class="panel contact reveal" id="contact">
         <header class="section-head">
-          <p class="kicker" data-i18n="contact.kicker">05 / 联系</p>
-          <h2 data-i18n="contact.title">讨论功耗验证问题</h2>
+          <p class="kicker" data-i18n="contact.kicker">06 / 联系</p>
+          <h2 data-i18n="contact.title">讨论系统级硅验证与预硅方法</h2>
         </header>
         <p class="contact-copy" data-i18n="contact.body">
-          适合聊：功耗状态机、门控正确性、遥测对齐、跨域时序，以及如何把这些问题放进可回归的验证环境。
+          适合聊：NPU 组网与超节点、FPGA/EMU/ESL 多层预硅、Stress/PVT 覆盖、DFX 可观测性、验证平台与精确 CI。
         </p>
-        <a class="btn primary" href="https://github.com/caesarvan" rel="noopener noreferrer">
-          github.com/caesarvan
-        </a>
+        <div class="contact-links">
+          <a class="btn primary" href="mailto:fangaoyige@live.com">fangaoyige@live.com</a>
+          <a class="btn ghost" href="tel:+8613282355085">(+86) 132-8235-5085</a>
+          <a class="btn ghost" href="https://github.com/caesarvan" rel="noopener noreferrer">github.com/caesarvan</a>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span data-i18n="footer.copy">静态站点 · 本地可直接打开</span>
+      <span data-i18n="footer.copy">Gaoyige Fan · Silicon Validation</span>
       <a href="#top" data-i18n="footer.top">回到顶部</a>
     </footer>
 
