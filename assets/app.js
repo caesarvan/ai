@@ -271,6 +271,7 @@ function renderStages() {
   if (!root || !nav) {
     return;
   }
+  const requestedStageId = window.location.hash.replace("#stage-", "");
 
   nav.replaceChildren(
     ...STAGES.map((stage) => {
@@ -357,8 +358,8 @@ function renderStages() {
   }
   setupStageScrolling();
   updateStageTheme(activeStageId);
-  const deepLink = window.location.hash.startsWith("#stage-")
-    ? document.getElementById(window.location.hash.slice(1))
+  const deepLink = requestedStageId
+    ? document.getElementById(`stage-${requestedStageId}`)
     : null;
   if (deepLink) {
     requestAnimationFrame(() => deepLink.scrollIntoView({ block: "start" }));
