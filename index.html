@@ -29,39 +29,20 @@
             当前在 NVIDIA 从事 GPU / 芯片功耗验证，关注功耗与性能交互、时钟与电源域、功耗状态、门控、遥测及负载驱动的功耗行为。
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="work.html" data-i18n="home.cta.work">查看专业经历</a>
+            <a class="btn primary" href="#timeline" data-i18n="home.cta.work">浏览完整时间轴</a>
             <a class="btn ghost" href="projects.html" data-i18n="home.cta.projects">GitHub 项目</a>
           </div>
         </div>
       </section>
 
-      <section class="panel reveal">
+      <section class="timeline-home" id="timeline">
         <header class="section-head">
-          <p class="kicker">Overview</p>
-          <h2 data-i18n="home.overview.title">专业领域</h2>
+          <p class="kicker" data-i18n="timeline.kicker">2017 — NOW</p>
+          <h2 data-i18n="timeline.title">学习与工作，沿一条时间轴展开</h2>
+          <p class="section-lede" data-i18n="timeline.lede">学校、科研、产品线与当前工作不再分成独立页面；每个事件都回到它发生的时间阶段。</p>
         </header>
-        <div class="link-grid">
-          <a class="link-card" href="work.html">
-            <span class="tag" data-i18n="nav.work">工作</span>
-            <strong data-i18n="home.card.work.title">芯片与系统验证</strong>
-            <p data-i18n="home.card.work.body">NPU 多芯片互连、系统级压力测试与流片前验证。</p>
-          </a>
-          <a class="link-card" href="projects.html">
-            <span class="tag" data-i18n="nav.projects">项目</span>
-            <strong data-i18n="home.card.projects.title">公开仓库</strong>
-            <p data-i18n="home.card.projects.body">拓扑编辑器、工具脚本、研究原型等。</p>
-          </a>
-          <a class="link-card" href="awards.html">
-            <span class="tag" data-i18n="nav.awards">荣誉</span>
-            <strong data-i18n="home.card.awards.title">荣誉与认可</strong>
-            <p data-i18n="home.card.awards.body">验证平台、研发工具与交付质量方面的奖项。</p>
-          </a>
-          <a class="link-card" href="about.html">
-            <span class="tag" data-i18n="nav.about">关于</span>
-            <strong data-i18n="home.card.about.title">专业背景</strong>
-            <p data-i18n="home.card.about.body">教育背景、职业经历与当前关注方向。</p>
-          </a>
-        </div>
+        <nav class="stage-nav" id="stage-nav" aria-label="经历阶段"></nav>
+        <div class="stages" id="stages"></div>
       </section>
     </main>
 
