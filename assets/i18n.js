@@ -1,6 +1,7 @@
 const I18N = {
   zh: {
     "nav.home": "首页",
+    "nav.timeline": "时间轴",
     "nav.work": "工作",
     "nav.projects": "项目",
     "nav.awards": "荣誉",
@@ -11,7 +12,7 @@ const I18N = {
     "theme.toDark": "切换到深色模式",
     "home.signal": "NVIDIA · GPU / 芯片功耗验证",
     "home.lede": "当前在 NVIDIA 从事 GPU / 芯片功耗验证，关注功耗与性能交互、时钟与电源域、功耗状态、门控、遥测及负载驱动的功耗行为。",
-    "home.cta.work": "查看专业经历",
+    "home.cta.work": "浏览完整时间轴",
     "home.cta.projects": "GitHub 项目",
     "home.overview.title": "专业领域",
     "home.card.work.title": "芯片与系统验证",
@@ -22,6 +23,9 @@ const I18N = {
     "home.card.awards.body": "验证平台、研发工具与交付质量方面的奖项。",
     "home.card.about.title": "专业背景",
     "home.card.about.body": "教育背景、职业经历与当前关注方向。",
+    "timeline.kicker": "2017 — NOW",
+    "timeline.title": "学习与工作，沿一条时间轴展开",
+    "timeline.lede": "学校、科研、产品线与当前工作不再分成独立页面；每个事件都回到它发生的时间阶段。",
     "work.kicker": "Experience",
     "work.title": "专业经历",
     "work.lede":
@@ -62,6 +66,7 @@ const I18N = {
   },
   en: {
     "nav.home": "Home",
+    "nav.timeline": "Timeline",
     "nav.work": "Work",
     "nav.projects": "Projects",
     "nav.awards": "Awards",
@@ -73,7 +78,7 @@ const I18N = {
     "home.signal": "NVIDIA · GPU / Chip Power Verification",
     "home.lede":
       "Currently working at NVIDIA on GPU and chip power verification, with a focus on power/performance interactions, clock and power domains, power states, gating, telemetry, and workload-driven power behavior.",
-    "home.cta.work": "View experience",
+    "home.cta.work": "Explore the timeline",
     "home.cta.projects": "GitHub projects",
     "home.overview.title": "Areas of expertise",
     "home.card.work.title": "Chip and system verification",
@@ -84,6 +89,9 @@ const I18N = {
     "home.card.awards.body": "Recognition for verification platforms, engineering tools, and delivery quality.",
     "home.card.about.title": "Background",
     "home.card.about.body": "Education, professional experience, and current focus.",
+    "timeline.kicker": "2017 — NOW",
+    "timeline.title": "One timeline across study and work",
+    "timeline.lede": "Education, research, product-line roles, and current work are presented as one continuous chronology.",
     "work.kicker": "Experience",
     "work.title": "Professional experience",
     "work.lede":
@@ -343,8 +351,28 @@ const STAGES = [
         },
         tags: ["FPGA", "SoC Integration", "PG", "Traffic Paths"],
       },
+      {
+        when: "2022 – 2023",
+        title: { zh: "4G/5G 调度改版与产品化支持", en: "4G/5G scheduling redesign and commercialization support" },
+        role: { zh: "公开行业背景", en: "Public industry context" },
+        body: {
+          zh: "简历记载的是基带 SoC 调度子系统验证及 4G/5G 调度改版支持。图片展示 Huawei UWB AAU 与 Massive MIMO 公开场景，不代表本人参与该 AAU 产品。",
+          en: "The résumé covers baseband SoC scheduler verification and support for 4G/5G scheduling redesign. The image shows public Huawei UWB AAU and Massive MIMO context; it does not indicate involvement in this AAU product.",
+        },
+        tags: ["4G / 5G", "Baseband SoC", "Massive MIMO"],
+        media: [
+          { src: "assets/img/huawei-uwb-aau-mimo.png", alt: { zh: "Huawei UWB AAU 与 Massive MIMO 基站场景", en: "Huawei UWB AAU and Massive MIMO base-station context" } },
+        ],
+        mediaSource: {
+          url: "https://www.mobileworldlive.com/huawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo/",
+          label: { zh: "来源：Mobile World Live · Huawei Press Release", en: "Source: Mobile World Live · Huawei Press Release" },
+        },
+      },
     ],
-    link: "work.html",
+    awards: {
+      zh: ["2023 · 研发工具装备「召之即来」奖", "2023 · 质量之星"],
+      en: ["2023 · Call-for-Fire Award for R&D Tools and Equipment", "2023 · Quality Star"],
+    },
   },
   {
     id: "ascend",
@@ -394,7 +422,10 @@ const STAGES = [
         tags: ["CVA", "Precise CI", "PerfInsight", "URegister / UDB"],
       },
     ],
-    link: "work.html",
+    awards: {
+      zh: ["2025 · 计算战役总裁奖"],
+      en: ["2025 · Computing Campaign President Award"],
+    },
   },
   {
     id: "nvidia",

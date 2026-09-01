@@ -59,19 +59,17 @@ function renderChrome() {
   const footer = document.getElementById("site-footer");
   const page = pageName();
   const links = [
-    ["index.html", "home", "nav.home"],
-    ["work.html", "work", "nav.work"],
-    ["projects.html", "projects", "nav.projects"],
-    ["awards.html", "awards", "nav.awards"],
-    ["about.html", "about", "nav.about"],
-    ["contact.html", "contact", "nav.contact"],
+    ["index.html", "", "home", "nav.home"],
+    ["index.html", "#timeline", "timeline", "nav.timeline"],
+    ["projects.html", "", "projects", "nav.projects"],
+    ["contact.html", "", "contact", "nav.contact"],
   ];
 
   const localeSuffix = lang === "en" ? "?lang=en" : "";
   const navHtml = links
-    .map(([href, id, key]) => {
+    .map(([href, hash, id, key]) => {
       const active = id === page ? ' aria-current="page" class="active"' : "";
-      return `<a href="${href}${localeSuffix}" data-i18n="${key}"${active}></a>`;
+      return `<a href="${href}${localeSuffix}${hash}" data-nav-id="${id}" data-i18n="${key}"${active}></a>`;
     })
     .join("");
 
@@ -134,7 +132,7 @@ function applyI18n() {
     } else {
       url.searchParams.delete("lang");
     }
-    link.href = `${url.pathname.split("/").pop() || "index.html"}${url.search}`;
+    link.href = `${url.pathname.split("/").pop() || "index.html"}${url.search}${url.hash}`;
   });
 }
 
@@ -256,10 +254,12 @@ function createStageProject(project) {
     });
     const source = document.createElement("a");
     source.className = "source-link";
-    source.href = "https://github.com/caesarvan/NUS_Medical_Care";
+    source.href = project.mediaSource?.url
+      ?? "https://github.com/caesarvan/NUS_Medical_Care";
     source.rel = "noopener noreferrer";
     source.target = "_blank";
-    source.textContent = I18N[lang]["stage.mediaSource"];
+    source.textContent = project.mediaSource?.label[lang]
+      ?? I18N[lang]["stage.mediaSource"];
     article.append(media, source);
   }
   return article;
@@ -299,6 +299,9 @@ function renderStages() {
         section.style.setProperty("--stage-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
         section.style.setProperty("--stage-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
       });
+      const timelineNode = document.createElement("span");
+      timelineNode.className = "timeline-node";
+      timelineNode.setAttribute("aria-hidden", "true");
       const header = document.createElement("header");
       header.className = "stage-header";
       const logoWrap = createInstitutionLogo(stage);
@@ -325,7 +328,7 @@ function renderStages() {
       });
       heading.append(phase, title, summary, skills);
       header.append(logoWrap, heading);
-      section.append(header);
+      section.append(timelineNode, header);
 
       if (stage.projects.length) {
         const subhead = document.createElement("h3");
@@ -366,7 +369,9 @@ function renderStages() {
     activeStageId = STAGES[0].id;
   }
   setupStageScrolling();
-  updateStageTheme(activeStageId);
+  if (pageName() !== "home" || window.location.hash.startsWith("#stage-")) {
+    updateStageTheme(activeStageId);
+  }
   const deepLink = requestedStageId
     ? document.getElementById(`stage-${requestedStageId}`)
     : null;
@@ -398,7 +403,22 @@ function updateStageTheme(stageId) {
   document.documentElement.style.setProperty("--journey-accent", stage.accent);
   document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
   document.body.dataset.journeyStage = stage.id;
+  if (pageName() === "home") {
+    setPrimaryNav("timeline");
+  }
 
+}
+
+function setPrimaryNav(activeId) {
+  document.querySelectorAll("[data-nav-id]").forEach((link) => {
+    const selected = link.dataset.navId === activeId;
+    link.classList.toggle("active", selected);
+    if (selected) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
 }
 
 function setupStageScrolling() {
@@ -418,6 +438,14 @@ function setupStageScrolling() {
     }
     ticking = true;
     requestAnimationFrame(() => {
+      const firstRect = sections[0].getBoundingClientRect();
+      if (firstRect.top > window.innerHeight * 0.8) {
+        if (pageName() === "home") {
+          setPrimaryNav("home");
+        }
+        ticking = false;
+        return;
+      }
       const targetY = window.innerHeight * 0.42;
       const closest = sections.reduce((best, section) => {
         const rect = section.getBoundingClientRect();
