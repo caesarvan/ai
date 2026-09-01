@@ -26,7 +26,7 @@ included at `assets/fonts/LICENSE.txt`.
 | Image | Source and terms |
 | --- | --- |
 | Atlas 950 SuperPoD | Public product image linked from ifeng.com; product description links to [Huawei's official announcement](https://www.huawei.com/cn/news/2026/7/atlas-950-superpod). |
-| 5G cell tower | Photograph by Jeffrey Beall, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:5G_cell_tower.JPG). |
+| Huawei UWB AAU | Featured image resolved from the Open Graph metadata of the requested [Mobile World Live Huawei press release](https://www.mobileworldlive.com/huawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo/). The site links back to the article and labels it as public industry context. |
 
 The product-reference section labels these as public context. It does not imply
 that the photographs depict non-public projects or the author's workplace.

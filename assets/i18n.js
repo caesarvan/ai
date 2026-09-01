@@ -458,13 +458,13 @@ const PRODUCT_REFERENCES = [
     },
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/5G_cell_tower.JPG",
-    sourceUrl: "https://commons.wikimedia.org/wiki/File:5G_cell_tower.JPG",
-    source: { zh: "摄影：Jeffrey Beall · CC BY 4.0", en: "Photo: Jeffrey Beall · CC BY 4.0" },
-    title: { zh: "5G 基站与无线接入场景", en: "5G base station and radio access" },
+    img: "https://api.microlink.io/?url=https%3A%2F%2Fwww.mobileworldlive.com%2Fhuawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo%2F&embed=image.url",
+    sourceUrl: "https://www.mobileworldlive.com/huawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo/",
+    source: { zh: "来源：Mobile World Live · Huawei Press Release", en: "Source: Mobile World Live · Huawei Press Release" },
+    title: { zh: "Huawei UWB AAU 与 Massive MIMO", en: "Huawei UWB AAU and Massive MIMO" },
     body: {
-      zh: "公开场景参考：图片为通用 5G 基站。简历记载的是基带 SoC 调度子系统、Scheduler/DAG Engine/QDMA 验证，以及 4G/5G 调度改版与产品化支持；不代表本人参与图示基站或部署。",
-      en: "Public context: this is a generic 5G base-station image. The résumé covers baseband SoC scheduler verification, Scheduler/DAG Engine/QDMA, and support for 4G/5G scheduling redesign and commercialization; it does not indicate involvement with the depicted tower or deployment.",
+      zh: "公开行业参考：文章介绍用于 5G/5G-A 与 Massive MIMO 部署的 Huawei UWB AAU 系列。简历记载的是基带 SoC 调度子系统验证及 4G/5G 调度改版支持，不代表本人参与该 AAU 产品。",
+      en: "Public industry context: the article covers Huawei's UWB AAU series for 5G/5G-A and Massive MIMO deployments. The résumé covers baseband SoC scheduler verification and support for 4G/5G scheduling redesign; it does not indicate involvement in this AAU product.",
     },
   },
 ];
