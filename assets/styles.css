@@ -1116,7 +1116,7 @@ main {
   margin-top: 16px;
 }
 
-.student-media:has(figure:only-child) {
+.student-media.single-media {
   grid-template-columns: 1fr;
 }
 
@@ -1126,15 +1126,28 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  background: #ffffff;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background: transparent;
 }
 
 .student-media img {
   display: block;
   width: 100%;
-  max-height: 280px;
+  height: auto;
+  max-height: none;
   object-fit: contain;
+}
+
+.student-media.single-media figure {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+.student-media.single-media img {
+  height: 100%;
+  object-fit: cover;
 }
 
 .stage-awards {

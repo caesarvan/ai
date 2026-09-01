@@ -243,6 +243,9 @@ function createStageProject(project) {
   if (project.media?.length) {
     const media = document.createElement("div");
     media.className = "student-media";
+    if (project.media.length === 1) {
+      media.classList.add("single-media");
+    }
     project.media.forEach((asset) => {
       const figure = document.createElement("figure");
       const img = document.createElement("img");
