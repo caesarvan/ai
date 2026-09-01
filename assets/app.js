@@ -1,21 +1,67 @@
-const langToggle = document.getElementById("lang-toggle");
-const menuToggle = document.getElementById("menu-toggle");
-const mobileNav = document.getElementById("mobile-nav");
-const scrollProgress = document.getElementById("scroll-progress");
-const dieCanvas = document.getElementById("die-canvas");
-const waferCanvas = document.getElementById("wafer");
-const inspectMeta = document.getElementById("inspect-meta");
-const inspectTitle = document.getElementById("inspect-title");
-const inspectBody = document.getElementById("inspect-body");
-const inspectChecks = document.getElementById("inspect-checks");
+const langToggleId = "lang-toggle";
+const menuToggleId = "menu-toggle";
+const mobileNavId = "mobile-nav";
 
-let lang = "zh";
-let selectedId = "noc";
-let hoverId = null;
+const urlLang = new URLSearchParams(window.location.search).get("lang");
+let lang = urlLang === "en" || urlLang === "zh"
+  ? urlLang
+  : localStorage.getItem("site-lang") === "en"
+    ? "en"
+    : "zh";
 let dieAnim = 0;
 
-function t(key) {
-  return I18N[lang][key] ?? key;
+function pageName() {
+  return document.body.getAttribute("data-page") || "home";
+}
+
+function renderChrome() {
+  const header = document.getElementById("site-header");
+  const footer = document.getElementById("site-footer");
+  const page = pageName();
+  const links = [
+    ["index.html", "home", "nav.home"],
+    ["work.html", "work", "nav.work"],
+    ["projects.html", "projects", "nav.projects"],
+    ["awards.html", "awards", "nav.awards"],
+    ["about.html", "about", "nav.about"],
+    ["contact.html", "contact", "nav.contact"],
+  ];
+
+  const localeSuffix = lang === "en" ? "?lang=en" : "";
+  const navHtml = links
+    .map(([href, id, key]) => {
+      const active = id === page ? ' aria-current="page" class="active"' : "";
+      return `<a href="${href}${localeSuffix}" data-i18n="${key}"${active}></a>`;
+    })
+    .join("");
+
+  header.innerHTML = `
+    <header class="site-header">
+      <a class="brand" href="index.html${localeSuffix}">
+        <span class="brand-die" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Caesar Fan</span>
+          <span class="brand-tag">CHIP · VERIFY</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Primary">${navHtml}</nav>
+      <div class="header-actions">
+        <button type="button" class="lang-toggle" id="${langToggleId}" aria-pressed="false" aria-label="Language">EN</button>
+        <button type="button" class="menu-toggle" id="${menuToggleId}" aria-expanded="false" aria-controls="${mobileNavId}">
+          <span data-i18n="nav.menu">Menu</span>
+        </button>
+      </div>
+      <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    </header>
+    <div class="mobile-nav" id="${mobileNavId}" hidden>${navHtml}</div>
+  `;
+
+  footer.innerHTML = `
+    <footer class="site-footer">
+      <span data-i18n="footer.copy">Caesar Fan</span>
+      <a href="#main" data-i18n="footer.top">Top</a>
+    </footer>
+  `;
 }
 
 function applyI18n() {
@@ -26,226 +72,200 @@ function applyI18n() {
       node.textContent = I18N[lang][key];
     }
   });
-  langToggle.textContent = lang === "zh" ? "EN" : "中文";
-  langToggle.setAttribute("aria-pressed", String(lang === "en"));
-  renderExperience();
-  renderProjects();
-  renderSkills();
-  renderEducation();
+  const langToggle = document.getElementById(langToggleId);
+  if (langToggle) {
+    langToggle.textContent = lang === "zh" ? "EN" : "中文";
+    langToggle.setAttribute("aria-pressed", String(lang === "en"));
+  }
+  renderGallery();
   renderAwards();
-  renderInspect();
-  drawWafer();
+  renderPath();
+  renderProjects();
+  renderProductReferences();
+  document.querySelectorAll("a[href$='.html'], a[href*='.html?']").forEach((link) => {
+    const url = new URL(link.href);
+    if (url.origin !== window.location.origin) {
+      return;
+    }
+    if (lang === "en") {
+      url.searchParams.set("lang", "en");
+    } else {
+      url.searchParams.delete("lang");
+    }
+    link.href = `${url.pathname.split("/").pop() || "index.html"}${url.search}`;
+  });
 }
 
-function renderExperience() {
-  const root = document.getElementById("timeline");
+function renderGallery() {
+  const root = document.getElementById("gallery");
+  if (!root) {
+    return;
+  }
   root.replaceChildren(
-    ...EXPERIENCE.map((job) => {
-      const li = document.createElement("li");
-      const head = document.createElement("div");
-      head.className = "timeline-head";
-      const meta = document.createElement("span");
-      meta.className = "timeline-meta";
-      meta.textContent = `${job.period[lang]} · ${job.org[lang]}`;
-      head.append(meta);
-      const h3 = document.createElement("h3");
-      h3.textContent = job.role[lang];
-      const ul = document.createElement("ul");
-      job.points[lang].forEach((text) => {
-        const item = document.createElement("li");
-        item.textContent = text;
-        ul.append(item);
-      });
-      li.append(head, h3, ul);
-      return li;
-    }),
-  );
-}
-
-function renderProjects() {
-  const root = document.getElementById("project-grid");
-  root.replaceChildren(
-    ...PROJECTS.map((project) => {
+    ...GALLERY.map((item) => {
       const article = document.createElement("article");
-      const year = document.createElement("p");
-      year.className = "project-year";
-      year.textContent = project.year;
+      const media = document.createElement("div");
+      media.className = "media";
+      const img = document.createElement("img");
+      img.src = item.img;
+      img.alt = item.title[lang];
+      img.loading = "lazy";
+      const disclosure = document.createElement("span");
+      disclosure.className = "media-disclosure";
+      disclosure.textContent = I18N[lang]["media.illustration"];
+      media.append(img, disclosure);
+      const copy = document.createElement("div");
+      copy.className = "copy";
+      const tag = document.createElement("p");
+      tag.className = "tag";
+      tag.textContent = item.tag[lang];
       const h3 = document.createElement("h3");
-      h3.textContent = project.title[lang];
+      h3.textContent = item.title[lang];
       const p = document.createElement("p");
-      p.textContent = project.body[lang];
-      article.append(year, h3, p);
-      return article;
-    }),
-  );
-}
-
-function renderSkills() {
-  const root = document.getElementById("skill-bands");
-  root.replaceChildren(
-    ...SKILLS.map((skill) => {
-      const article = document.createElement("article");
-      const h3 = document.createElement("h3");
-      h3.textContent = skill.title[lang];
-      const p = document.createElement("p");
-      p.textContent = skill.items;
-      article.append(h3, p);
-      return article;
-    }),
-  );
-}
-
-function renderEducation() {
-  const root = document.getElementById("edu");
-  root.replaceChildren(
-    ...EDUCATION.map((item) => {
-      const article = document.createElement("article");
-      const period = document.createElement("p");
-      period.className = "edu-period";
-      period.textContent = item.period;
-      const h3 = document.createElement("h3");
-      h3.textContent = item.school[lang];
-      const note = document.createElement("p");
-      note.textContent = item.note[lang];
-      article.append(period, h3, note);
+      p.textContent = item.body[lang];
+      copy.append(tag, h3, p);
+      article.append(media, copy);
       return article;
     }),
   );
 }
 
 function renderAwards() {
-  const root = document.getElementById("award-list");
-  root.replaceChildren(
-    ...AWARDS.map((award) => {
-      const li = document.createElement("li");
-      li.textContent = award[lang];
-      return li;
-    }),
-  );
-}
-
-function stackCopy(item) {
-  return item[lang];
-}
-
-function renderInspect() {
-  const item = STACK.find((entry) => entry.id === selectedId) ?? STACK[0];
-  const copy = stackCopy(item);
-  inspectMeta.textContent = copy.meta;
-  inspectTitle.textContent = copy.title;
-  inspectBody.textContent = copy.body;
-  inspectChecks.replaceChildren(
-    ...copy.checks.map((text) => {
-      const li = document.createElement("li");
-      li.textContent = text;
-      return li;
-    }),
-  );
-}
-
-function selectStack(id) {
-  selectedId = id;
-  renderInspect();
-  drawWafer();
-}
-
-function drawWafer() {
-  const ctx = waferCanvas.getContext("2d");
-  if (!ctx) {
+  const root = document.getElementById("award-gallery");
+  if (!root) {
     return;
   }
-  const { width, height } = waferCanvas;
-  const cx = width / 2;
-  const cy = height / 2;
-  const radius = Math.min(width, height) * 0.46;
-  ctx.clearRect(0, 0, width, height);
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius + 18, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(30, 200, 184, 0.18)";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius + 8, 0, Math.PI * 2);
-  ctx.fillStyle = "#0a1018";
-  ctx.fill();
-  ctx.strokeStyle = "rgba(138, 151, 171, 0.35)";
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  const n = STACK.length;
-  STACK.forEach((item, index) => {
-    const start = -Math.PI / 2 + (index / n) * Math.PI * 2;
-    const end = -Math.PI / 2 + ((index + 1) / n) * Math.PI * 2;
-    const active = item.id === selectedId;
-    const hovered = item.id === hoverId;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, radius, start, end);
-    ctx.closePath();
-    ctx.fillStyle = item.color;
-    ctx.globalAlpha = active ? 0.92 : hovered ? 0.72 : 0.42;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = active ? "#e7eef8" : "rgba(6, 9, 15, 0.75)";
-    ctx.lineWidth = active ? 2 : 1;
-    ctx.stroke();
-
-    const mid = (start + end) / 2;
-    const tx = cx + Math.cos(mid) * radius * 0.62;
-    const ty = cy + Math.sin(mid) * radius * 0.62;
-    ctx.fillStyle = "#061018";
-    ctx.font = "600 13px ui-monospace, monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(item.label, tx, ty);
-  });
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius * 0.22, 0, Math.PI * 2);
-  ctx.fillStyle = "#06090f";
-  ctx.fill();
-  ctx.strokeStyle = varCyanStroke();
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  ctx.fillStyle = "#1ec8b8";
-  ctx.font = "600 11px ui-monospace, monospace";
-  ctx.fillText("Si", cx, cy);
+  root.replaceChildren(
+    ...AWARD_CARDS.map((item) => {
+      const article = document.createElement("article");
+      const bg = document.createElement("img");
+      bg.className = "bg";
+      bg.src = item.img;
+      bg.alt = "";
+      bg.loading = "lazy";
+      const disclosure = document.createElement("span");
+      disclosure.className = "media-disclosure";
+      disclosure.textContent = I18N[lang]["media.illustration"];
+      const shade = document.createElement("div");
+      shade.className = "shade";
+      const copy = document.createElement("div");
+      copy.className = "copy";
+      const year = document.createElement("div");
+      year.className = "year";
+      year.textContent = item.year;
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      copy.append(year, h3, p);
+      article.append(bg, shade, disclosure, copy);
+      return article;
+    }),
+  );
 }
 
-function varCyanStroke() {
-  return "rgba(30, 200, 184, 0.7)";
-}
-
-function waferHit(px, py) {
-  const { width, height } = waferCanvas;
-  const cx = width / 2;
-  const cy = height / 2;
-  const dx = px - cx;
-  const dy = py - cy;
-  const dist = Math.hypot(dx, dy);
-  const radius = Math.min(width, height) * 0.46;
-  if (dist < radius * 0.22 || dist > radius) {
-    return null;
+function renderPath() {
+  const root = document.getElementById("path-list");
+  if (!root) {
+    return;
   }
-  let angle = Math.atan2(dy, dx) + Math.PI / 2;
-  if (angle < 0) {
-    angle += Math.PI * 2;
-  }
-  const index = Math.floor((angle / (Math.PI * 2)) * STACK.length) % STACK.length;
-  return STACK[index];
+  root.replaceChildren(
+    ...PATH.map((item) => {
+      const li = document.createElement("li");
+      const logoWrap = document.createElement("div");
+      logoWrap.className = "institution-logo";
+      const logo = document.createElement("img");
+      logo.src = item.logo;
+      logo.alt = item.logoAlt;
+      logo.loading = "lazy";
+      const fallback = document.createElement("span");
+      fallback.className = "logo-fallback";
+      fallback.textContent = item.logoAlt;
+      logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
+      logoWrap.append(logo, fallback);
+      const when = document.createElement("span");
+      when.className = "when";
+      when.textContent = item.when;
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      li.append(logoWrap, when, h3, p);
+      return li;
+    }),
+  );
 }
 
-function waferPoint(event) {
-  const bounds = waferCanvas.getBoundingClientRect();
-  return {
-    x: ((event.clientX - bounds.left) / bounds.width) * waferCanvas.width,
-    y: ((event.clientY - bounds.top) / bounds.height) * waferCanvas.height,
-  };
+function renderProductReferences() {
+  const root = document.getElementById("product-references");
+  if (!root) {
+    return;
+  }
+  root.replaceChildren(
+    ...PRODUCT_REFERENCES.map((item) => {
+      const article = document.createElement("article");
+      const media = document.createElement("div");
+      media.className = "media";
+      const img = document.createElement("img");
+      img.src = item.img;
+      img.alt = item.title[lang];
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      const fallback = document.createElement("span");
+      fallback.className = "photo-fallback";
+      fallback.textContent = item.title[lang];
+      img.addEventListener("error", () => media.classList.add("load-failed"));
+      media.append(img, fallback);
+
+      const copy = document.createElement("div");
+      copy.className = "copy";
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      const source = document.createElement("a");
+      source.className = "source-link";
+      source.href = item.sourceUrl;
+      source.rel = "noopener noreferrer";
+      source.target = "_blank";
+      source.textContent = item.source[lang];
+      copy.append(h3, p, source);
+      article.append(media, copy);
+      return article;
+    }),
+  );
+}
+
+function renderProjects() {
+  const root = document.getElementById("project-list");
+  if (!root) {
+    return;
+  }
+  root.replaceChildren(
+    ...PROJECTS.map((item) => {
+      const a = document.createElement("a");
+      a.className = "project-card";
+      a.href = item.url;
+      a.rel = "noopener noreferrer";
+      a.target = "_blank";
+      const meta = document.createElement("div");
+      meta.className = "project-meta";
+      meta.innerHTML = `<span>${item.name}</span><span>${item.lang}</span>`;
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      a.append(meta, h3, p);
+      return a;
+    }),
+  );
 }
 
 function sizeDieCanvas() {
+  const dieCanvas = document.getElementById("die-canvas");
+  if (!dieCanvas) {
+    return;
+  }
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const css = Math.min(window.innerWidth * 0.72, 720);
   dieCanvas.style.width = `${css}px`;
@@ -255,6 +275,10 @@ function sizeDieCanvas() {
 }
 
 function drawDie(time) {
+  const dieCanvas = document.getElementById("die-canvas");
+  if (!dieCanvas) {
+    return;
+  }
   const ctx = dieCanvas.getContext("2d");
   if (!ctx) {
     return;
@@ -296,25 +320,6 @@ function drawDie(time) {
   ctx.stroke();
 }
 
-function animateCounters() {
-  const nodes = document.querySelectorAll("[data-count]");
-  nodes.forEach((node) => {
-    const target = Number(node.getAttribute("data-count"));
-    const suffix = node.getAttribute("data-suffix") ?? "";
-    const start = performance.now();
-    const duration = 1100;
-    const step = (now) => {
-      const p = Math.min(1, (now - start) / duration);
-      const eased = 1 - (1 - p) ** 3;
-      node.textContent = `${Math.round(target * eased)}${suffix}`;
-      if (p < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  });
-}
-
 function setupReveal() {
   const nodes = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) {
@@ -336,72 +341,57 @@ function setupReveal() {
 }
 
 function updateProgress() {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const ratio = max > 0 ? (window.scrollY / max) * 100 : 0;
-  scrollProgress.style.width = `${ratio}%`;
-}
-
-langToggle.addEventListener("click", () => {
-  lang = lang === "zh" ? "en" : "zh";
-  applyI18n();
-});
-
-menuToggle.addEventListener("click", () => {
-  const open = mobileNav.hasAttribute("hidden");
-  if (open) {
-    mobileNav.removeAttribute("hidden");
-  } else {
-    mobileNav.setAttribute("hidden", "");
-  }
-  menuToggle.setAttribute("aria-expanded", String(open));
-});
-
-mobileNav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobileNav.setAttribute("hidden", "");
-    menuToggle.setAttribute("aria-expanded", "false");
-  });
-});
-
-waferCanvas.addEventListener("mousemove", (event) => {
-  const point = waferPoint(event);
-  const hit = waferHit(point.x, point.y);
-  hoverId = hit ? hit.id : null;
-  waferCanvas.style.cursor = hit ? "pointer" : "default";
-  drawWafer();
-});
-
-waferCanvas.addEventListener("mouseleave", () => {
-  hoverId = null;
-  drawWafer();
-});
-
-waferCanvas.addEventListener("click", (event) => {
-  const point = waferPoint(event);
-  const hit = waferHit(point.x, point.y);
-  if (hit) {
-    selectStack(hit.id);
-  }
-});
-
-waferCanvas.tabIndex = 0;
-waferCanvas.addEventListener("keydown", (event) => {
-  const index = STACK.findIndex((item) => item.id === selectedId);
-  if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
-    event.preventDefault();
-    selectStack(STACK[(index + 1) % STACK.length].id);
+  const el = document.getElementById("scroll-progress");
+  if (!el) {
     return;
   }
-  if (event.key === "ArrowLeft") {
-    event.preventDefault();
-    selectStack(STACK[(index - 1 + STACK.length) % STACK.length].id);
-  }
-});
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  el.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+}
 
+function bindChrome() {
+  const langToggle = document.getElementById(langToggleId);
+  const menuToggle = document.getElementById(menuToggleId);
+  const mobileNav = document.getElementById(mobileNavId);
+
+  langToggle?.addEventListener("click", () => {
+    lang = lang === "zh" ? "en" : "zh";
+    localStorage.setItem("site-lang", lang);
+    const url = new URL(window.location.href);
+    if (lang === "en") {
+      url.searchParams.set("lang", "en");
+    } else {
+      url.searchParams.delete("lang");
+    }
+    window.history.replaceState({}, "", url);
+    applyI18n();
+  });
+
+  menuToggle?.addEventListener("click", () => {
+    const open = mobileNav.hasAttribute("hidden");
+    if (open) {
+      mobileNav.removeAttribute("hidden");
+    } else {
+      mobileNav.setAttribute("hidden", "");
+    }
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+
+  mobileNav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileNav.setAttribute("hidden", "");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+renderChrome();
+applyI18n();
+bindChrome();
+setupReveal();
+updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
-window.addEventListener("resize", () => {
-  sizeDieCanvas();
-});
+window.addEventListener("resize", sizeDieCanvas);
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 sizeDieCanvas();
@@ -411,9 +401,6 @@ function loopDie(time) {
     dieAnim = requestAnimationFrame(loopDie);
   }
 }
-dieAnim = requestAnimationFrame(loopDie);
-
-applyI18n();
-setupReveal();
-animateCounters();
-updateProgress();
+if (document.getElementById("die-canvas")) {
+  dieAnim = requestAnimationFrame(loopDie);
+}

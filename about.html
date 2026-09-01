@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Caesar Fan — short path and focus." />
+    <title>About · Caesar Fan</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="about">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
+    <div id="site-header"></div>
+
+    <main id="main" class="page">
+      <header class="page-hero">
+        <p class="kicker" data-i18n="about.kicker">About</p>
+        <h1 data-i18n="about.title">关于</h1>
+        <p class="page-lede" data-i18n="about.lede">
+          Caesar Fan，从事芯片设计验证与验证平台工程。
+        </p>
+      </header>
+
+      <section class="plain-section reveal">
+        <h2 data-i18n="about.focus.title">专业方向</h2>
+        <p data-i18n="about.focus.body">
+          当前关注 AI 芯片多芯片互连与系统级验证，同时从事流片前验证平台、自动化回归、性能监控与分析以及调试工具建设。
+        </p>
+      </section>
+
+      <section class="plain-section reveal">
+        <h2 data-i18n="about.path.title">教育与职业经历</h2>
+        <ol class="path-list" id="path-list"></ol>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/i18n.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
