@@ -186,7 +186,8 @@ function createStageProject(project) {
 
   const meta = document.createElement("p");
   meta.className = "stage-project-meta";
-  meta.textContent = `${project.when} · ${project.role[lang]}`;
+  const projectWhen = typeof project.when === "string" ? project.when : project.when[lang];
+  meta.textContent = `${projectWhen} · ${project.role[lang]}`;
   const title = document.createElement("h4");
   title.textContent = project.title[lang];
   const body = document.createElement("p");

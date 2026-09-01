@@ -362,7 +362,7 @@ const STAGES = [
     skills: ["NPU Networking", "IO / UB", "FPGA / EMU / ESL", "PVT", "Verification Platforms"],
     projects: [
       {
-        when: "2024 – 近期",
+        when: { zh: "2024 – 近期", en: "2024 – Recent" },
         title: { zh: "NPU 组网与超节点验证", en: "NPU networking and super-node validation" },
         role: { zh: "芯片验证经理 / PL", en: "Chip Verification Manager / PL" },
         body: {
@@ -372,7 +372,7 @@ const STAGES = [
         tags: ["NPU Networking", "IO / UB", "Super-node", "PVT"],
       },
       {
-        when: "2024 – 近期",
+        when: { zh: "2024 – 近期", en: "2024 – Recent" },
         title: { zh: "多层流片前验证体系", en: "Multi-level pre-silicon validation" },
         role: { zh: "原型验证团队建设", en: "Prototyping team development" },
         body: {
@@ -382,7 +382,7 @@ const STAGES = [
         tags: ["VTOF", "Palladium", "FastModel", "QEMU"],
       },
       {
-        when: "2025 – 近期",
+        when: { zh: "2025 – 近期", en: "2025 – Recent" },
         title: { zh: "验证平台工程", en: "Verification platform engineering" },
         role: { zh: "验证平台工程负责人", en: "Verification Platform Engineering Lead" },
         body: {
@@ -411,7 +411,7 @@ const STAGES = [
     skills: ["GPU Power", "Power × Performance", "Clock / Voltage Domains", "Gating", "Telemetry"],
     projects: [
       {
-        when: "CURRENT",
+        when: { zh: "现阶段", en: "Current" },
         title: { zh: "功耗与性能交互", en: "Power and performance interactions" },
         role: { zh: "GPU / 芯片功耗验证", en: "GPU / chip power verification" },
         body: {
@@ -421,7 +421,7 @@ const STAGES = [
         tags: ["Power × Performance", "Workloads", "DVFS"],
       },
       {
-        when: "CURRENT",
+        when: { zh: "现阶段", en: "Current" },
         title: { zh: "时钟、电压与功耗域", en: "Clock, voltage, and power domains" },
         role: { zh: "电源状态与门控", en: "Power states and gating" },
         body: {
@@ -431,7 +431,7 @@ const STAGES = [
         tags: ["Clock Gating", "Power Gating", "Isolation", "Retention"],
       },
       {
-        when: "CURRENT",
+        when: { zh: "现阶段", en: "Current" },
         title: { zh: "遥测与负载驱动验证", en: "Telemetry and workload-driven verification" },
         role: { zh: "可观测性", en: "Observability" },
         body: {
