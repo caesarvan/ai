@@ -390,11 +390,6 @@ function updateStageTheme(stageId) {
   document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
   document.body.dataset.journeyStage = stage.id;
 
-  const url = new URL(window.location.href);
-  if (url.hash !== `#stage-${stage.id}`) {
-    url.hash = `stage-${stage.id}`;
-    window.history.replaceState({}, "", url);
-  }
 }
 
 function setupStageScrolling() {
