@@ -539,6 +539,12 @@ main {
   font-size: 14px;
 }
 
+.translation-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .note-box,
 .plain-section {
   margin-top: 36px;
