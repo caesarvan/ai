@@ -41,7 +41,7 @@ function renderChrome() {
         <span class="brand-die" aria-hidden="true"></span>
         <span class="brand-text">
           <span class="brand-name">Caesar Fan</span>
-          <span class="brand-tag">SILICON · VALIDATE</span>
+          <span class="brand-tag">CHIP · VERIFY</span>
         </span>
       </a>
       <nav class="nav" aria-label="Primary">${navHtml}</nav>
