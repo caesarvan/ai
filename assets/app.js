@@ -3,6 +3,7 @@ const menuToggleId = "menu-toggle";
 const mobileNavId = "mobile-nav";
 const themeToggleId = "theme-toggle";
 const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const urlLang = new URLSearchParams(window.location.search).get("lang");
 let lang = urlLang === "en" || urlLang === "zh"
@@ -376,7 +377,11 @@ function updateStageTheme(stageId) {
     link.classList.toggle("active", selected);
     link.setAttribute("aria-current", selected ? "step" : "false");
     if (selected) {
-      link.scrollIntoView({ block: "nearest", inline: "center" });
+      const rail = link.parentElement;
+      rail?.scrollTo({
+        left: link.offsetLeft - (rail.clientWidth - link.clientWidth) / 2,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
     }
   });
 
@@ -663,7 +668,6 @@ window.addEventListener("hashchange", () => {
   }
 });
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 sizeDieCanvas();
 function loopDie(time) {
   drawDie(time);
