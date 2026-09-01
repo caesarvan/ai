@@ -9,6 +9,7 @@ let lang = urlLang === "en" || urlLang === "zh"
     ? "en"
     : "zh";
 let dieAnim = 0;
+let activeStageId = window.location.hash.replace("#stage-", "");
 
 function pageName() {
   return document.body.getAttribute("data-page") || "home";
@@ -79,7 +80,7 @@ function applyI18n() {
   }
   renderGallery();
   renderAwards();
-  renderPath();
+  renderStages();
   renderProjects();
   renderProductReferences();
   document.querySelectorAll("a[href$='.html'], a[href*='.html?']").forEach((link) => {
@@ -164,36 +165,227 @@ function renderAwards() {
   );
 }
 
-function renderPath() {
-  const root = document.getElementById("path-list");
-  if (!root) {
+function createInstitutionLogo(item) {
+  const logoWrap = document.createElement("div");
+  logoWrap.className = "institution-logo";
+  const logo = document.createElement("img");
+  logo.src = item.logo;
+  logo.alt = item.logoAlt;
+  logo.loading = "lazy";
+  const fallback = document.createElement("span");
+  fallback.className = "logo-fallback";
+  fallback.textContent = item.logoAlt;
+  logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
+  logoWrap.append(logo, fallback);
+  return logoWrap;
+}
+
+function createStageProject(project) {
+  const article = document.createElement("article");
+  article.className = "stage-project";
+
+  const meta = document.createElement("p");
+  meta.className = "stage-project-meta";
+  const projectWhen = typeof project.when === "string" ? project.when : project.when[lang];
+  meta.textContent = `${projectWhen} · ${project.role[lang]}`;
+  const title = document.createElement("h4");
+  title.textContent = project.title[lang];
+  const body = document.createElement("p");
+  body.textContent = project.body[lang];
+  const tags = document.createElement("div");
+  tags.className = "stage-tags";
+  project.tags.forEach((tagText) => {
+    const tag = document.createElement("span");
+    tag.textContent = tagText;
+    tags.append(tag);
+  });
+  article.append(meta, title, body, tags);
+
+  if (project.media?.length) {
+    const media = document.createElement("div");
+    media.className = "student-media";
+    project.media.forEach((asset) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = asset.src;
+      img.alt = asset.alt[lang];
+      img.loading = "lazy";
+      figure.append(img);
+      media.append(figure);
+    });
+    const source = document.createElement("a");
+    source.className = "source-link";
+    source.href = "https://github.com/caesarvan/NUS_Medical_Care";
+    source.rel = "noopener noreferrer";
+    source.target = "_blank";
+    source.textContent = I18N[lang]["stage.mediaSource"];
+    article.append(media, source);
+  }
+  return article;
+}
+
+function renderStages() {
+  const root = document.getElementById("stages");
+  const nav = document.getElementById("stage-nav");
+  if (!root || !nav) {
     return;
   }
-  root.replaceChildren(
-    ...PATH.map((item) => {
-      const li = document.createElement("li");
-      const logoWrap = document.createElement("div");
-      logoWrap.className = "institution-logo";
-      const logo = document.createElement("img");
-      logo.src = item.logo;
-      logo.alt = item.logoAlt;
-      logo.loading = "lazy";
-      const fallback = document.createElement("span");
-      fallback.className = "logo-fallback";
-      fallback.textContent = item.logoAlt;
-      logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
-      logoWrap.append(logo, fallback);
-      const when = document.createElement("span");
-      when.className = "when";
-      when.textContent = item.when;
-      const h3 = document.createElement("h3");
-      h3.textContent = item.title[lang];
-      const p = document.createElement("p");
-      p.textContent = item.body[lang];
-      li.append(logoWrap, when, h3, p);
-      return li;
+
+  nav.replaceChildren(
+    ...STAGES.map((stage) => {
+      const link = document.createElement("a");
+      link.href = `#stage-${stage.id}`;
+      link.dataset.stageTarget = stage.id;
+      link.style.setProperty("--stage-accent", stage.accent);
+      link.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        activateStage(stage.id, true);
+      });
+      return link;
     }),
   );
+
+  const sections = STAGES.map((stage, index) => {
+      const section = document.createElement("section");
+      section.className = "stage-section";
+      section.id = `stage-${stage.id}`;
+      section.dataset.stage = stage.id;
+      section.dataset.index = String(index + 1).padStart(2, "0");
+      section.style.setProperty("--stage-accent", stage.accent);
+      section.style.setProperty("--stage-secondary", stage.secondary);
+      section.addEventListener("pointermove", (event) => {
+        const bounds = section.getBoundingClientRect();
+        section.style.setProperty("--stage-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+        section.style.setProperty("--stage-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+      });
+      const header = document.createElement("header");
+      header.className = "stage-header";
+      const logoWrap = createInstitutionLogo(stage);
+      const heading = document.createElement("div");
+      const phase = document.createElement("p");
+      phase.className = "stage-phase";
+      phase.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
+      const title = document.createElement("h3");
+      title.textContent = stage.title[lang];
+      const summary = document.createElement("p");
+      summary.textContent = stage.summary[lang];
+      const skills = document.createElement("div");
+      skills.className = "stage-skill-line";
+      stage.skills.forEach((skillText) => {
+        const skill = document.createElement("span");
+        skill.textContent = skillText;
+        skills.append(skill);
+      });
+      heading.append(phase, title, summary, skills);
+      header.append(logoWrap, heading);
+      section.append(header);
+
+      if (stage.projects.length) {
+        const subhead = document.createElement("h3");
+        subhead.className = "stage-subhead";
+        subhead.textContent = I18N[lang]["stage.projects"];
+        const projects = document.createElement("div");
+        projects.className = "stage-projects";
+        projects.append(...stage.projects.map(createStageProject));
+        section.append(subhead, projects);
+      }
+
+      if (stage.awards?.[lang]?.length) {
+        const subhead = document.createElement("h3");
+        subhead.className = "stage-subhead";
+        subhead.textContent = I18N[lang]["stage.awards"];
+        const awards = document.createElement("ul");
+        awards.className = "stage-awards";
+        stage.awards[lang].forEach((awardText) => {
+          const award = document.createElement("li");
+          award.textContent = awardText;
+          awards.append(award);
+        });
+        section.append(subhead, awards);
+      }
+
+      if (stage.link) {
+        const link = document.createElement("a");
+        link.className = "stage-link";
+        link.href = stage.link;
+        link.textContent = `${I18N[lang]["stage.careerLink"]} →`;
+        section.append(link);
+      }
+      return section;
+    });
+
+  const pager = document.createElement("div");
+  pager.className = "stage-pager";
+  const previous = document.createElement("button");
+  previous.type = "button";
+  previous.dataset.stagePrevious = "";
+  previous.addEventListener("click", () => moveStage(-1));
+  const counter = document.createElement("span");
+  counter.dataset.stageCounter = "";
+  const next = document.createElement("button");
+  next.type = "button";
+  next.dataset.stageNext = "";
+  next.addEventListener("click", () => moveStage(1));
+  pager.append(previous, counter, next);
+
+  root.replaceChildren(...sections, pager);
+  if (!STAGES.some((stage) => stage.id === activeStageId)) {
+    activeStageId = STAGES[0].id;
+  }
+  activateStage(activeStageId, false);
+}
+
+function activateStage(stageId, updateHash) {
+  const stage = STAGES.find((item) => item.id === stageId);
+  if (!stage) {
+    return;
+  }
+  activeStageId = stage.id;
+  const sections = document.querySelectorAll(".stage-section");
+  const navLinks = document.querySelectorAll("[data-stage-target]");
+  sections.forEach((section) => {
+    const selected = section.dataset.stage === stage.id;
+    section.hidden = !selected;
+    section.classList.toggle("stage-visible", selected);
+  });
+  navLinks.forEach((link) => {
+    const selected = link.dataset.stageTarget === stage.id;
+    link.classList.toggle("active", selected);
+    link.setAttribute("aria-current", selected ? "step" : "false");
+    if (selected) {
+      link.scrollIntoView({ block: "nearest", inline: "center" });
+    }
+  });
+
+  document.documentElement.style.setProperty("--journey-accent", stage.accent);
+  document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
+  document.body.dataset.journeyStage = stage.id;
+
+  const index = STAGES.findIndex((item) => item.id === stage.id);
+  const previous = document.querySelector("[data-stage-previous]");
+  const next = document.querySelector("[data-stage-next]");
+  const counter = document.querySelector("[data-stage-counter]");
+  if (previous) {
+    previous.textContent = `← ${I18N[lang]["stage.previous"]}`;
+    previous.disabled = index === 0;
+  }
+  if (next) {
+    next.textContent = `${I18N[lang]["stage.next"]} →`;
+    next.disabled = index === STAGES.length - 1;
+  }
+  if (counter) {
+    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(STAGES.length).padStart(2, "0")}`;
+  }
+  if (updateHash) {
+    window.history.replaceState({}, "", `#stage-${stage.id}`);
+  }
+}
+
+function moveStage(offset) {
+  const index = STAGES.findIndex((stage) => stage.id === activeStageId);
+  const nextIndex = Math.max(0, Math.min(STAGES.length - 1, index + offset));
+  activateStage(STAGES[nextIndex].id, true);
 }
 
 function renderProductReferences() {
@@ -302,16 +494,16 @@ function drawDie(time) {
         continue;
       }
       const alpha = 0.08 + Math.max(0, wave) * 0.22 * (1 - edge * 0.45);
-      ctx.fillStyle = `rgba(30, 200, 184, ${alpha})`;
+      ctx.fillStyle = `rgba(118, 185, 0, ${alpha})`;
       ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
       if ((x + y) % 5 === 0) {
-        ctx.strokeStyle = `rgba(58, 160, 255, ${0.12 + Math.max(0, wave) * 0.2})`;
+        ctx.strokeStyle = `rgba(184, 255, 66, ${0.12 + Math.max(0, wave) * 0.2})`;
         ctx.strokeRect(px + 3, py + 3, cellW - 6, cellH - 6);
       }
     }
   }
 
-  ctx.strokeStyle = "rgba(30, 200, 184, 0.35)";
+  ctx.strokeStyle = "rgba(118, 185, 0, 0.4)";
   ctx.lineWidth = 2;
   const scanY = pad + ((tSec * 80) % (height - pad * 2));
   ctx.beginPath();
@@ -392,6 +584,12 @@ setupReveal();
 updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", sizeDieCanvas);
+window.addEventListener("hashchange", () => {
+  const stageId = window.location.hash.replace("#stage-", "");
+  if (STAGES.some((stage) => stage.id === stageId)) {
+    activateStage(stageId, false);
+  }
+});
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 sizeDieCanvas();
