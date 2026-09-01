@@ -3,6 +3,7 @@ const menuToggleId = "menu-toggle";
 const mobileNavId = "mobile-nav";
 const themeToggleId = "theme-toggle";
 const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const urlLang = new URLSearchParams(window.location.search).get("lang");
 let lang = urlLang === "en" || urlLang === "zh"
@@ -12,6 +13,8 @@ let lang = urlLang === "en" || urlLang === "zh"
     : "zh";
 let dieAnim = 0;
 let activeStageId = window.location.hash.replace("#stage-", "");
+let stageScrollHandler = null;
+let stageRevealObserver = null;
 
 function pageName() {
   return document.body.getAttribute("data-page") || "home";
@@ -268,19 +271,15 @@ function renderStages() {
   if (!root || !nav) {
     return;
   }
+  const requestedStageId = window.location.hash.replace("#stage-", "");
 
   nav.replaceChildren(
     ...STAGES.map((stage) => {
-      const link = document.createElement("a");
-      link.href = `#stage-${stage.id}`;
-      link.dataset.stageTarget = stage.id;
-      link.style.setProperty("--stage-accent", stage.accent);
-      link.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        activateStage(stage.id, true);
-      });
-      return link;
+      const marker = document.createElement("span");
+      marker.dataset.stageTarget = stage.id;
+      marker.style.setProperty("--stage-accent", stage.accent);
+      marker.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
+      return marker;
     }),
   );
 
@@ -289,6 +288,9 @@ function renderStages() {
       section.className = "stage-section";
       section.id = `stage-${stage.id}`;
       section.dataset.stage = stage.id;
+      if (stage.companyGroup) {
+        section.dataset.company = "huawei";
+      }
       section.dataset.index = String(index + 1).padStart(2, "0");
       section.style.setProperty("--stage-accent", stage.accent);
       section.style.setProperty("--stage-secondary", stage.secondary);
@@ -301,6 +303,12 @@ function renderStages() {
       header.className = "stage-header";
       const logoWrap = createInstitutionLogo(stage);
       const heading = document.createElement("div");
+      if (stage.companyGroup) {
+        const company = document.createElement("p");
+        company.className = "company-group-label";
+        company.textContent = stage.companyGroup[lang];
+        heading.append(company);
+      }
       const phase = document.createElement("p");
       phase.className = "stage-phase";
       phase.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
@@ -353,46 +361,37 @@ function renderStages() {
       return section;
     });
 
-  const pager = document.createElement("div");
-  pager.className = "stage-pager";
-  const previous = document.createElement("button");
-  previous.type = "button";
-  previous.dataset.stagePrevious = "";
-  previous.addEventListener("click", () => moveStage(-1));
-  const counter = document.createElement("span");
-  counter.dataset.stageCounter = "";
-  const next = document.createElement("button");
-  next.type = "button";
-  next.dataset.stageNext = "";
-  next.addEventListener("click", () => moveStage(1));
-  pager.append(previous, counter, next);
-
-  root.replaceChildren(...sections, pager);
+  root.replaceChildren(...sections);
   if (!STAGES.some((stage) => stage.id === activeStageId)) {
     activeStageId = STAGES[0].id;
   }
-  activateStage(activeStageId, false);
+  setupStageScrolling();
+  updateStageTheme(activeStageId);
+  const deepLink = requestedStageId
+    ? document.getElementById(`stage-${requestedStageId}`)
+    : null;
+  if (deepLink) {
+    requestAnimationFrame(() => deepLink.scrollIntoView({ block: "start" }));
+  }
 }
 
-function activateStage(stageId, updateHash) {
+function updateStageTheme(stageId) {
   const stage = STAGES.find((item) => item.id === stageId);
   if (!stage) {
     return;
   }
   activeStageId = stage.id;
-  const sections = document.querySelectorAll(".stage-section");
   const navLinks = document.querySelectorAll("[data-stage-target]");
-  sections.forEach((section) => {
-    const selected = section.dataset.stage === stage.id;
-    section.hidden = !selected;
-    section.classList.toggle("stage-visible", selected);
-  });
   navLinks.forEach((link) => {
     const selected = link.dataset.stageTarget === stage.id;
     link.classList.toggle("active", selected);
     link.setAttribute("aria-current", selected ? "step" : "false");
     if (selected) {
-      link.scrollIntoView({ block: "nearest", inline: "center" });
+      const rail = link.parentElement;
+      rail?.scrollTo({
+        left: link.offsetLeft - (rail.clientWidth - link.clientWidth) / 2,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
     }
   });
 
@@ -400,30 +399,53 @@ function activateStage(stageId, updateHash) {
   document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
   document.body.dataset.journeyStage = stage.id;
 
-  const index = STAGES.findIndex((item) => item.id === stage.id);
-  const previous = document.querySelector("[data-stage-previous]");
-  const next = document.querySelector("[data-stage-next]");
-  const counter = document.querySelector("[data-stage-counter]");
-  if (previous) {
-    previous.textContent = `← ${I18N[lang]["stage.previous"]}`;
-    previous.disabled = index === 0;
-  }
-  if (next) {
-    next.textContent = `${I18N[lang]["stage.next"]} →`;
-    next.disabled = index === STAGES.length - 1;
-  }
-  if (counter) {
-    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(STAGES.length).padStart(2, "0")}`;
-  }
-  if (updateHash) {
-    window.history.replaceState({}, "", `#stage-${stage.id}`);
-  }
 }
 
-function moveStage(offset) {
-  const index = STAGES.findIndex((stage) => stage.id === activeStageId);
-  const nextIndex = Math.max(0, Math.min(STAGES.length - 1, index + offset));
-  activateStage(STAGES[nextIndex].id, true);
+function setupStageScrolling() {
+  const sections = [...document.querySelectorAll(".stage-section")];
+  if (!sections.length) {
+    return;
+  }
+  if (stageScrollHandler) {
+    window.removeEventListener("scroll", stageScrollHandler);
+  }
+  stageRevealObserver?.disconnect();
+
+  let ticking = false;
+  stageScrollHandler = () => {
+    if (ticking) {
+      return;
+    }
+    ticking = true;
+    requestAnimationFrame(() => {
+      const targetY = window.innerHeight * 0.42;
+      const closest = sections.reduce((best, section) => {
+        const rect = section.getBoundingClientRect();
+        const visiblePoint = Math.max(rect.top, Math.min(targetY, rect.bottom));
+        const distance = Math.abs(visiblePoint - targetY);
+        return !best || distance < best.distance ? { section, distance } : best;
+      }, null);
+      if (closest) {
+        updateStageTheme(closest.section.dataset.stage);
+      }
+      ticking = false;
+    });
+  };
+  window.addEventListener("scroll", stageScrollHandler, { passive: true });
+
+  stageRevealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("stage-visible");
+        }
+      });
+    },
+    { threshold: 0.02, rootMargin: "0px 0px -8% 0px" },
+  );
+  sections.forEach((section) => stageRevealObserver.observe(section));
+  sections[0].classList.add("stage-visible");
+  stageScrollHandler();
 }
 
 function renderProductReferences() {
@@ -645,12 +667,12 @@ document.addEventListener("pointermove", (event) => {
 });
 window.addEventListener("hashchange", () => {
   const stageId = window.location.hash.replace("#stage-", "");
-  if (STAGES.some((stage) => stage.id === stageId)) {
-    activateStage(stageId, false);
+  const stage = document.getElementById(`stage-${stageId}`);
+  if (stage) {
+    stage.scrollIntoView({ block: "start" });
   }
 });
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 sizeDieCanvas();
 function loopDie(time) {
   drawDie(time);
