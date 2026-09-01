@@ -346,7 +346,7 @@ function setupStageThemes() {
         link.classList.toggle("active", link.dataset.stageTarget === stage.id);
       });
     },
-    { threshold: [0.25, 0.45, 0.65], rootMargin: "-15% 0px -45% 0px" },
+    { threshold: [0.05, 0.2, 0.4], rootMargin: "-10% 0px -10% 0px" },
   );
   sections.forEach((section) => stageThemeObserver.observe(section));
 }
