@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" role="img" aria-label="Soochow University">
-  <rect width="160" height="48" rx="4" fill="#111820"/>
-  <rect x="14" y="10" width="28" height="28" rx="2" fill="none" stroke="#2F6FED" stroke-width="2"/>
-  <path d="M21 32V16h5c4 0 6 2 6 5s-2 5-6 5h-2v6h-3zm3-9h2c1.6 0 2.5-.7 2.5-2s-.9-2-2.5-2h-2v4z" fill="#2F6FED"/>
-  <text x="50" y="22" fill="#E8EEF6" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700">оч'f</text>
-  <text x="50" y="36" fill="#8B97AB" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">SOOCHOW UNIVERSITY</text>
-</svg>

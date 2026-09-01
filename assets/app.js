@@ -1,11 +1,62 @@
-const langToggle = document.getElementById("lang-toggle");
-const menuToggle = document.getElementById("menu-toggle");
-const mobileNav = document.getElementById("mobile-nav");
-const scrollProgress = document.getElementById("scroll-progress");
-const dieCanvas = document.getElementById("die-canvas");
+const langToggleId = "lang-toggle";
+const menuToggleId = "menu-toggle";
+const mobileNavId = "mobile-nav";
 
-let lang = "zh";
+let lang = localStorage.getItem("site-lang") === "en" ? "en" : "zh";
 let dieAnim = 0;
+
+function pageName() {
+  return document.body.getAttribute("data-page") || "home";
+}
+
+function renderChrome() {
+  const header = document.getElementById("site-header");
+  const footer = document.getElementById("site-footer");
+  const page = pageName();
+  const links = [
+    ["index.html", "home", "nav.home"],
+    ["work.html", "work", "nav.work"],
+    ["projects.html", "projects", "nav.projects"],
+    ["awards.html", "awards", "nav.awards"],
+    ["about.html", "about", "nav.about"],
+    ["contact.html", "contact", "nav.contact"],
+  ];
+
+  const navHtml = links
+    .map(([href, id, key]) => {
+      const active = id === page ? ' aria-current="page" class="active"' : "";
+      return `<a href="${href}" data-i18n="${key}"${active}></a>`;
+    })
+    .join("");
+
+  header.innerHTML = `
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-die" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Caesar Fan</span>
+          <span class="brand-tag">SILICON · VALIDATE</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Primary">${navHtml}</nav>
+      <div class="header-actions">
+        <button type="button" class="lang-toggle" id="${langToggleId}" aria-pressed="false" aria-label="Language">EN</button>
+        <button type="button" class="menu-toggle" id="${menuToggleId}" aria-expanded="false" aria-controls="${mobileNavId}">
+          <span data-i18n="nav.menu">Menu</span>
+        </button>
+      </div>
+      <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    </header>
+    <div class="mobile-nav" id="${mobileNavId}" hidden>${navHtml}</div>
+  `;
+
+  footer.innerHTML = `
+    <footer class="site-footer">
+      <span data-i18n="footer.copy">Caesar Fan</span>
+      <a href="#main" data-i18n="footer.top">Top</a>
+    </footer>
+  `;
+}
 
 function applyI18n() {
   document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
@@ -15,15 +66,22 @@ function applyI18n() {
       node.textContent = I18N[lang][key];
     }
   });
-  langToggle.textContent = lang === "zh" ? "EN" : "中文";
-  langToggle.setAttribute("aria-pressed", String(lang === "en"));
+  const langToggle = document.getElementById(langToggleId);
+  if (langToggle) {
+    langToggle.textContent = lang === "zh" ? "EN" : "中文";
+    langToggle.setAttribute("aria-pressed", String(lang === "en"));
+  }
   renderGallery();
   renderAwards();
   renderPath();
+  renderProjects();
 }
 
 function renderGallery() {
   const root = document.getElementById("gallery");
+  if (!root) {
+    return;
+  }
   root.replaceChildren(
     ...GALLERY.map((item) => {
       const article = document.createElement("article");
@@ -33,11 +91,7 @@ function renderGallery() {
       img.src = item.img;
       img.alt = item.title[lang];
       img.loading = "lazy";
-      const chip = document.createElement("img");
-      chip.className = "chip";
-      chip.src = item.logo;
-      chip.alt = "";
-      media.append(img, chip);
+      media.append(img);
       const copy = document.createElement("div");
       copy.className = "copy";
       const tag = document.createElement("p");
@@ -56,6 +110,9 @@ function renderGallery() {
 
 function renderAwards() {
   const root = document.getElementById("award-gallery");
+  if (!root) {
+    return;
+  }
   root.replaceChildren(
     ...AWARD_CARDS.map((item) => {
       const article = document.createElement("article");
@@ -83,27 +140,56 @@ function renderAwards() {
 }
 
 function renderPath() {
-  const root = document.getElementById("path-track");
+  const root = document.getElementById("path-list");
+  if (!root) {
+    return;
+  }
   root.replaceChildren(
     ...PATH.map((item) => {
-      const article = document.createElement("article");
-      const logo = document.createElement("img");
-      logo.src = item.logo;
-      logo.alt = "";
-      const when = document.createElement("p");
+      const li = document.createElement("li");
+      const when = document.createElement("span");
       when.className = "when";
       when.textContent = item.when;
       const h3 = document.createElement("h3");
       h3.textContent = item.title[lang];
       const p = document.createElement("p");
       p.textContent = item.body[lang];
-      article.append(logo, when, h3, p);
-      return article;
+      li.append(when, h3, p);
+      return li;
+    }),
+  );
+}
+
+function renderProjects() {
+  const root = document.getElementById("project-list");
+  if (!root) {
+    return;
+  }
+  root.replaceChildren(
+    ...PROJECTS.map((item) => {
+      const a = document.createElement("a");
+      a.className = "project-card";
+      a.href = item.url;
+      a.rel = "noopener noreferrer";
+      a.target = "_blank";
+      const meta = document.createElement("div");
+      meta.className = "project-meta";
+      meta.innerHTML = `<span>${item.name}</span><span>${item.lang}</span>`;
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      a.append(meta, h3, p);
+      return a;
     }),
   );
 }
 
 function sizeDieCanvas() {
+  const dieCanvas = document.getElementById("die-canvas");
+  if (!dieCanvas) {
+    return;
+  }
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const css = Math.min(window.innerWidth * 0.72, 720);
   dieCanvas.style.width = `${css}px`;
@@ -113,6 +199,10 @@ function sizeDieCanvas() {
 }
 
 function drawDie(time) {
+  const dieCanvas = document.getElementById("die-canvas");
+  if (!dieCanvas) {
+    return;
+  }
   const ctx = dieCanvas.getContext("2d");
   if (!ctx) {
     return;
@@ -175,33 +265,48 @@ function setupReveal() {
 }
 
 function updateProgress() {
+  const el = document.getElementById("scroll-progress");
+  if (!el) {
+    return;
+  }
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  const ratio = max > 0 ? (window.scrollY / max) * 100 : 0;
-  scrollProgress.style.width = `${ratio}%`;
+  el.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
 }
 
-langToggle.addEventListener("click", () => {
-  lang = lang === "zh" ? "en" : "zh";
-  applyI18n();
-});
+function bindChrome() {
+  const langToggle = document.getElementById(langToggleId);
+  const menuToggle = document.getElementById(menuToggleId);
+  const mobileNav = document.getElementById(mobileNavId);
 
-menuToggle.addEventListener("click", () => {
-  const open = mobileNav.hasAttribute("hidden");
-  if (open) {
-    mobileNav.removeAttribute("hidden");
-  } else {
-    mobileNav.setAttribute("hidden", "");
-  }
-  menuToggle.setAttribute("aria-expanded", String(open));
-});
-
-mobileNav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobileNav.setAttribute("hidden", "");
-    menuToggle.setAttribute("aria-expanded", "false");
+  langToggle?.addEventListener("click", () => {
+    lang = lang === "zh" ? "en" : "zh";
+    localStorage.setItem("site-lang", lang);
+    applyI18n();
   });
-});
 
+  menuToggle?.addEventListener("click", () => {
+    const open = mobileNav.hasAttribute("hidden");
+    if (open) {
+      mobileNav.removeAttribute("hidden");
+    } else {
+      mobileNav.setAttribute("hidden", "");
+    }
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+
+  mobileNav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileNav.setAttribute("hidden", "");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+renderChrome();
+applyI18n();
+bindChrome();
+setupReveal();
+updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", sizeDieCanvas);
 
@@ -213,8 +318,6 @@ function loopDie(time) {
     dieAnim = requestAnimationFrame(loopDie);
   }
 }
-dieAnim = requestAnimationFrame(loopDie);
-
-applyI18n();
-setupReveal();
-updateProgress();
+if (document.getElementById("die-canvas")) {
+  dieAnim = requestAnimationFrame(loopDie);
+}

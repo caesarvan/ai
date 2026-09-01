@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" role="img" aria-label="Ascend">
-  <rect width="160" height="48" rx="4" fill="#111820"/>
-  <rect x="12" y="12" width="24" height="24" rx="3" fill="none" stroke="#1EC8B8" stroke-width="2"/>
-  <path d="M18 30V18h4l6 8.5V18h4v12h-4l-6-8.5V30h-4z" fill="#1EC8B8"/>
-  <text x="46" y="22" fill="#E8EEF6" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700">~ Ascend</text>
-  <text x="46" y="36" fill="#8B97AB" font-family="ui-monospace, monospace" font-size="9" letter-spacing="1">NPU PLATFORM</text>
-</svg>

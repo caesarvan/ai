@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Caesar Fan — short path and focus." />
+    <title>About · Caesar Fan</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body data-page="about">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
+    <div id="site-header"></div>
+
+    <main id="main" class="page">
+      <header class="page-hero">
+        <p class="kicker" data-i18n="about.kicker">About</p>
+        <h1 data-i18n="about.title">关于</h1>
+        <p class="page-lede" data-i18n="about.lede">
+          Caesar Fan。关注芯片验证、系统级场景，以及把验证做成可维护的工程系统。
+        </p>
+      </header>
+
+      <section class="plain-section reveal">
+        <h2 data-i18n="about.focus.title">现在在做什么</h2>
+        <p data-i18n="about.focus.body">
+          AI 加速芯片相关的组网与系统验证，搭建流片前的多层验证环境，并把自动化、可观测性和 Debug 工具做成日常能用的平台。
+        </p>
+      </section>
+
+      <section class="plain-section reveal">
+        <h2 data-i18n="about.path.title">路径</h2>
+        <ol class="path-list" id="path-list"></ol>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="assets/i18n.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

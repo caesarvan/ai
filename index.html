@@ -3,126 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="樊高一格 · 系统级硅验证。昇腾 NPU 组网、预硅验证与验证平台工程。"
-    />
+    <meta name="description" content="Caesar Fan — chip validation, NPU networking, validation platforms, and open-source projects." />
     <meta name="theme-color" content="#06090f" />
-    <title>樊高一格 · Silicon Validation</title>
+    <title>Caesar Fan</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body>
-    <a class="skip-link" href="#main">跳到正文</a>
+  <body data-page="home">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="scanlines" aria-hidden="true"></div>
     <div class="ambient" aria-hidden="true"></div>
-
-    <header class="site-header">
-      <a class="brand" href="#top">
-        <span class="brand-die" aria-hidden="true"></span>
-        <span class="brand-text">
-          <span class="brand-name" data-i18n="brand.name">樊高一格</span>
-          <span class="brand-tag">SILICON · VALIDATE</span>
-        </span>
-      </a>
-      <nav class="nav" aria-label="主导航">
-        <a href="#built" data-i18n="nav.built">作品</a>
-        <a href="#awards" data-i18n="nav.awards">荣誉</a>
-        <a href="#path" data-i18n="nav.path">路径</a>
-        <a href="#contact" data-i18n="nav.contact">联系</a>
-      </nav>
-      <div class="header-actions">
-        <button type="button" class="lang-toggle" id="lang-toggle" aria-pressed="false" aria-label="切换语言">EN</button>
-        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">
-          <span data-i18n="nav.menu">菜单</span>
-        </button>
-      </div>
-      <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
-    </header>
-
-    <div class="mobile-nav" id="mobile-nav" hidden>
-      <a href="#built" data-i18n="nav.built">作品</a>
-      <a href="#awards" data-i18n="nav.awards">荣誉</a>
-      <a href="#path" data-i18n="nav.path">路径</a>
-      <a href="#contact" data-i18n="nav.contact">联系</a>
-    </div>
+    <div id="site-header"></div>
 
     <main id="main">
-      <section class="hero" id="top">
+      <section class="hero">
         <canvas id="die-canvas" aria-hidden="true"></canvas>
         <div class="hero-frame">
-          <p class="hero-signal">
-            <span class="pulse" aria-hidden="true"></span>
-            <span data-i18n="hero.signal">System-level Silicon Validation</span>
-          </p>
+          <p class="hero-signal"><span class="pulse" aria-hidden="true"></span> Chip Validation · Platforms · Tools</p>
           <h1>
-            <span class="hero-name" data-i18n="hero.name">樊高一格</span>
-            <span class="hero-en" data-i18n="hero.nameEn">Gaoyige Fan</span>
+            <span class="hero-name">Caesar Fan</span>
+            <span class="hero-en">Silicon validation &amp; engineering systems</span>
           </h1>
-          <p class="hero-lede" data-i18n="hero.lede">
-            把昇腾超节点组网、多层预硅与验证平台，做成看得见的交付物。
+          <p class="hero-lede" data-i18n="home.lede">
+            做芯片验证与验证工程：NPU 组网、流片前的多层验证环境，以及能跑起来的平台与工具。
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="#built" data-i18n="hero.cta.built">看做过的事</a>
-            <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">联系</a>
+            <a class="btn primary" href="work.html" data-i18n="home.cta.work">看工作面</a>
+            <a class="btn ghost" href="projects.html" data-i18n="home.cta.projects">GitHub 项目</a>
           </div>
         </div>
       </section>
 
-      <section class="logo-strip reveal" aria-label="机构">
-        <p class="logo-label" data-i18n="logos.label">曾工作 / 求学于</p>
-        <div class="logo-row">
-          <img src="assets/logos/huawei.svg" alt="Huawei" width="160" height="48" />
-          <img src="assets/logos/ascend.svg" alt="Ascend" width="160" height="48" />
-          <img src="assets/logos/nus.svg" alt="NUS" width="160" height="48" />
-          <img src="assets/logos/soochow.svg" alt="Soochow University" width="160" height="48" />
-        </div>
-      </section>
-
-      <section class="panel reveal" id="built">
+      <section class="panel reveal">
         <header class="section-head">
-          <p class="kicker" data-i18n="built.kicker">01 / 作品</p>
-          <h2 data-i18n="built.title">做过的系统与产品面</h2>
+          <p class="kicker">Overview</p>
+          <h2 data-i18n="home.overview.title">站点怎么读</h2>
         </header>
-        <div class="gallery" id="gallery"></div>
-      </section>
-
-      <section class="panel reveal" id="awards">
-        <header class="section-head">
-          <p class="kicker" data-i18n="awards.kicker">02 / 荣誉</p>
-          <h2 data-i18n="awards.title">被组织看见的交付</h2>
-        </header>
-        <div class="award-gallery" id="award-gallery"></div>
-      </section>
-
-      <section class="panel reveal" id="path">
-        <header class="section-head">
-          <p class="kicker" data-i18n="path.kicker">03 / 路径</p>
-          <h2 data-i18n="path.title">从校园到昇腾验证现场</h2>
-        </header>
-        <div class="path-track" id="path-track"></div>
-      </section>
-
-      <section class="panel contact reveal" id="contact">
-        <header class="section-head">
-          <p class="kicker" data-i18n="contact.kicker">04 / 联系</p>
-          <h2 data-i18n="contact.title">继续聊硅验证与预硅方法</h2>
-        </header>
-        <p class="contact-copy" data-i18n="contact.body">
-          邮件即可。适合聊超节点组网、预硅平台与验证工程化。
-        </p>
-        <div class="contact-links">
-          <a class="btn primary" href="mailto:fangaoyige@live.com">fangaoyige@live.com</a>
-          <a class="btn ghost" href="https://github.com/caesarvan" rel="noopener noreferrer">github.com/caesarvan</a>
+        <div class="link-grid">
+          <a class="link-card" href="work.html">
+            <span class="tag" data-i18n="nav.work">工作</span>
+            <strong data-i18n="home.card.work.title">组网 · 验证环境 · 平台</strong>
+            <p data-i18n="home.card.work.body">用图说明做过的系统面，不贴简历条目。</p>
+          </a>
+          <a class="link-card" href="projects.html">
+            <span class="tag" data-i18n="nav.projects">项目</span>
+            <strong data-i18n="home.card.projects.title">公开仓库</strong>
+            <p data-i18n="home.card.projects.body">拓扑编辑器、工具脚本、研究原型等。</p>
+          </a>
+          <a class="link-card" href="awards.html">
+            <span class="tag" data-i18n="nav.awards">荣誉</span>
+            <strong data-i18n="home.card.awards.title">交付被看见的结果</strong>
+            <p data-i18n="home.card.awards.body">实验室、自动化与质量相关认可。</p>
+          </a>
+          <a class="link-card" href="about.html">
+            <span class="tag" data-i18n="nav.about">关于</span>
+            <strong data-i18n="home.card.about.title">路径很短</strong>
+            <p data-i18n="home.card.about.body">学校与工作阶段用一句话带过。</p>
+          </a>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <span data-i18n="footer.copy">樊高一格 · Silicon Validation</span>
-      <a href="#top" data-i18n="footer.top">回到顶部</a>
-    </footer>
-
+    <div id="site-footer"></div>
     <script src="assets/i18n.js"></script>
     <script src="assets/app.js"></script>
   </body>

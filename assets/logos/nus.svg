@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" role="img" aria-label="NUS">
-  <rect width="160" height="48" rx="4" fill="#111820"/>
-  <circle cx="28" cy="24" r="14" fill="none" stroke="#EF7C00" stroke-width="2"/>
-  <path d="M22 28c2-8 10-10 12-2 1 4-2 8-6 8s-7-2-6-6z" fill="#EF7C00"/>
-  <text x="50" y="22" fill="#E8EEF6" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">NUS</text>
-  <text x="50" y="36" fill="#8B97AB" font-family="ui-monospace, monospace" font-size="8.5" letter-spacing="0.5">NATIONAL U. OF SINGAPORE</text>
-</svg>
