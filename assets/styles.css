@@ -5,10 +5,12 @@
   --ink: #e7eef8;
   --muted: #8b97ab;
   --line: #1c2738;
-  --cyan: #1ec8b8;
-  --cyan-dim: rgba(30, 200, 184, 0.14);
+  --cyan: #76b900;
+  --cyan-dim: rgba(118, 185, 0, 0.14);
   --blue: #3aa0ff;
-  --glow: rgba(30, 200, 184, 0.35);
+  --glow: rgba(118, 185, 0, 0.35);
+  --journey-accent: #76b900;
+  --journey-secondary: #b8ff42;
   --font: "Segoe UI", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
   --radius: 2px;
@@ -31,6 +33,7 @@ body {
   font-size: 16.5px;
   line-height: 1.65;
   overflow-x: hidden;
+  transition: background-color 0.5s ease;
 }
 
 .skip-link {
@@ -67,8 +70,9 @@ body {
 
 .ambient {
   background:
-    radial-gradient(ellipse 70% 50% at 12% -8%, rgba(30, 200, 184, 0.16), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 92% 8%, rgba(58, 160, 255, 0.1), transparent 50%);
+    radial-gradient(ellipse 70% 50% at 12% -8%, color-mix(in srgb, var(--journey-accent) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 92% 8%, color-mix(in srgb, var(--journey-secondary) 10%, transparent), transparent 50%);
+  transition: background 0.7s ease;
 }
 
 .site-header,
@@ -202,10 +206,10 @@ main,
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, #1ec8b8, #149e92);
+  background: linear-gradient(135deg, var(--cyan), #4f8500);
   border-color: transparent;
   color: #041016;
-  box-shadow: 0 0 24px rgba(30, 200, 184, 0.25);
+  box-shadow: 0 0 24px rgba(118, 185, 0, 0.25);
 }
 
 .btn.primary:hover {
@@ -304,13 +308,13 @@ main {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(30, 200, 184, 0.45);
+    box-shadow: 0 0 0 0 rgba(118, 185, 0, 0.45);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(30, 200, 184, 0);
+    box-shadow: 0 0 0 12px rgba(118, 185, 0, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(30, 200, 184, 0);
+    box-shadow: 0 0 0 0 rgba(118, 185, 0, 0);
   }
 }
 
@@ -710,13 +714,24 @@ main {
 }
 
 .stage-nav {
+  position: sticky;
+  top: calc(var(--header-h) + 8px);
+  z-index: 12;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   margin-top: 20px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: rgba(6, 9, 15, 0.86);
+  backdrop-filter: blur(14px);
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .stage-nav a {
+  position: relative;
+  flex: 0 0 auto;
   padding: 7px 10px;
   border: 1px solid var(--line);
   color: var(--muted);
@@ -726,8 +741,14 @@ main {
 }
 
 .stage-nav a:hover {
-  border-color: var(--cyan);
-  color: var(--cyan);
+  border-color: var(--stage-accent);
+  color: var(--stage-accent);
+}
+
+.stage-nav a.active {
+  border-color: var(--stage-accent);
+  color: var(--stage-accent);
+  box-shadow: inset 0 -2px 0 var(--stage-accent);
 }
 
 .stages {
@@ -737,12 +758,87 @@ main {
 }
 
 .stage-section {
+  position: relative;
   scroll-margin-top: calc(var(--header-h) + 18px);
   padding: 22px;
-  border: 1px solid var(--line);
+  border: 1px solid color-mix(in srgb, var(--stage-accent) 38%, var(--line));
+  border-top: 2px solid var(--stage-accent);
   background:
-    linear-gradient(135deg, rgba(30, 200, 184, 0.04), transparent 28%),
+    radial-gradient(circle at var(--stage-x, 100%) var(--stage-y, 0%), color-mix(in srgb, var(--stage-accent) 16%, transparent), transparent 34%),
+    linear-gradient(135deg, color-mix(in srgb, var(--stage-secondary) 5%, transparent), transparent 32%),
     var(--bg-panel);
+  overflow: hidden;
+  opacity: 0.55;
+  transform: translateY(28px) scale(0.995);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.65s ease, opacity 0.65s ease;
+}
+
+.stage-section.stage-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.stage-section.stage-visible:hover {
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--stage-accent) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+.stage-section::before {
+  content: attr(data-index);
+  position: absolute;
+  top: -28px;
+  right: 18px;
+  color: color-mix(in srgb, var(--stage-accent) 11%, transparent);
+  font-family: var(--mono);
+  font-size: 120px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.stage-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  pointer-events: none;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--stage-accent) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--stage-accent) 28%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(135deg, transparent 55%, #000);
+}
+
+.stage-section[data-stage="undergraduate"]::after {
+  background-image:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--stage-accent) 34%, transparent) 0 1px, transparent 1px 18px);
+}
+
+.stage-section[data-stage="graduate"]::after {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--stage-secondary) 55%, transparent) 1px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+.stage-section[data-stage="baseband"]::after,
+.stage-section[data-stage="ascend"]::after {
+  background-image:
+    linear-gradient(90deg, color-mix(in srgb, var(--stage-accent) 38%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--stage-accent) 38%, transparent) 1px, transparent 1px);
+  background-size: 44px 22px;
+}
+
+.stage-section[data-stage="nvidia"]::after {
+  opacity: 0.24;
+  background-image:
+    linear-gradient(90deg, color-mix(in srgb, var(--stage-accent) 48%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--stage-accent) 48%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.stage-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .stage-header {
@@ -754,12 +850,14 @@ main {
 
 .stage-header .institution-logo {
   grid-row: auto;
+  border: 1px solid color-mix(in srgb, var(--stage-accent) 45%, transparent);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--stage-accent) 13%, transparent);
 }
 
 .stage-phase,
 .stage-project-meta {
   margin: 0;
-  color: var(--cyan);
+  color: var(--stage-accent);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.05em;
@@ -774,6 +872,22 @@ main {
   margin: 0;
   color: #b8c3d4;
   font-size: 14.5px;
+}
+
+.stage-skill-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 13px;
+}
+
+.stage-skill-line span {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--stage-accent) 42%, var(--line));
+  background: color-mix(in srgb, var(--stage-accent) 7%, transparent);
+  color: color-mix(in srgb, var(--stage-accent) 80%, white);
+  font-family: var(--mono);
+  font-size: 10px;
 }
 
 .stage-subhead {
@@ -798,6 +912,12 @@ main {
   padding: 16px;
   border: 1px solid var(--line);
   background: #0b111b;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.stage-project:hover {
+  border-color: color-mix(in srgb, var(--stage-accent) 52%, var(--line));
+  transform: translateY(-2px);
 }
 
 .stage-project:has(.student-media) {
@@ -873,7 +993,7 @@ main {
 .stage-link {
   display: inline-block;
   margin-top: 18px;
-  color: var(--cyan);
+  color: var(--stage-accent);
   font-family: var(--mono);
   font-size: 12px;
   text-decoration: none;
@@ -977,6 +1097,7 @@ main {
   }
 
   .reveal,
+  .stage-section,
   .brand-die,
   .pulse,
   .gallery article,

@@ -7,7 +7,8 @@ const I18N = {
     "nav.about": "关于",
     "nav.contact": "联系",
     "nav.menu": "菜单",
-    "home.lede": "专注于 AI 芯片系统级验证、NPU 多芯片互连，以及流片前验证平台和调试工具建设。",
+    "home.signal": "NVIDIA · GPU / 芯片功耗验证",
+    "home.lede": "当前在 NVIDIA 从事 GPU / 芯片功耗验证，关注功耗与性能交互、时钟与电源域、功耗状态、门控、遥测及负载驱动的功耗行为。",
     "home.cta.work": "查看专业经历",
     "home.cta.projects": "GitHub 项目",
     "home.overview.title": "专业领域",
@@ -41,10 +42,10 @@ const I18N = {
     "awards.translationNote": "英文奖项名称为中文原名的说明性翻译。",
     "about.kicker": "About",
     "about.title": "关于",
-    "about.lede": "Caesar Fan，从事芯片设计验证与验证平台工程。",
+    "about.lede": "Caesar Fan，现阶段从事 GPU / 芯片功耗验证。",
     "about.focus.title": "专业方向",
     "about.focus.body":
-      "当前关注 AI 芯片多芯片互连与系统级验证，同时从事流片前验证平台、自动化回归、性能监控与分析以及调试工具建设。",
+      "当前在 NVIDIA 从事 GPU / 芯片功耗验证，重点关注功耗与性能交互、时钟/电压/功耗域、功耗状态、门控、遥测与工作负载驱动的功耗行为。",
     "about.path.title": "分阶段经历",
     "about.path.lede": "从本科科研、硕士研究到芯片验证工作，按时间阶段展开。",
     "stage.projects": "项目与工作",
@@ -65,8 +66,9 @@ const I18N = {
     "nav.about": "About",
     "nav.contact": "Contact",
     "nav.menu": "Menu",
+    "home.signal": "NVIDIA · GPU / Chip Power Verification",
     "home.lede":
-      "Focused on system-level verification for AI accelerators, NPU multi-chip interconnects, pre-silicon verification platforms, and debug tooling.",
+      "Currently working at NVIDIA on GPU and chip power verification, with a focus on power/performance interactions, clock and power domains, power states, gating, telemetry, and workload-driven power behavior.",
     "home.cta.work": "View experience",
     "home.cta.projects": "GitHub projects",
     "home.overview.title": "Areas of expertise",
@@ -100,10 +102,10 @@ const I18N = {
     "awards.translationNote": "English award titles are descriptive translations of the original Chinese names.",
     "about.kicker": "About",
     "about.title": "About",
-    "about.lede": "Caesar Fan, working in chip verification and verification platform engineering.",
+    "about.lede": "Caesar Fan, currently working in GPU and chip power verification.",
     "about.focus.title": "Professional focus",
     "about.focus.body":
-      "Currently focused on multi-chip interconnect and system-level verification for AI accelerators, alongside pre-silicon verification platforms, regression automation, performance monitoring and analysis, and debug tools.",
+      "Currently working at NVIDIA on GPU and chip power verification, focusing on power/performance interactions, clock/voltage/power domains, power states, gating, telemetry, and workload-driven power behavior.",
     "about.path.title": "Experience by stage",
     "about.path.lede": "A chronological view from undergraduate research and graduate work to chip verification.",
     "stage.projects": "Projects and work",
@@ -208,7 +210,10 @@ const AWARD_CARDS = [
 const STAGES = [
   {
     id: "undergraduate",
-    when: "2017.09 – 2021.06",
+    when: { zh: "2017.09 – 2021.06", en: "2017.09 – 2021.06" },
+    theme: "soochow",
+    accent: "#a61e2d",
+    secondary: "#d3a64a",
     phase: { zh: "本科阶段", en: "Undergraduate" },
     title: { zh: "苏州大学 · 信息工程", en: "Soochow University · Information Engineering" },
     logo: "assets/brand/soochow.jpg",
@@ -217,6 +222,7 @@ const STAGES = [
       zh: "围绕传感器、嵌入式系统、医学图像与机器学习开展跨学科项目。",
       en: "Cross-disciplinary projects spanning sensors, embedded systems, medical imaging, and machine learning.",
     },
+    skills: ["Embedded Systems", "Sensors", "Wireless", "Computer Vision", "Machine Learning"],
     projects: [
       {
         when: "2020 – 2021",
@@ -266,7 +272,10 @@ const STAGES = [
   },
   {
     id: "graduate",
-    when: "2021.08 – 2022",
+    when: { zh: "2021.08 – 2022", en: "2021.08 – 2022" },
+    theme: "nus",
+    accent: "#ef7c00",
+    secondary: "#003d7c",
     phase: { zh: "硕士阶段", en: "Graduate study" },
     title: { zh: "新加坡国立大学 · 电气与计算机工程", en: "National University of Singapore · Electrical & Computer Engineering" },
     logo: "assets/brand/nus.svg",
@@ -275,6 +284,7 @@ const STAGES = [
       zh: "研究方向集中在传感器、BLE 数据链路、移动应用和姿态识别。",
       en: "Research focused on sensors, BLE data pipelines, mobile applications, and posture recognition.",
     },
+    skills: ["BLE", "iOS", "Firebase", "On-device ML", "Healthcare"],
     projects: [
       {
         when: "2021.08 – 2022",
@@ -294,7 +304,10 @@ const STAGES = [
   },
   {
     id: "baseband",
-    when: "2022.08 – 2024.03",
+    when: { zh: "2022.08 – 2024.03", en: "2022.08 – 2024.03" },
+    theme: "huawei",
+    accent: "#cf0a2c",
+    secondary: "#ff6b6b",
     phase: { zh: "职业阶段 I", en: "Professional stage I" },
     logo: "assets/brand/huawei.svg",
     logoAlt: "Huawei",
@@ -303,12 +316,37 @@ const STAGES = [
       zh: "从 FPGA 原型验证扩展到 Scheduler 子系统验证与团队负责工作。",
       en: "Progressed from FPGA prototyping to scheduler-subsystem verification and team leadership.",
     },
-    projects: [],
+    skills: ["Scheduler", "DAG Engine", "QDMA", "FPGA", "SoC Verification"],
+    projects: [
+      {
+        when: "2023.08 – 2024.03",
+        title: { zh: "Scheduler 子系统验证", en: "Scheduler subsystem verification" },
+        role: { zh: "基带芯片验证负责人", en: "Baseband Chip Verification Lead" },
+        body: {
+          zh: "负责 Scheduler、DAG Engine、QDMA 等 IP 的分层验证，建立动态优先级模型，覆盖多任务并发、抢占、资源竞争与调度顺序。",
+          en: "Led layered verification for Scheduler, DAG Engine, and QDMA IPs, including a dynamic-priority model for concurrency, preemption, resource contention, and scheduling order.",
+        },
+        tags: ["Scheduler", "Concurrency", "Preemption", "QDMA"],
+      },
+      {
+        when: "2022.08 – 2023.12",
+        title: { zh: "FPGA 原型与 PG 特性验证", en: "FPGA prototyping and PG feature verification" },
+        role: { zh: "基带芯片原型验证", en: "Baseband chip prototyping verification" },
+        body: {
+          zh: "负责 Scheduler IP、流量路径以及 SoC/HAC/Core 集成验证，并覆盖功能、异常、边界和特性交互场景。",
+          en: "Verified Scheduler IP, traffic paths, and SoC/HAC/Core integration across functional, exception, boundary, and feature-interaction scenarios.",
+        },
+        tags: ["FPGA", "SoC Integration", "PG", "Traffic Paths"],
+      },
+    ],
     link: "work.html",
   },
   {
     id: "ascend",
-    when: "2024 – now",
+    when: { zh: "2024 – 近期", en: "2024 – Recent" },
+    theme: "ascend",
+    accent: "#cf0a2c",
+    secondary: "#f2a900",
     phase: { zh: "职业阶段 II", en: "Professional stage II" },
     logo: "https://www.hiascend.com/_static3/logo1.BQ2XZIjU.svg",
     logoAlt: "昇腾社区 / Ascend Community",
@@ -317,8 +355,88 @@ const STAGES = [
       zh: "负责 NPU 组网、流片前验证方法、原型验证团队建设与验证平台工程。",
       en: "Responsible for NPU networking, pre-silicon validation methodology, prototyping-team development, and verification platform engineering.",
     },
-    projects: [],
+    skills: ["NPU Networking", "IO / UB", "FPGA / EMU / ESL", "PVT", "Verification Platforms"],
+    projects: [
+      {
+        when: "2024 – 近期",
+        title: { zh: "NPU 组网与超节点验证", en: "NPU networking and super-node validation" },
+        role: { zh: "芯片验证经理 / PL", en: "Chip Verification Manager / PL" },
+        body: {
+          zh: "面向高速 IO/UB 与多芯片组网，开展拓扑分解、接口定义、系统级压力与并发验证。",
+          en: "Worked on high-speed IO/UB and multi-chip networking through topology decomposition, interface definitions, and system-level stress and concurrency validation.",
+        },
+        tags: ["NPU Networking", "IO / UB", "Super-node", "PVT"],
+      },
+      {
+        when: "2024 – 近期",
+        title: { zh: "多层流片前验证体系", en: "Multi-level pre-silicon validation" },
+        role: { zh: "原型验证团队建设", en: "Prototyping team development" },
+        body: {
+          zh: "建设 FPGA（VTOF）、硬件仿真（Palladium）和 ESL（FastModel/QEMU）多层验证平台。",
+          en: "Established FPGA (VTOF), emulation (Palladium), and ESL (FastModel/QEMU) validation platforms.",
+        },
+        tags: ["VTOF", "Palladium", "FastModel", "QEMU"],
+      },
+      {
+        when: "2025 – 近期",
+        title: { zh: "验证平台工程", en: "Verification platform engineering" },
+        role: { zh: "验证平台工程负责人", en: "Verification Platform Engineering Lead" },
+        body: {
+          zh: "负责测试自动化、精确 CI、性能观测、压力负载监控、寄存器系统和调试工具链。",
+          en: "Led test automation, precise CI, performance observability, stress-load monitoring, register systems, and debug toolchains.",
+        },
+        tags: ["CVA", "Precise CI", "PerfInsight", "URegister / UDB"],
+      },
+    ],
     link: "work.html",
+  },
+  {
+    id: "nvidia",
+    when: { zh: "现阶段", en: "Current" },
+    phase: { zh: "职业阶段 III", en: "Professional stage III" },
+    theme: "nvidia",
+    accent: "#76b900",
+    secondary: "#b8ff42",
+    logo: "assets/brand/nvidia.svg",
+    logoAlt: "NVIDIA",
+    title: { zh: "NVIDIA · GPU / 芯片功耗验证", en: "NVIDIA · GPU / Chip Power Verification" },
+    summary: {
+      zh: "围绕 GPU / 芯片功耗开展验证，关注功耗与性能交互、时钟/电压/功耗域、功耗状态、门控、遥测和工作负载驱动的功耗行为。",
+      en: "GPU and chip power verification focused on power/performance interactions, clock/voltage/power domains, power states, gating, telemetry, and workload-driven power behavior.",
+    },
+    skills: ["GPU Power", "Power × Performance", "Clock / Voltage Domains", "Gating", "Telemetry"],
+    projects: [
+      {
+        when: "CURRENT",
+        title: { zh: "功耗与性能交互", en: "Power and performance interactions" },
+        role: { zh: "GPU / 芯片功耗验证", en: "GPU / chip power verification" },
+        body: {
+          zh: "验证工作负载、频率、电压与功耗状态之间的关系，以及功耗策略对性能行为的影响。",
+          en: "Verifying relationships among workloads, frequency, voltage, and power states, including how power policies affect performance behavior.",
+        },
+        tags: ["Power × Performance", "Workloads", "DVFS"],
+      },
+      {
+        when: "CURRENT",
+        title: { zh: "时钟、电压与功耗域", en: "Clock, voltage, and power domains" },
+        role: { zh: "电源状态与门控", en: "Power states and gating" },
+        body: {
+          zh: "关注功耗状态转换、时钟门控、电源门控、隔离与保持，以及跨域时序和状态一致性。",
+          en: "Focusing on power-state transitions, clock and power gating, isolation, retention, and cross-domain timing and state consistency.",
+        },
+        tags: ["Clock Gating", "Power Gating", "Isolation", "Retention"],
+      },
+      {
+        when: "CURRENT",
+        title: { zh: "遥测与负载驱动验证", en: "Telemetry and workload-driven verification" },
+        role: { zh: "可观测性", en: "Observability" },
+        body: {
+          zh: "对齐硬件状态、遥测数据与工作负载行为，构建可判定、可回归的功耗验证证据。",
+          en: "Aligning hardware state, telemetry, and workload behavior to build decidable and regressable evidence for power verification.",
+        },
+        tags: ["Telemetry", "Counters", "Regression", "Observability"],
+      },
+    ],
   },
 ];
 

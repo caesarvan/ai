@@ -33,3 +33,10 @@ python3 -m http.server 8080
 
 学生阶段的姿态数据图来自公开仓库 `caesarvan/NUS_Medical_Care`，
 来源记录在 `BRAND_ASSETS.md`。
+
+About 页会随阶段切换视觉主题：
+
+- 苏州大学：校徽红与暖金
+- NUS：官方蓝 `#003D7C` / 橙 `#EF7C00`
+- 华为经历：品牌红
+- NVIDIA 当前阶段：NVIDIA Green `#76B900`

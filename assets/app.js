@@ -9,6 +9,7 @@ let lang = urlLang === "en" || urlLang === "zh"
     ? "en"
     : "zh";
 let dieAnim = 0;
+let stageThemeObserver = null;
 
 function pageName() {
   return document.body.getAttribute("data-page") || "home";
@@ -233,28 +234,46 @@ function renderStages() {
     ...STAGES.map((stage) => {
       const link = document.createElement("a");
       link.href = `#stage-${stage.id}`;
-      link.textContent = `${stage.phase[lang]} · ${stage.when}`;
+      link.dataset.stageTarget = stage.id;
+      link.style.setProperty("--stage-accent", stage.accent);
+      link.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
       return link;
     }),
   );
 
   root.replaceChildren(
-    ...STAGES.map((stage) => {
+    ...STAGES.map((stage, index) => {
       const section = document.createElement("section");
       section.className = "stage-section";
       section.id = `stage-${stage.id}`;
+      section.dataset.stage = stage.id;
+      section.dataset.index = String(index + 1).padStart(2, "0");
+      section.style.setProperty("--stage-accent", stage.accent);
+      section.style.setProperty("--stage-secondary", stage.secondary);
+      section.addEventListener("pointermove", (event) => {
+        const bounds = section.getBoundingClientRect();
+        section.style.setProperty("--stage-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+        section.style.setProperty("--stage-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+      });
       const header = document.createElement("header");
       header.className = "stage-header";
       const logoWrap = createInstitutionLogo(stage);
       const heading = document.createElement("div");
       const phase = document.createElement("p");
       phase.className = "stage-phase";
-      phase.textContent = `${stage.phase[lang]} · ${stage.when}`;
+      phase.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
       const title = document.createElement("h3");
       title.textContent = stage.title[lang];
       const summary = document.createElement("p");
       summary.textContent = stage.summary[lang];
-      heading.append(phase, title, summary);
+      const skills = document.createElement("div");
+      skills.className = "stage-skill-line";
+      stage.skills.forEach((skillText) => {
+        const skill = document.createElement("span");
+        skill.textContent = skillText;
+        skills.append(skill);
+      });
+      heading.append(phase, title, summary, skills);
       header.append(logoWrap, heading);
       section.append(header);
 
@@ -292,6 +311,44 @@ function renderStages() {
       return section;
     }),
   );
+  setupStageThemes();
+}
+
+function setupStageThemes() {
+  const sections = document.querySelectorAll(".stage-section");
+  const navLinks = document.querySelectorAll("[data-stage-target]");
+  if (!sections.length || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  stageThemeObserver?.disconnect();
+  stageThemeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("stage-visible");
+        }
+      });
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) {
+        return;
+      }
+      const stage = STAGES.find((item) => item.id === visible.target.dataset.stage);
+      if (!stage) {
+        return;
+      }
+      document.documentElement.style.setProperty("--journey-accent", stage.accent);
+      document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
+      document.body.dataset.journeyStage = stage.id;
+      navLinks.forEach((link) => {
+        link.classList.toggle("active", link.dataset.stageTarget === stage.id);
+      });
+    },
+    { threshold: [0.25, 0.45, 0.65], rootMargin: "-15% 0px -45% 0px" },
+  );
+  sections.forEach((section) => stageThemeObserver.observe(section));
 }
 
 function renderProductReferences() {
@@ -400,16 +457,16 @@ function drawDie(time) {
         continue;
       }
       const alpha = 0.08 + Math.max(0, wave) * 0.22 * (1 - edge * 0.45);
-      ctx.fillStyle = `rgba(30, 200, 184, ${alpha})`;
+      ctx.fillStyle = `rgba(118, 185, 0, ${alpha})`;
       ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
       if ((x + y) % 5 === 0) {
-        ctx.strokeStyle = `rgba(58, 160, 255, ${0.12 + Math.max(0, wave) * 0.2})`;
+        ctx.strokeStyle = `rgba(184, 255, 66, ${0.12 + Math.max(0, wave) * 0.2})`;
         ctx.strokeRect(px + 3, py + 3, cellW - 6, cellH - 6);
       }
     }
   }
 
-  ctx.strokeStyle = "rgba(30, 200, 184, 0.35)";
+  ctx.strokeStyle = "rgba(118, 185, 0, 0.4)";
   ctx.lineWidth = 2;
   const scanY = pad + ((tSec * 80) % (height - pad * 2));
   ctx.beginPath();
