@@ -22,3 +22,13 @@ recreated, recoloured, or presented as endorsement.
 
 The product-reference section labels these as public context. It does not imply
 that the photographs depict non-public projects or the author's workplace.
+
+## Student project images
+
+The posture-sensor traces and Random Forest confusion matrix on the About page
+come from the author's public
+[`NUS_Medical_Care`](https://github.com/caesarvan/NUS_Medical_Care)
+repository:
+
+- `Machine Learning/figure/visualize/running.png`
+- `Machine Learning/figure/recognize/rf_confusion_matrix.png`

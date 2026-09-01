@@ -45,7 +45,12 @@ const I18N = {
     "about.focus.title": "专业方向",
     "about.focus.body":
       "当前关注 AI 芯片多芯片互连与系统级验证，同时从事流片前验证平台、自动化回归、性能监控与分析以及调试工具建设。",
-    "about.path.title": "教育与职业经历",
+    "about.path.title": "分阶段经历",
+    "about.path.lede": "从本科科研、硕士研究到芯片验证工作，按时间阶段展开。",
+    "stage.projects": "项目与工作",
+    "stage.awards": "阶段荣誉",
+    "stage.mediaSource": "图片来自公开 GitHub 项目 NUS_Medical_Care",
+    "stage.careerLink": "查看专业经历",
     "contact.kicker": "Contact",
     "contact.title": "联系",
     "contact.lede": "欢迎通过 GitHub 联系。",
@@ -99,7 +104,12 @@ const I18N = {
     "about.focus.title": "Professional focus",
     "about.focus.body":
       "Currently focused on multi-chip interconnect and system-level verification for AI accelerators, alongside pre-silicon verification platforms, regression automation, performance monitoring and analysis, and debug tools.",
-    "about.path.title": "Education and experience",
+    "about.path.title": "Experience by stage",
+    "about.path.lede": "A chronological view from undergraduate research and graduate work to chip verification.",
+    "stage.projects": "Projects and work",
+    "stage.awards": "Recognition in this stage",
+    "stage.mediaSource": "Images from the public GitHub project NUS_Medical_Care",
+    "stage.careerLink": "View professional experience",
     "contact.kicker": "Contact",
     "contact.title": "Contact",
     "contact.lede": "Feel free to connect on GitHub.",
@@ -195,34 +205,120 @@ const AWARD_CARDS = [
   },
 ];
 
-const PATH = [
+const STAGES = [
   {
-    when: "2017 – 2021",
-    title: { zh: "本科 · 信息工程", en: "B.Eng. · Information Engineering" },
+    id: "undergraduate",
+    when: "2017.09 – 2021.06",
+    phase: { zh: "本科阶段", en: "Undergraduate" },
+    title: { zh: "苏州大学 · 信息工程", en: "Soochow University · Information Engineering" },
     logo: "assets/brand/soochow.jpg",
     logoAlt: "苏州大学 / Soochow University",
-    body: { zh: "信息工程本科。", en: "Bachelor's degree in Information Engineering." },
+    summary: {
+      zh: "围绕传感器、嵌入式系统、医学图像与机器学习开展跨学科项目。",
+      en: "Cross-disciplinary projects spanning sensors, embedded systems, medical imaging, and machine learning.",
+    },
+    projects: [
+      {
+        when: "2020 – 2021",
+        title: { zh: "摩擦电手势识别手套与增强现实应用", en: "Triboelectric smart glove and AR gesture recognition" },
+        role: { zh: "合作研究 · 新加坡国立大学苏州研究院", en: "Collaborative research · NUS Suzhou Research Institute" },
+        body: {
+          zh: "设计并制作摩擦电纳米发电机传感器与智能手套，结合机器学习和深度神经网络完成手势识别，并在 Unity 中实现 AR 实时演示。",
+          en: "Designed triboelectric sensors and a smart glove, applied machine-learning and deep-neural-network models to gesture recognition, and demonstrated real-time motion in Unity AR.",
+        },
+        tags: ["TENG", "Machine Learning", "Unity AR"],
+      },
+      {
+        when: "2019.10 – 2021.05",
+        title: { zh: "电子式气动量仪", en: "Electronic pneumatic gauge" },
+        role: { zh: "合作研究 · 国家级大学生创新创业训练计划", en: "Collaborative research · National Student Innovation Program" },
+        body: {
+          zh: "以气体为测量介质，采用 WirelessHART 传输数据，改进便携式电子气动量仪；项目形成工业无线通信相关软件著作权与论文。",
+          en: "Improved a portable electronic pneumatic gauge using gas as the measurement medium and WirelessHART for data transmission; the project resulted in one software copyright registration and one paper.",
+        },
+        tags: ["WirelessHART", "Embedded", "0.1 μm"],
+      },
+      {
+        when: "2019.01 – 2020.01",
+        title: { zh: "智能家居多协议控制系统", en: "Multi-protocol smart-home control system" },
+        role: { zh: "项目主持人 · 苏州大学智能信息处理与控制系统研究所", en: "Project lead · Soochow University Institute of Intelligent Information Processing and Control Systems" },
+        body: {
+          zh: "基于 STM32 搭建集成化硬件平台，实现 Wi-Fi、蓝牙、Zigbee 多协议控制终端及移动端控制；形成四项移动端软件著作权。",
+          en: "Built an STM32-based integrated hardware platform with Wi-Fi, Bluetooth, and Zigbee control plus a mobile client; the work resulted in four mobile software copyright registrations.",
+        },
+        tags: ["STM32", "Wi-Fi", "Bluetooth", "Zigbee"],
+      },
+      {
+        when: "2017.12 – 2018.12",
+        title: { zh: "糖尿病视网膜病变自动筛查", en: "Automated diabetic-retinopathy screening" },
+        role: { zh: "项目主持人 · 医学影像处理与分析实验室", en: "Project lead · Medical Imaging Lab" },
+        body: {
+          zh: "针对眼底图像开展血管分割与图像配准，用于医学辅助诊断；项目形成三项软件著作权与一篇论文。",
+          en: "Performed and optimized retinal-vessel segmentation and image registration for computer-aided diagnosis; the project resulted in three software copyright registrations and one paper.",
+        },
+        tags: ["Medical Imaging", "Segmentation", "Registration"],
+      },
+    ],
+    awards: {
+      zh: ["“互联网+”全国大学生创新创业大赛二等奖", "美国大学生数学建模竞赛 Honorable Mention", "苏州大学挑战杯一等奖", "蓝桥杯单片机开发大赛省级三等奖"],
+      en: ["China College Students’ “Internet+” Innovation and Entrepreneurship Competition — Second Prize", "Mathematical Contest in Modeling — Honorable Mention", "Soochow University Challenge Cup — First Prize", "Lanqiao Cup MCU Competition — Provincial Third Prize"],
+    },
   },
   {
-    when: "2021 – 2022",
-    title: { zh: "硕士 · 电气与计算机工程", en: "M.Eng. · Electrical & Computer Engineering" },
+    id: "graduate",
+    when: "2021.08 – 2022",
+    phase: { zh: "硕士阶段", en: "Graduate study" },
+    title: { zh: "新加坡国立大学 · 电气与计算机工程", en: "National University of Singapore · Electrical & Computer Engineering" },
     logo: "assets/brand/nus.svg",
     logoAlt: "National University of Singapore",
-    body: { zh: "电气与计算机工程硕士。", en: "Master's degree in Electrical and Computer Engineering." },
+    summary: {
+      zh: "研究方向集中在传感器、BLE 数据链路、移动应用和姿态识别。",
+      en: "Research focused on sensors, BLE data pipelines, mobile applications, and posture recognition.",
+    },
+    projects: [
+      {
+        when: "2021.08 – 2022",
+        title: { zh: "触觉反馈医用矫正背心及辅助医疗平台", en: "Haptic-feedback medical vest and care platform" },
+        role: { zh: "研究员 · NUS Lab of Sensors, MEMS and NEMS", en: "Research Assistant · NUS Lab of Sensors, MEMS and NEMS" },
+        body: {
+          zh: "面向脊柱侧弯患者开发实时姿态监测背心：在 Arduino 平台实现姿态识别与振动反馈；通过 BLE、iOS 和 Firebase 上传数据；使用 Web 界面辅助医生查看身体状态。",
+          en: "Developed a real-time posture-monitoring vest for scoliosis care: posture recognition and vibration feedback on Arduino, BLE/iOS/Firebase data upload, and a web interface for clinicians.",
+        },
+        tags: ["Arduino", "BLE", "iOS", "Firebase", "Machine Learning"],
+        media: [
+          { src: "assets/student/posture_running.png", alt: { zh: "背心姿态传感器跑步数据曲线", en: "Running posture sensor traces from the vest project" } },
+          { src: "assets/student/posture_confusion.png", alt: { zh: "随机森林姿态识别混淆矩阵", en: "Random Forest confusion matrix for posture recognition" } },
+        ],
+      },
+    ],
   },
   {
-    when: "2022 – 2024",
+    id: "baseband",
+    when: "2022.08 – 2024.03",
+    phase: { zh: "职业阶段 I", en: "Professional stage I" },
     logo: "assets/brand/huawei.svg",
     logoAlt: "Huawei",
     title: { zh: "基带芯片设计验证", en: "Baseband chip verification" },
-    body: { zh: "调度子系统验证与 FPGA 原型验证。", en: "Scheduler subsystem verification and FPGA prototyping." },
+    summary: {
+      zh: "从 FPGA 原型验证扩展到 Scheduler 子系统验证与团队负责工作。",
+      en: "Progressed from FPGA prototyping to scheduler-subsystem verification and team leadership.",
+    },
+    projects: [],
+    link: "work.html",
   },
   {
+    id: "ascend",
     when: "2024 – now",
+    phase: { zh: "职业阶段 II", en: "Professional stage II" },
     logo: "https://www.hiascend.com/_static3/logo1.BQ2XZIjU.svg",
     logoAlt: "昇腾社区 / Ascend Community",
     title: { zh: "AI 芯片设计验证与验证平台", en: "AI accelerator verification and platforms" },
-    body: { zh: "多芯片互连、流片前验证与验证平台建设。", en: "Multi-chip interconnect verification, pre-silicon verification, and verification platform engineering." },
+    summary: {
+      zh: "负责 NPU 组网、流片前验证方法、原型验证团队建设与验证平台工程。",
+      en: "Responsible for NPU networking, pre-silicon validation methodology, prototyping-team development, and verification platform engineering.",
+    },
+    projects: [],
+    link: "work.html",
   },
 ];
 

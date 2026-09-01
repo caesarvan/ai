@@ -79,7 +79,7 @@ function applyI18n() {
   }
   renderGallery();
   renderAwards();
-  renderPath();
+  renderStages();
   renderProjects();
   renderProductReferences();
   document.querySelectorAll("a[href$='.html'], a[href*='.html?']").forEach((link) => {
@@ -164,34 +164,132 @@ function renderAwards() {
   );
 }
 
-function renderPath() {
-  const root = document.getElementById("path-list");
-  if (!root) {
+function createInstitutionLogo(item) {
+  const logoWrap = document.createElement("div");
+  logoWrap.className = "institution-logo";
+  const logo = document.createElement("img");
+  logo.src = item.logo;
+  logo.alt = item.logoAlt;
+  logo.loading = "lazy";
+  const fallback = document.createElement("span");
+  fallback.className = "logo-fallback";
+  fallback.textContent = item.logoAlt;
+  logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
+  logoWrap.append(logo, fallback);
+  return logoWrap;
+}
+
+function createStageProject(project) {
+  const article = document.createElement("article");
+  article.className = "stage-project";
+
+  const meta = document.createElement("p");
+  meta.className = "stage-project-meta";
+  meta.textContent = `${project.when} · ${project.role[lang]}`;
+  const title = document.createElement("h4");
+  title.textContent = project.title[lang];
+  const body = document.createElement("p");
+  body.textContent = project.body[lang];
+  const tags = document.createElement("div");
+  tags.className = "stage-tags";
+  project.tags.forEach((tagText) => {
+    const tag = document.createElement("span");
+    tag.textContent = tagText;
+    tags.append(tag);
+  });
+  article.append(meta, title, body, tags);
+
+  if (project.media?.length) {
+    const media = document.createElement("div");
+    media.className = "student-media";
+    project.media.forEach((asset) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = asset.src;
+      img.alt = asset.alt[lang];
+      img.loading = "lazy";
+      figure.append(img);
+      media.append(figure);
+    });
+    const source = document.createElement("a");
+    source.className = "source-link";
+    source.href = "https://github.com/caesarvan/NUS_Medical_Care";
+    source.rel = "noopener noreferrer";
+    source.target = "_blank";
+    source.textContent = I18N[lang]["stage.mediaSource"];
+    article.append(media, source);
+  }
+  return article;
+}
+
+function renderStages() {
+  const root = document.getElementById("stages");
+  const nav = document.getElementById("stage-nav");
+  if (!root || !nav) {
     return;
   }
+
+  nav.replaceChildren(
+    ...STAGES.map((stage) => {
+      const link = document.createElement("a");
+      link.href = `#stage-${stage.id}`;
+      link.textContent = `${stage.phase[lang]} · ${stage.when}`;
+      return link;
+    }),
+  );
+
   root.replaceChildren(
-    ...PATH.map((item) => {
-      const li = document.createElement("li");
-      const logoWrap = document.createElement("div");
-      logoWrap.className = "institution-logo";
-      const logo = document.createElement("img");
-      logo.src = item.logo;
-      logo.alt = item.logoAlt;
-      logo.loading = "lazy";
-      const fallback = document.createElement("span");
-      fallback.className = "logo-fallback";
-      fallback.textContent = item.logoAlt;
-      logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
-      logoWrap.append(logo, fallback);
-      const when = document.createElement("span");
-      when.className = "when";
-      when.textContent = item.when;
-      const h3 = document.createElement("h3");
-      h3.textContent = item.title[lang];
-      const p = document.createElement("p");
-      p.textContent = item.body[lang];
-      li.append(logoWrap, when, h3, p);
-      return li;
+    ...STAGES.map((stage) => {
+      const section = document.createElement("section");
+      section.className = "stage-section";
+      section.id = `stage-${stage.id}`;
+      const header = document.createElement("header");
+      header.className = "stage-header";
+      const logoWrap = createInstitutionLogo(stage);
+      const heading = document.createElement("div");
+      const phase = document.createElement("p");
+      phase.className = "stage-phase";
+      phase.textContent = `${stage.phase[lang]} · ${stage.when}`;
+      const title = document.createElement("h3");
+      title.textContent = stage.title[lang];
+      const summary = document.createElement("p");
+      summary.textContent = stage.summary[lang];
+      heading.append(phase, title, summary);
+      header.append(logoWrap, heading);
+      section.append(header);
+
+      if (stage.projects.length) {
+        const subhead = document.createElement("h3");
+        subhead.className = "stage-subhead";
+        subhead.textContent = I18N[lang]["stage.projects"];
+        const projects = document.createElement("div");
+        projects.className = "stage-projects";
+        projects.append(...stage.projects.map(createStageProject));
+        section.append(subhead, projects);
+      }
+
+      if (stage.awards?.[lang]?.length) {
+        const subhead = document.createElement("h3");
+        subhead.className = "stage-subhead";
+        subhead.textContent = I18N[lang]["stage.awards"];
+        const awards = document.createElement("ul");
+        awards.className = "stage-awards";
+        stage.awards[lang].forEach((awardText) => {
+          const award = document.createElement("li");
+          award.textContent = awardText;
+          awards.append(award);
+        });
+        section.append(subhead, awards);
+      }
+
+      if (stage.link) {
+        const link = document.createElement("a");
+        link.className = "stage-link";
+        link.href = stage.link;
+        link.textContent = `${I18N[lang]["stage.careerLink"]} →`;
+        section.append(link);
+      }
+      return section;
     }),
   );
 }
