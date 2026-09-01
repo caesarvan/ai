@@ -458,7 +458,7 @@ const PRODUCT_REFERENCES = [
     },
   },
   {
-    img: "https://api.microlink.io/?url=https%3A%2F%2Fwww.mobileworldlive.com%2Fhuawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo%2F&embed=image.url",
+    img: "assets/img/huawei-uwb-aau-mimo.png",
     sourceUrl: "https://www.mobileworldlive.com/huawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo/",
     source: { zh: "来源：Mobile World Live · Huawei Press Release", en: "Source: Mobile World Live · Huawei Press Release" },
     title: { zh: "Huawei UWB AAU 与 Massive MIMO", en: "Huawei UWB AAU and Massive MIMO" },
