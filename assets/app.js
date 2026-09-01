@@ -2,7 +2,12 @@ const langToggleId = "lang-toggle";
 const menuToggleId = "menu-toggle";
 const mobileNavId = "mobile-nav";
 
-let lang = localStorage.getItem("site-lang") === "en" ? "en" : "zh";
+const urlLang = new URLSearchParams(window.location.search).get("lang");
+let lang = urlLang === "en" || urlLang === "zh"
+  ? urlLang
+  : localStorage.getItem("site-lang") === "en"
+    ? "en"
+    : "zh";
 let dieAnim = 0;
 
 function pageName() {
@@ -22,16 +27,17 @@ function renderChrome() {
     ["contact.html", "contact", "nav.contact"],
   ];
 
+  const localeSuffix = lang === "en" ? "?lang=en" : "";
   const navHtml = links
     .map(([href, id, key]) => {
       const active = id === page ? ' aria-current="page" class="active"' : "";
-      return `<a href="${href}" data-i18n="${key}"${active}></a>`;
+      return `<a href="${href}${localeSuffix}" data-i18n="${key}"${active}></a>`;
     })
     .join("");
 
   header.innerHTML = `
     <header class="site-header">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html${localeSuffix}">
         <span class="brand-die" aria-hidden="true"></span>
         <span class="brand-text">
           <span class="brand-name">Caesar Fan</span>
@@ -75,6 +81,18 @@ function applyI18n() {
   renderAwards();
   renderPath();
   renderProjects();
+  document.querySelectorAll("a[href$='.html'], a[href*='.html?']").forEach((link) => {
+    const url = new URL(link.href);
+    if (url.origin !== window.location.origin) {
+      return;
+    }
+    if (lang === "en") {
+      url.searchParams.set("lang", "en");
+    } else {
+      url.searchParams.delete("lang");
+    }
+    link.href = `${url.pathname.split("/").pop() || "index.html"}${url.search}`;
+  });
 }
 
 function renderGallery() {
@@ -91,7 +109,10 @@ function renderGallery() {
       img.src = item.img;
       img.alt = item.title[lang];
       img.loading = "lazy";
-      media.append(img);
+      const disclosure = document.createElement("span");
+      disclosure.className = "media-disclosure";
+      disclosure.textContent = I18N[lang]["media.illustration"];
+      media.append(img, disclosure);
       const copy = document.createElement("div");
       copy.className = "copy";
       const tag = document.createElement("p");
@@ -121,6 +142,9 @@ function renderAwards() {
       bg.src = item.img;
       bg.alt = "";
       bg.loading = "lazy";
+      const disclosure = document.createElement("span");
+      disclosure.className = "media-disclosure";
+      disclosure.textContent = I18N[lang]["media.illustration"];
       const shade = document.createElement("div");
       shade.className = "shade";
       const copy = document.createElement("div");
@@ -133,7 +157,7 @@ function renderAwards() {
       const p = document.createElement("p");
       p.textContent = item.body[lang];
       copy.append(year, h3, p);
-      article.append(bg, shade, copy);
+      article.append(bg, shade, disclosure, copy);
       return article;
     }),
   );
@@ -147,6 +171,13 @@ function renderPath() {
   root.replaceChildren(
     ...PATH.map((item) => {
       const li = document.createElement("li");
+      const logoWrap = document.createElement("div");
+      logoWrap.className = "institution-logo";
+      const logo = document.createElement("img");
+      logo.src = item.logo;
+      logo.alt = item.logoAlt;
+      logo.loading = "lazy";
+      logoWrap.append(logo);
       const when = document.createElement("span");
       when.className = "when";
       when.textContent = item.when;
@@ -154,7 +185,7 @@ function renderPath() {
       h3.textContent = item.title[lang];
       const p = document.createElement("p");
       p.textContent = item.body[lang];
-      li.append(when, h3, p);
+      li.append(logoWrap, when, h3, p);
       return li;
     }),
   );
@@ -281,6 +312,13 @@ function bindChrome() {
   langToggle?.addEventListener("click", () => {
     lang = lang === "zh" ? "en" : "zh";
     localStorage.setItem("site-lang", lang);
+    const url = new URL(window.location.href);
+    if (lang === "en") {
+      url.searchParams.set("lang", "en");
+    } else {
+      url.searchParams.delete("lang");
+    }
+    window.history.replaceState({}, "", url);
     applyI18n();
   });
 
