@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" role="img" aria-label="Huawei">
+  <rect width="160" height="48" rx="4" fill="#111820"/>
+  <g fill="#CF0A2C">
+    <path d="M28 14c0 0 4 8 4 14s-1.5 8-4 8-4-2-4-8 4-14 4-14z" transform="rotate(0 28 24)"/>
+    <path d="M28 14c0 0 4 8 4 14s-1.5 8-4 8-4-2-4-8 4-14 4-14z" transform="rotate(45 28 24)"/>
+    <path d="M28 14c0 0 4 8 4 14s-1.5 8-4 8-4-2-4-8 4-14 4-14z" transform="rotate(90 28 24)"/>
+    <path d="M28 14c0 0 4 8 4 14s-1.5 8-4 8-4-2-4-8 4-14 4-14z" transform="rotate(135 28 24)"/>
+  </g>
+  <text x="52" y="30" fill="#E8EEF6" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" letter-spacing="1">HUAWEI</text>
+</svg>

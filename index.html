@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="范高一格 · 数字芯片验证 / 系统级硅验证。昇腾 NPU 组网验证、FPGA/EMU/ESL 预硅验证、验证平台工程。"
+      content="樊高一格 · 系统级硅验证。昇腾 NPU 组网、预硅验证与验证平台工程。"
     />
     <meta name="theme-color" content="#06090f" />
-    <title>范高一格 · Silicon Validation</title>
+    <title>樊高一格 · Silicon Validation</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
@@ -17,32 +17,23 @@
     <div class="scanlines" aria-hidden="true"></div>
     <div class="ambient" aria-hidden="true"></div>
 
-    <header class="site-header" id="site-header">
+    <header class="site-header">
       <a class="brand" href="#top">
         <span class="brand-die" aria-hidden="true"></span>
         <span class="brand-text">
-          <span class="brand-name" data-i18n="brand.name">范高一格</span>
-          <span class="brand-tag" data-i18n="brand.tag">SILICON · VALIDATE</span>
+          <span class="brand-name" data-i18n="brand.name">樊高一格</span>
+          <span class="brand-tag">SILICON · VALIDATE</span>
         </span>
       </a>
       <nav class="nav" aria-label="主导航">
-        <a href="#profile" data-i18n="nav.profile">简介</a>
-        <a href="#experience" data-i18n="nav.experience">经历</a>
-        <a href="#projects" data-i18n="nav.projects">项目</a>
-        <a href="#stack" data-i18n="nav.stack">能力</a>
+        <a href="#built" data-i18n="nav.built">作品</a>
+        <a href="#awards" data-i18n="nav.awards">荣誉</a>
+        <a href="#path" data-i18n="nav.path">路径</a>
         <a href="#contact" data-i18n="nav.contact">联系</a>
       </nav>
       <div class="header-actions">
-        <button type="button" class="lang-toggle" id="lang-toggle" aria-pressed="false" aria-label="切换语言">
-          EN
-        </button>
-        <button
-          type="button"
-          class="menu-toggle"
-          id="menu-toggle"
-          aria-expanded="false"
-          aria-controls="mobile-nav"
-        >
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-pressed="false" aria-label="切换语言">EN</button>
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">
           <span data-i18n="nav.menu">菜单</span>
         </button>
       </div>
@@ -50,10 +41,9 @@
     </header>
 
     <div class="mobile-nav" id="mobile-nav" hidden>
-      <a href="#profile" data-i18n="nav.profile">简介</a>
-      <a href="#experience" data-i18n="nav.experience">经历</a>
-      <a href="#projects" data-i18n="nav.projects">项目</a>
-      <a href="#stack" data-i18n="nav.stack">能力</a>
+      <a href="#built" data-i18n="nav.built">作品</a>
+      <a href="#awards" data-i18n="nav.awards">荣誉</a>
+      <a href="#path" data-i18n="nav.path">路径</a>
       <a href="#contact" data-i18n="nav.contact">联系</a>
     </div>
 
@@ -66,132 +56,70 @@
             <span data-i18n="hero.signal">System-level Silicon Validation</span>
           </p>
           <h1>
-            <span class="hero-name" data-i18n="hero.name">范高一格</span>
+            <span class="hero-name" data-i18n="hero.name">樊高一格</span>
             <span class="hero-en" data-i18n="hero.nameEn">Gaoyige Fan</span>
           </h1>
-          <p class="hero-role" data-i18n="hero.role">
-            昇腾芯片验证经理 / PL · NPU 组网 · 预硅验证 · 验证平台工程
-          </p>
           <p class="hero-lede" data-i18n="hero.lede">
-            四年数字芯片与系统级硅验证。把 FPGA / EMU / ESL 多层预硅、高速互连与超节点组网、压测与可观测性，收敛成可交付的验证体系。
+            把昇腾超节点组网、多层预硅与验证平台，做成看得见的交付物。
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="#experience" data-i18n="hero.cta.exp">查看经历</a>
-            <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">取得联系</a>
+            <a class="btn primary" href="#built" data-i18n="hero.cta.built">看做过的事</a>
+            <a class="btn ghost" href="#contact" data-i18n="hero.cta.contact">联系</a>
           </div>
         </div>
       </section>
 
-      <section class="metrics-band reveal" aria-label="关键指标">
-        <div>
-          <strong data-count="4">0</strong>
-          <span data-i18n="hero.m1">年验证经验</span>
-        </div>
-        <div>
-          <strong data-count="100" data-suffix="+">0</strong>
-          <span data-i18n="hero.m2">RTL / 集成问题闭环</span>
-        </div>
-        <div>
-          <strong data-count="3">0</strong>
-          <span data-i18n="hero.m3">预硅层级 FPGA·EMU·ESL</span>
+      <section class="logo-strip reveal" aria-label="机构">
+        <p class="logo-label" data-i18n="logos.label">曾工作 / 求学于</p>
+        <div class="logo-row">
+          <img src="assets/logos/huawei.svg" alt="Huawei" width="160" height="48" />
+          <img src="assets/logos/ascend.svg" alt="Ascend" width="160" height="48" />
+          <img src="assets/logos/nus.svg" alt="NUS" width="160" height="48" />
+          <img src="assets/logos/soochow.svg" alt="Soochow University" width="160" height="48" />
         </div>
       </section>
 
-      <section class="panel reveal" id="profile">
+      <section class="panel reveal" id="built">
         <header class="section-head">
-          <p class="kicker" data-i18n="profile.kicker">01 / 简介</p>
-          <h2 data-i18n="profile.title">验证对象是整机级硅路径，而不只是单 IP 功能</h2>
+          <p class="kicker" data-i18n="built.kicker">01 / 作品</p>
+          <h2 data-i18n="built.title">做过的系统与产品面</h2>
         </header>
-        <div class="profile-grid">
-          <p class="profile-body" data-i18n="profile.body">
-            现任华为计算产品线昇腾芯片验证经理 / PL，负责 NPU 组网验证、预硅验证方法、原型验证团队建设与验证平台工程。覆盖 IP 级验证、SoC 集成、多芯片组网、FPGA/EMU/ESL 预硅、DFX、压测与自动化平台。目标方向：System-level Silicon Validation、HW ArchDev、Pre-silicon Bring-up、Emulation & FPGA Validation、Validation Methodology。
-          </p>
-          <ul class="profile-points">
-            <li>
-              <span data-i18n="profile.p1.l">当前角色</span>
-              <strong data-i18n="profile.p1.v">昇腾芯片验证经理 / PL</strong>
-            </li>
-            <li>
-              <span data-i18n="profile.p2.l">主战场</span>
-              <strong data-i18n="profile.p2.v">NPU 组网 · 超节点 · 高速 IO/UB</strong>
-            </li>
-            <li>
-              <span data-i18n="profile.p3.l">方法偏好</span>
-              <strong data-i18n="profile.p3.v">Stress / Concurrency / PVT 矩阵收敛</strong>
-            </li>
-            <li>
-              <span data-i18n="profile.p4.l">平台栈</span>
-              <strong data-i18n="profile.p4.v">FPGA · Palladium · FastModel/QEMU</strong>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="panel reveal" id="experience">
-        <header class="section-head">
-          <p class="kicker" data-i18n="exp.kicker">02 / 经历</p>
-          <h2 data-i18n="exp.title">从基带调度到昇腾超节点组网</h2>
-        </header>
-        <ol class="timeline" id="timeline"></ol>
-      </section>
-
-      <section class="panel reveal" id="projects">
-        <header class="section-head">
-          <p class="kicker" data-i18n="proj.kicker">03 / 项目</p>
-          <h2 data-i18n="proj.title">把方法、平台与工具做成可复用交付物</h2>
-        </header>
-        <div class="project-grid" id="project-grid"></div>
-      </section>
-
-      <section class="panel reveal" id="stack">
-        <header class="section-head">
-          <p class="kicker" data-i18n="stack.kicker">04 / 能力</p>
-          <h2 data-i18n="stack.title">点选一层验证栈，看职责边界</h2>
-        </header>
-        <div class="stack-layout">
-          <div class="wafer-wrap">
-            <canvas id="wafer" width="640" height="640" role="img" aria-label="验证栈晶圆图"></canvas>
-            <p class="hint" data-i18n="stack.hint">点击扇区；聚焦后可用方向键切换。</p>
-          </div>
-          <article class="inspect" id="inspect">
-            <p class="inspect-meta" id="inspect-meta"></p>
-            <h3 id="inspect-title"></h3>
-            <p id="inspect-body"></p>
-            <ul class="checks" id="inspect-checks"></ul>
-          </article>
-        </div>
-        <div class="skill-bands" id="skill-bands"></div>
+        <div class="gallery" id="gallery"></div>
       </section>
 
       <section class="panel reveal" id="awards">
         <header class="section-head">
-          <p class="kicker" data-i18n="awards.kicker">05 / 教育与荣誉</p>
-          <h2 data-i18n="awards.title">半导体与系统背景，验证交付被组织认可</h2>
+          <p class="kicker" data-i18n="awards.kicker">02 / 荣誉</p>
+          <h2 data-i18n="awards.title">被组织看见的交付</h2>
         </header>
-        <div class="edu-awards">
-          <div class="edu" id="edu"></div>
-          <ul class="award-list" id="award-list"></ul>
-        </div>
+        <div class="award-gallery" id="award-gallery"></div>
+      </section>
+
+      <section class="panel reveal" id="path">
+        <header class="section-head">
+          <p class="kicker" data-i18n="path.kicker">03 / 路径</p>
+          <h2 data-i18n="path.title">从校园到昇腾验证现场</h2>
+        </header>
+        <div class="path-track" id="path-track"></div>
       </section>
 
       <section class="panel contact reveal" id="contact">
         <header class="section-head">
-          <p class="kicker" data-i18n="contact.kicker">06 / 联系</p>
-          <h2 data-i18n="contact.title">讨论系统级硅验证与预硅方法</h2>
+          <p class="kicker" data-i18n="contact.kicker">04 / 联系</p>
+          <h2 data-i18n="contact.title">继续聊硅验证与预硅方法</h2>
         </header>
         <p class="contact-copy" data-i18n="contact.body">
-          适合聊：NPU 组网与超节点、FPGA/EMU/ESL 多层预硅、Stress/PVT 覆盖、DFX 可观测性、验证平台与精确 CI。
+          邮件即可。适合聊超节点组网、预硅平台与验证工程化。
         </p>
         <div class="contact-links">
           <a class="btn primary" href="mailto:fangaoyige@live.com">fangaoyige@live.com</a>
-          <a class="btn ghost" href="tel:+8613282355085">(+86) 132-8235-5085</a>
           <a class="btn ghost" href="https://github.com/caesarvan" rel="noopener noreferrer">github.com/caesarvan</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span data-i18n="footer.copy">Gaoyige Fan · Silicon Validation</span>
+      <span data-i18n="footer.copy">樊高一格 · Silicon Validation</span>
       <a href="#top" data-i18n="footer.top">回到顶部</a>
     </footer>
 
