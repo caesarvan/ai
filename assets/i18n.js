@@ -197,7 +197,7 @@ const AWARD_CARDS = [
     img: "assets/img/award_plaque.jpg",
     year: "2023",
     title: {
-      zh: "研发工具装备「召之即来」奖",
+      zh: "研发工具装备「呼唤炮火」奖",
       en: "Call-for-Fire Award for R&D Tools and Equipment",
     },
     body: {
@@ -370,7 +370,7 @@ const STAGES = [
       },
     ],
     awards: {
-      zh: ["2023 · 研发工具装备「召之即来」奖", "2023 · 质量之星"],
+      zh: ["2023 · 研发工具装备「呼唤炮火」奖", "2023 · 质量之星"],
       en: ["2023 · Call-for-Fire Award for R&D Tools and Equipment", "2023 · Quality Star"],
     },
   },
