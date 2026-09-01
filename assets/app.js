@@ -1,6 +1,8 @@
 const langToggleId = "lang-toggle";
 const menuToggleId = "menu-toggle";
 const mobileNavId = "mobile-nav";
+const themeToggleId = "theme-toggle";
+const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
 
 const urlLang = new URLSearchParams(window.location.search).get("lang");
 let lang = urlLang === "en" || urlLang === "zh"
@@ -13,6 +15,40 @@ let activeStageId = window.location.hash.replace("#stage-", "");
 
 function pageName() {
   return document.body.getAttribute("data-page") || "home";
+}
+
+function resolvedTheme() {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+function themeIcon(theme) {
+  if (theme === "dark") {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/><circle cx="12" cy="12" r="4"/></svg>';
+  }
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"/></svg>';
+}
+
+function updateThemeToggle() {
+  const toggle = document.getElementById(themeToggleId);
+  if (!toggle) {
+    return;
+  }
+  const theme = resolvedTheme();
+  toggle.innerHTML = themeIcon(theme);
+  toggle.setAttribute(
+    "aria-label",
+    theme === "dark" ? I18N[lang]["theme.toLight"] : I18N[lang]["theme.toDark"],
+  );
+  toggle.title = toggle.getAttribute("aria-label");
+}
+
+function setTheme(theme, persist) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+  if (persist) {
+    localStorage.setItem("color-theme", theme);
+  }
+  updateThemeToggle();
 }
 
 function renderChrome() {
@@ -39,7 +75,7 @@ function renderChrome() {
   header.innerHTML = `
     <header class="site-header">
       <a class="brand" href="index.html${localeSuffix}">
-        <span class="brand-die" aria-hidden="true"></span>
+        <span class="brand-monogram" aria-hidden="true">CF</span>
         <span class="brand-text">
           <span class="brand-name">Caesar Fan</span>
           <span class="brand-tag">CHIP · VERIFY</span>
@@ -47,6 +83,7 @@ function renderChrome() {
       </a>
       <nav class="nav" aria-label="Primary">${navHtml}</nav>
       <div class="header-actions">
+        <button type="button" class="theme-toggle" id="${themeToggleId}"></button>
         <button type="button" class="lang-toggle" id="${langToggleId}" aria-pressed="false" aria-label="Language">EN</button>
         <button type="button" class="menu-toggle" id="${menuToggleId}" aria-expanded="false" aria-controls="${mobileNavId}">
           <span data-i18n="nav.menu">Menu</span>
@@ -78,6 +115,7 @@ function applyI18n() {
     langToggle.textContent = lang === "zh" ? "EN" : "中文";
     langToggle.setAttribute("aria-pressed", String(lang === "en"));
   }
+  updateThemeToggle();
   renderGallery();
   renderAwards();
   renderStages();
@@ -542,6 +580,11 @@ function updateProgress() {
 }
 
 function bindChrome() {
+  const themeToggle = document.getElementById(themeToggleId);
+  themeToggle?.addEventListener("click", () => {
+    setTheme(resolvedTheme() === "dark" ? "light" : "dark", true);
+  });
+
   const langToggle = document.getElementById(langToggleId);
   const menuToggle = document.getElementById(menuToggleId);
   const mobileNav = document.getElementById(mobileNavId);
@@ -584,6 +627,22 @@ setupReveal();
 updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", sizeDieCanvas);
+themeMedia.addEventListener("change", (event) => {
+  if (!localStorage.getItem("color-theme")) {
+    setTheme(event.matches ? "dark" : "light", false);
+  }
+});
+document.addEventListener("pointermove", (event) => {
+  const glass = event.target.closest(
+    ".link-card, .project-card, .gallery article, .stage-project, .stage-section, .plain-section, .note-box",
+  );
+  if (!glass) {
+    return;
+  }
+  const bounds = glass.getBoundingClientRect();
+  glass.style.setProperty("--glass-x", `${event.clientX - bounds.left}px`);
+  glass.style.setProperty("--glass-y", `${event.clientY - bounds.top}px`);
+});
 window.addEventListener("hashchange", () => {
   const stageId = window.location.hash.replace("#stage-", "");
   if (STAGES.some((stage) => stage.id === stageId)) {

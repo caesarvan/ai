@@ -7,6 +7,8 @@ const I18N = {
     "nav.about": "关于",
     "nav.contact": "联系",
     "nav.menu": "菜单",
+    "theme.toLight": "切换到浅色模式",
+    "theme.toDark": "切换到深色模式",
     "home.signal": "NVIDIA · GPU / 芯片功耗验证",
     "home.lede": "当前在 NVIDIA 从事 GPU / 芯片功耗验证，关注功耗与性能交互、时钟与电源域、功耗状态、门控、遥测及负载驱动的功耗行为。",
     "home.cta.work": "查看专业经历",
@@ -68,6 +70,8 @@ const I18N = {
     "nav.about": "About",
     "nav.contact": "Contact",
     "nav.menu": "Menu",
+    "theme.toLight": "Switch to light mode",
+    "theme.toDark": "Switch to dark mode",
     "home.signal": "NVIDIA · GPU / Chip Power Verification",
     "home.lede":
       "Currently working at NVIDIA on GPU and chip power verification, with a focus on power/performance interactions, clock and power domains, power states, gating, telemetry, and workload-driven power behavior.",
@@ -220,7 +224,7 @@ const STAGES = [
     secondary: "#d3a64a",
     phase: { zh: "本科阶段", en: "Undergraduate" },
     title: { zh: "苏州大学 · 信息工程", en: "Soochow University · Information Engineering" },
-    logo: "assets/brand/soochow.jpg",
+    logo: "assets/brand/soochow-full.png",
     logoAlt: "苏州大学 / Soochow University",
     summary: {
       zh: "围绕传感器、嵌入式系统、医学图像与机器学习开展跨学科项目。",
@@ -313,7 +317,7 @@ const STAGES = [
     accent: "#cf0a2c",
     secondary: "#ff6b6b",
     phase: { zh: "职业阶段 I", en: "Professional stage I" },
-    logo: "assets/brand/huawei.svg",
+    logo: "assets/brand/huawei-professional.svg",
     logoAlt: "Huawei",
     title: { zh: "基带芯片设计验证", en: "Baseband chip verification" },
     summary: {
@@ -352,8 +356,8 @@ const STAGES = [
     accent: "#cf0a2c",
     secondary: "#f2a900",
     phase: { zh: "职业阶段 II", en: "Professional stage II" },
-    logo: "https://www.hiascend.com/_static3/logo1.BQ2XZIjU.svg",
-    logoAlt: "昇腾社区 / Ascend Community",
+    logo: "assets/brand/huawei-professional.svg",
+    logoAlt: "Huawei",
     title: { zh: "AI 芯片设计验证与验证平台", en: "AI accelerator verification and platforms" },
     summary: {
       zh: "负责 NPU 组网、流片前验证方法、原型验证团队建设与验证平台工程。",
@@ -401,7 +405,7 @@ const STAGES = [
     theme: "nvidia",
     accent: "#76b900",
     secondary: "#b8ff42",
-    logo: "assets/brand/nvidia.svg",
+    logo: "assets/brand/nvidia-standard.svg",
     logoAlt: "NVIDIA",
     title: { zh: "NVIDIA · GPU / 芯片功耗验证", en: "NVIDIA · GPU / Chip Power Verification" },
     summary: {

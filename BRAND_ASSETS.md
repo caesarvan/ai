@@ -5,14 +5,21 @@ only to identify education and employment history.
 
 | Mark | Asset source | Reference |
 | --- | --- | --- |
-| Huawei | Unmodified Huawei icon from the Simple Icons repository | [Source file](https://github.com/simple-icons/simple-icons/blob/develop/icons/huawei.svg) |
-| NVIDIA | Unmodified NVIDIA icon from the Simple Icons repository; stage styling uses NVIDIA Green `#76B900` from the official brand guide | [Source file](https://github.com/simple-icons/simple-icons/blob/develop/icons/nvidia.svg) · [Official brand guidelines](https://www.nvidia.com/en-us/about-nvidia/legal-info/logo-brand-usage/) |
-| Ascend Community | Logo loaded directly from the official Ascend Community website; the site falls back to text if the asset is unavailable | [Official asset](https://www.hiascend.com/_static3/logo1.BQ2XZIjU.svg) · [Ascend visual specification](https://www.hiascend.com/s/ascendstatic/lst/files/pdf/Visual_Specification_for_Brand_Authorization_V1.0.pdf) |
+| Huawei | Full horizontal Huawei lockup from VectorLogoZone; its source references Huawei artwork | [Source file](https://github.com/VectorLogoZone/vectorlogozone/blob/main/src/content/logos/huawei/huawei-ar21.svg) · [Official Huawei brand resources](https://developer.huawei.com/consumer/cn/design/resource/) |
+| NVIDIA | Full horizontal NVIDIA lockup mirrored by the curated `gilbarbara/logos` project; stage styling uses official NVIDIA Green `#76B900` | [Source file](https://github.com/gilbarbara/logos/blob/main/logos/nvidia.svg) · [Official brand guidelines](https://www.nvidia.com/en-us/about-nvidia/legal-info/logo-brand-usage/) |
 | National University of Singapore | Unmodified complete NUS logo mirrored in a public repository; the source file traces to the IARU prospectus | [Source file](https://github.com/leroytan/the-website/blob/1c92a2170900c1c6510352032d9a28ba5030dc4a/frontend/public/images/National_University_of_Singapore_Logo.svg) · [NUS guidelines](https://nus.edu.sg/identity/guidelines/logo-guideline) |
-| Soochow University | Unmodified emblem file from a public Soochow University thesis template | [Source file](https://github.com/hinesboy/SUDA-Latex/blob/master/sudamark.jpg) · [Official identity guide](http://www.suda.edu.cn/portal/uis.html) |
+| Soochow University | Full Chinese/English wordmark from a public Soochow University thesis template | [Source file](https://github.com/shadowofgost/sudathesis-soochow-university-latex-template/blob/main/figures/sudafull.png) · [Official identity guide](http://www.suda.edu.cn/portal/uis.html) |
 
 The marks remain the property of their respective owners. They are not
 recreated, recoloured, or presented as endorsement.
+
+## Typography
+
+The site uses a web subset of
+[Maple Mono CN v7.9](https://github.com/subframe7536/maple-font/releases/tag/v7.9).
+Only glyphs used by this site are included in the WOFF2 files. The original
+font is licensed under the SIL Open Font License 1.1; the license text is
+included at `assets/fonts/LICENSE.txt`.
 
 ## Public reference images
 
