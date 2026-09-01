@@ -371,11 +371,93 @@ main {
 
 .link-grid,
 .gallery,
+.product-references,
 .project-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: 28px;
+}
+
+.product-section {
+  margin-top: 72px;
+}
+
+.section-lede {
+  max-width: 58ch;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.product-references article {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  overflow: hidden;
+}
+
+.product-references .media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(30, 200, 184, 0.08), transparent),
+    #09101a;
+}
+
+.product-references .media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.photo-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: var(--muted);
+  font-family: var(--mono);
+  text-align: center;
+}
+
+.product-references .media.load-failed img {
+  display: none;
+}
+
+.product-references .media.load-failed .photo-fallback {
+  display: flex;
+}
+
+.product-references .copy {
+  padding: 18px;
+}
+
+.product-references h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.product-references p {
+  margin: 0;
+  color: #b8c3d4;
+  font-size: 14.5px;
+}
+
+.source-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.source-link:hover {
+  text-decoration: underline;
 }
 
 .link-card,
@@ -602,6 +684,22 @@ main {
   object-fit: contain;
 }
 
+.logo-fallback {
+  display: none;
+  color: #10151e;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.institution-logo.load-failed img {
+  display: none;
+}
+
+.institution-logo.load-failed .logo-fallback {
+  display: block;
+}
+
 .path-list .when {
   color: var(--cyan);
 }
@@ -647,6 +745,7 @@ main {
 
   .link-grid,
   .gallery,
+  .product-references,
   .project-list,
   .award-gallery {
     grid-template-columns: 1fr;

@@ -28,10 +28,13 @@ const I18N = {
     "work.note.2": "FPGA 原型验证：将芯片设计映射到 FPGA 平台，用于系统功能验证和软硬件协同调试。",
     "work.note.3": "硬件仿真：在 Palladium 等专用平台上运行大规模 RTL，支持复杂并发场景和长时间工作负载。",
     "work.note.4": "虚拟平台：使用 Arm Fast Models、QEMU 等环境，提前开展软件开发、接口验证和系统功能验证。",
+    "work.products.kicker": "Public references",
+    "work.products.title": "相关产品与应用场景",
+    "work.products.lede": "以下第三方图片仅用于说明与简历技术方向相关的公开行业或产品背景；图中产品、设备和部署场景不代表本人参与，也不是本人项目资料。",
     "media.illustration": "概念示意图",
     "projects.kicker": "GitHub",
     "projects.title": "公开项目",
-    "projects.lede": "选自 github.com/caesarvan，由本人创建的公开仓库，不含 fork 项目。",
+    "projects.lede": "以下内容根据 github.com/caesarvan 的非 fork 公开仓库整理，不属于简历所列职业项目；具体贡献以公开提交记录为准。",
     "awards.kicker": "Awards",
     "awards.title": "荣誉",
     "awards.lede": "来自验证平台、研发工具和交付质量方面的认可。",
@@ -79,10 +82,13 @@ const I18N = {
     "work.note.2": "FPGA prototyping: mapping a chip design onto FPGA hardware for system-level verification and hardware/software co-debugging.",
     "work.note.3": "Hardware emulation: running large RTL designs on platforms such as Palladium to exercise complex concurrent workloads and long-duration scenarios.",
     "work.note.4": "Virtual platforms: using Arm Fast Models, QEMU, and related environments for early software development, interface verification, and system-level verification.",
+    "work.products.kicker": "Public references",
+    "work.products.title": "Related products and application context",
+    "work.products.lede": "These third-party images provide only public industry or product context for technical areas in the résumé. The depicted products, equipment, and deployments do not indicate the author’s involvement and are not materials from the author’s projects.",
     "media.illustration": "Concept illustration",
     "projects.kicker": "GitHub",
     "projects.title": "Public projects",
-    "projects.lede": "Selected repositories created by the author, excluding forks.",
+    "projects.lede": "These items are summarized from non-fork public repositories at github.com/caesarvan and are not professional projects listed in the résumé. Individual contributions should be verified from the public commit history.",
     "awards.kicker": "Awards",
     "awards.title": "Awards",
     "awards.lede": "Recognition for verification platforms, engineering tools, and delivery quality.",
@@ -108,8 +114,8 @@ const GALLERY = [
     tag: { zh: "多芯片互连", en: "Multi-chip interconnects" },
     title: { zh: "NPU 多芯片互连验证", en: "NPU multi-chip interconnect verification" },
     body: {
-      zh: "负责高速互连接口与系统拓扑验证，包括场景设计、并发压力测试、异常处理和系统级问题定位。",
-      en: "Verified high-speed interconnect interfaces and system topologies, including scenario development, concurrent stress testing, error handling, and system-level debugging.",
+      zh: "面向昇腾 960/950 系列 NPU 平台，开展高速 IO/UB、多芯片组网与超节点架构验证，包括拓扑分解、接口定义、并发压力测试和系统级问题定位。",
+      en: "Led high-speed IO/UB and multi-chip networking validation for Ascend 960/950-series NPU platforms, including topology decomposition, interface definitions, concurrent stress testing, and system-level debugging.",
     },
   },
   {
@@ -117,11 +123,11 @@ const GALLERY = [
     tag: { zh: "流片前验证", en: "Pre-silicon verification" },
     title: {
       zh: "多层流片前验证平台",
-      en: "Multi-layer pre-silicon verification platforms",
+      en: "Multi-level pre-silicon validation platforms",
     },
     body: {
-      zh: "建设并使用 FPGA 原型、硬件仿真和虚拟平台，支持系统功能验证、软件提前开发和复杂问题定位。",
-      en: "Built and used FPGA prototypes, hardware emulation, and virtual platforms for system-level verification, early software development, and complex issue diagnosis.",
+      zh: "建设 FPGA（VTOF）、硬件仿真（Palladium）和 ESL（FastModel/QEMU）多层流片前验证平台，支持拓扑评估、系统 Bring-up 和问题定位。",
+      en: "Established multi-level pre-silicon validation platforms using FPGA (VTOF), emulation (Palladium), and ESL (FastModel/QEMU) for topology evaluation, system bring-up, and issue localization.",
     },
   },
   {
@@ -132,8 +138,8 @@ const GALLERY = [
       en: "Verification platforms and targeted regression",
     },
     body: {
-      zh: "建设自动化测试、基于代码变更的用例选择、性能分析和负载监控，用于加快验证反馈。",
-      en: "Developed test automation, change-based test selection, performance analysis, and workload monitoring to accelerate verification feedback.",
+      zh: "建设 CVA 自动化执行框架、精确 CI、PerfInsight 性能观测和压力负载监控平台，并维护 URegister、UDB、UModel 工具链。",
+      en: "Built a CVA-based automation framework, precise CI, PerfInsight performance observability, and stress-load monitoring, while maintaining the URegister, UDB, and UModel toolchains.",
     },
   },
   {
@@ -144,8 +150,8 @@ const GALLERY = [
       en: "Debug tooling and performance monitoring",
     },
     body: {
-      zh: "整合寄存器访问、Trace、性能计数器和压力测试监控，支持软硬件协同调试。",
-      en: "Integrated register access, traces, performance counters, and stress-test monitoring to support hardware/software co-debugging.",
+      zh: "建设 JTAG/eSPI/UART 三路径快速调试方案，并围绕寄存器、Trace、PMU、Profiling 等 DFX 能力支持问题定位。",
+      en: "Designed a JTAG/eSPI/UART tri-path debug solution and supported issue localization through register, trace, PMU, profiling, and other DFX capabilities.",
     },
   },
 ];
@@ -156,7 +162,7 @@ const AWARD_CARDS = [
     year: "2025",
     title: {
       zh: "计算战役总裁奖",
-      en: "President’s Award — Computing Program",
+      en: "Computing Campaign President Award",
     },
     body: {
       zh: "获奖工作涉及液冷验证实验室、自研自动化框架和在线芯片工具服务。",
@@ -168,11 +174,11 @@ const AWARD_CARDS = [
     year: "2023",
     title: {
       zh: "研发工具装备「召之即来」奖",
-      en: "R&D Tools Rapid Response Award",
+      en: "Call-for-Fire Award for R&D Tools and Equipment",
     },
     body: {
-      zh: "获奖工作涉及需求、设计与验证流程的端到端数字化改进。",
-      en: "Recognition associated with end-to-end digitization of the requirements, design, and verification workflow.",
+      zh: "获奖工作涉及无线芯片需求、设计与验证流程的端到端数字化改进。",
+      en: "Recognition associated with end-to-end digitization of the wireless-chip requirements, design, and verification workflow.",
     },
   },
   {
@@ -183,8 +189,8 @@ const AWARD_CARDS = [
       en: "Quality Star",
     },
     body: {
-      zh: "获奖工作涉及调度模型交付、调试支持和问题收敛。",
-      en: "Recognition associated with scheduler-model delivery, debugging support, and issue resolution.",
+      zh: "获奖工作涉及 Scheduler QEMU 模型交付、DFX 调试支持和问题发现与收敛。",
+      en: "Recognition associated with Scheduler QEMU model delivery, DFX debugging support, and issue identification and resolution.",
     },
   },
 ];
@@ -213,10 +219,33 @@ const PATH = [
   },
   {
     when: "2024 – now",
-    logo: "assets/brand/huawei.svg",
-    logoAlt: "Huawei",
+    logo: "https://www.hiascend.com/_static3/logo1.BQ2XZIjU.svg",
+    logoAlt: "昇腾社区 / Ascend Community",
     title: { zh: "AI 芯片设计验证与验证平台", en: "AI accelerator verification and platforms" },
     body: { zh: "多芯片互连、流片前验证与验证平台建设。", en: "Multi-chip interconnect verification, pre-silicon verification, and verification platform engineering." },
+  },
+];
+
+const PRODUCT_REFERENCES = [
+  {
+    img: "https://x0.ifengimg.com/res/2026/24EF9C5E6B4065B92F499203E19C68C13A604DB9_size98_w600_h300.jpg",
+    sourceUrl: "https://www.huawei.com/cn/news/2026/7/atlas-950-superpod",
+    source: { zh: "产品资料：华为；图片：凤凰网转引公开资料", en: "Product source: Huawei; image: ifeng.com public coverage" },
+    title: { zh: "Atlas 950 SuperPoD 智算超节点", en: "Atlas 950 SuperPoD" },
+    body: {
+      zh: "公开产品参考：Atlas 950 SuperPoD 与简历所述昇腾 950 系列 NPU、高速互连及超节点组网方向相关；简历未声明本人参与该具体产品。",
+      en: "Public product reference: Atlas 950 SuperPoD relates to the résumé’s Ascend 950-series NPU, high-speed interconnect, and super-node networking scope. The résumé does not state involvement in this specific product.",
+    },
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/5G_cell_tower.JPG",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:5G_cell_tower.JPG",
+    source: { zh: "摄影：Jeffrey Beall · CC BY 4.0", en: "Photo: Jeffrey Beall · CC BY 4.0" },
+    title: { zh: "5G 基站与无线接入场景", en: "5G base station and radio access" },
+    body: {
+      zh: "公开场景参考：图片为通用 5G 基站。简历记载的是基带 SoC 调度子系统、Scheduler/DAG Engine/QDMA 验证，以及 4G/5G 调度改版与产品化支持；不代表本人参与图示基站或部署。",
+      en: "Public context: this is a generic 5G base-station image. The résumé covers baseband SoC scheduler verification, Scheduler/DAG Engine/QDMA, and support for 4G/5G scheduling redesign and commercialization; it does not indicate involvement with the depicted tower or deployment.",
+    },
   },
 ];
 
@@ -227,8 +256,8 @@ const PROJECTS = [
     url: "https://github.com/caesarvan/ucluster",
     title: { zh: "网络拓扑图编辑器", en: "Network topology editor" },
     body: {
-      zh: "基于 React 和 React Flow，支持设备与端口管理、拓扑连线、自动布局及 JSON 导入导出。",
-      en: "A React and React Flow editor supporting devices, ports, links, automatic layout, JSON import/export, and themes.",
+      zh: "公开的 React / React Flow 网络拓扑编辑器，支持设备与端口管理、自动布局及 JSON 导入导出；不将其与简历中的 UCluster 统一验证平台视为同一项目。",
+      en: "A public React and React Flow network-topology editor with device/port management, automatic layout, and JSON import/export. No claim is made that it is the same project as the UCluster platform listed in the résumé.",
     },
   },
   {

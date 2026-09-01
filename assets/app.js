@@ -81,6 +81,7 @@ function applyI18n() {
   renderAwards();
   renderPath();
   renderProjects();
+  renderProductReferences();
   document.querySelectorAll("a[href$='.html'], a[href*='.html?']").forEach((link) => {
     const url = new URL(link.href);
     if (url.origin !== window.location.origin) {
@@ -177,7 +178,11 @@ function renderPath() {
       logo.src = item.logo;
       logo.alt = item.logoAlt;
       logo.loading = "lazy";
-      logoWrap.append(logo);
+      const fallback = document.createElement("span");
+      fallback.className = "logo-fallback";
+      fallback.textContent = item.logoAlt;
+      logo.addEventListener("error", () => logoWrap.classList.add("load-failed"));
+      logoWrap.append(logo, fallback);
       const when = document.createElement("span");
       when.className = "when";
       when.textContent = item.when;
@@ -187,6 +192,46 @@ function renderPath() {
       p.textContent = item.body[lang];
       li.append(logoWrap, when, h3, p);
       return li;
+    }),
+  );
+}
+
+function renderProductReferences() {
+  const root = document.getElementById("product-references");
+  if (!root) {
+    return;
+  }
+  root.replaceChildren(
+    ...PRODUCT_REFERENCES.map((item) => {
+      const article = document.createElement("article");
+      const media = document.createElement("div");
+      media.className = "media";
+      const img = document.createElement("img");
+      img.src = item.img;
+      img.alt = item.title[lang];
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      const fallback = document.createElement("span");
+      fallback.className = "photo-fallback";
+      fallback.textContent = item.title[lang];
+      img.addEventListener("error", () => media.classList.add("load-failed"));
+      media.append(img, fallback);
+
+      const copy = document.createElement("div");
+      copy.className = "copy";
+      const h3 = document.createElement("h3");
+      h3.textContent = item.title[lang];
+      const p = document.createElement("p");
+      p.textContent = item.body[lang];
+      const source = document.createElement("a");
+      source.className = "source-link";
+      source.href = item.sourceUrl;
+      source.rel = "noopener noreferrer";
+      source.target = "_blank";
+      source.textContent = item.source[lang];
+      copy.append(h3, p, source);
+      article.append(media, copy);
+      return article;
     }),
   );
 }
