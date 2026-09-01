@@ -288,6 +288,9 @@ function renderStages() {
       section.className = "stage-section";
       section.id = `stage-${stage.id}`;
       section.dataset.stage = stage.id;
+      if (stage.companyGroup) {
+        section.dataset.company = "huawei";
+      }
       section.dataset.index = String(index + 1).padStart(2, "0");
       section.style.setProperty("--stage-accent", stage.accent);
       section.style.setProperty("--stage-secondary", stage.secondary);
@@ -300,6 +303,12 @@ function renderStages() {
       header.className = "stage-header";
       const logoWrap = createInstitutionLogo(stage);
       const heading = document.createElement("div");
+      if (stage.companyGroup) {
+        const company = document.createElement("p");
+        company.className = "company-group-label";
+        company.textContent = stage.companyGroup[lang];
+        heading.append(company);
+      }
       const phase = document.createElement("p");
       phase.className = "stage-phase";
       phase.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;

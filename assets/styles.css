@@ -958,6 +958,25 @@ main {
   letter-spacing: 0.05em;
 }
 
+.company-group-label {
+  display: inline-flex;
+  margin: 0 0 8px;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, #cf0a2c 48%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, #cf0a2c 9%, transparent);
+  color: #cf0a2c;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stage-section[data-company="huawei"] {
+  border-left-color: #cf0a2c;
+  border-right-color: #cf0a2c;
+}
+
 .stage-header h3 {
   margin: 5px 0 6px;
   font-size: 22px;
