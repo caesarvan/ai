@@ -216,7 +216,7 @@ const STAGES = [
     id: "undergraduate",
     when: { zh: "2017.09 – 2021.06", en: "2017.09 – 2021.06" },
     theme: "soochow",
-    accent: "#a61e2d",
+    accent: "#8f2437",
     secondary: "#d3a64a",
     phase: { zh: "本科阶段", en: "Undergraduate" },
     title: { zh: "苏州大学 · 信息工程", en: "Soochow University · Information Engineering" },

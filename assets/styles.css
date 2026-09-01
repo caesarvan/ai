@@ -3,7 +3,7 @@
   --bg-elev: #0c121c;
   --bg-panel: #0f1622;
   --ink: #e7eef8;
-  --muted: #8b97ab;
+  --muted: #a3aec0;
   --line: #1c2738;
   --cyan: #76b900;
   --cyan-dim: rgba(118, 185, 0, 0.14);
@@ -254,8 +254,8 @@ main {
   position: relative;
   min-height: calc(100vh - var(--header-h));
   display: flex;
-  align-items: flex-end;
-  padding: 56px 0 72px;
+  align-items: center;
+  padding: 44px 0 56px;
   overflow: hidden;
 }
 
@@ -745,6 +745,12 @@ main {
   color: var(--stage-accent);
 }
 
+.stage-nav a:focus-visible,
+.stage-pager button:focus-visible {
+  outline: 2px solid var(--stage-accent, var(--journey-accent));
+  outline-offset: 3px;
+}
+
 .stage-nav a.active {
   border-color: var(--stage-accent);
   color: var(--stage-accent);
@@ -776,6 +782,18 @@ main {
 .stage-section.stage-visible {
   opacity: 1;
   transform: none;
+  animation: stage-in 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .stage-section.stage-visible:hover {
@@ -887,7 +905,7 @@ main {
   background: color-mix(in srgb, var(--stage-accent) 7%, transparent);
   color: color-mix(in srgb, var(--stage-accent) 80%, white);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .stage-subhead {
