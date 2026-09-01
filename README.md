@@ -42,7 +42,7 @@ python3 -m http.server 8080
 学生阶段的姿态数据图来自公开仓库 `caesarvan/NUS_Medical_Care`，
 来源记录在 `BRAND_ASSETS.md`。
 
-About 页会随阶段切换视觉主题：
+About 页使用连续滚动时间轴；滚轮进入不同阶段时，主题色和阶段指示会自动切换：
 
 - 苏州大学：校徽红与暖金
 - NUS：官方蓝 `#003D7C` / 橙 `#EF7C00`
