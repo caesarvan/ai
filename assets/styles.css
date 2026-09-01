@@ -999,6 +999,47 @@ main {
   text-decoration: none;
 }
 
+.stage-pager {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.stage-pager button {
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  color: var(--ink);
+  font-family: var(--mono);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.stage-pager button:last-child {
+  justify-self: end;
+}
+
+.stage-pager button:not(:disabled):hover {
+  border-color: var(--journey-accent);
+  color: var(--journey-accent);
+  transform: translateY(-1px);
+}
+
+.stage-pager button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.stage-pager span {
+  color: var(--journey-accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
 .site-footer {
   display: flex;
   justify-content: space-between;
@@ -1088,6 +1129,16 @@ main {
 
   .stage-project:has(.student-media) {
     grid-column: auto;
+  }
+
+  .stage-pager {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stage-pager span {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    text-align: center;
   }
 }
 

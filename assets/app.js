@@ -9,7 +9,7 @@ let lang = urlLang === "en" || urlLang === "zh"
     ? "en"
     : "zh";
 let dieAnim = 0;
-let stageThemeObserver = null;
+let activeStageId = window.location.hash.replace("#stage-", "");
 
 function pageName() {
   return document.body.getAttribute("data-page") || "home";
@@ -237,12 +237,15 @@ function renderStages() {
       link.dataset.stageTarget = stage.id;
       link.style.setProperty("--stage-accent", stage.accent);
       link.textContent = `${stage.phase[lang]} · ${stage.when[lang]}`;
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        activateStage(stage.id, true);
+      });
       return link;
     }),
   );
 
-  root.replaceChildren(
-    ...STAGES.map((stage, index) => {
+  const sections = STAGES.map((stage, index) => {
       const section = document.createElement("section");
       section.className = "stage-section";
       section.id = `stage-${stage.id}`;
@@ -309,46 +312,79 @@ function renderStages() {
         section.append(link);
       }
       return section;
-    }),
-  );
-  setupStageThemes();
+    });
+
+  const pager = document.createElement("div");
+  pager.className = "stage-pager";
+  const previous = document.createElement("button");
+  previous.type = "button";
+  previous.dataset.stagePrevious = "";
+  previous.addEventListener("click", () => moveStage(-1));
+  const counter = document.createElement("span");
+  counter.dataset.stageCounter = "";
+  const next = document.createElement("button");
+  next.type = "button";
+  next.dataset.stageNext = "";
+  next.addEventListener("click", () => moveStage(1));
+  pager.append(previous, counter, next);
+
+  root.replaceChildren(...sections, pager);
+  if (!STAGES.some((stage) => stage.id === activeStageId)) {
+    activeStageId = STAGES[0].id;
+  }
+  activateStage(activeStageId, false);
 }
 
-function setupStageThemes() {
-  const sections = document.querySelectorAll(".stage-section");
-  const navLinks = document.querySelectorAll("[data-stage-target]");
-  if (!sections.length || !("IntersectionObserver" in window)) {
+function activateStage(stageId, updateHash) {
+  const stage = STAGES.find((item) => item.id === stageId);
+  if (!stage) {
     return;
   }
+  activeStageId = stage.id;
+  const sections = document.querySelectorAll(".stage-section");
+  const navLinks = document.querySelectorAll("[data-stage-target]");
+  sections.forEach((section) => {
+    const selected = section.dataset.stage === stage.id;
+    section.hidden = !selected;
+    section.classList.toggle("stage-visible", selected);
+  });
+  navLinks.forEach((link) => {
+    const selected = link.dataset.stageTarget === stage.id;
+    link.classList.toggle("active", selected);
+    link.setAttribute("aria-current", selected ? "step" : "false");
+    if (selected) {
+      link.scrollIntoView({ block: "nearest", inline: "center" });
+    }
+  });
 
-  stageThemeObserver?.disconnect();
-  stageThemeObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("stage-visible");
-        }
-      });
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) {
-        return;
-      }
-      const stage = STAGES.find((item) => item.id === visible.target.dataset.stage);
-      if (!stage) {
-        return;
-      }
-      document.documentElement.style.setProperty("--journey-accent", stage.accent);
-      document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
-      document.body.dataset.journeyStage = stage.id;
-      navLinks.forEach((link) => {
-        link.classList.toggle("active", link.dataset.stageTarget === stage.id);
-      });
-    },
-    { threshold: [0.05, 0.2, 0.4], rootMargin: "-10% 0px -10% 0px" },
-  );
-  sections.forEach((section) => stageThemeObserver.observe(section));
+  document.documentElement.style.setProperty("--journey-accent", stage.accent);
+  document.documentElement.style.setProperty("--journey-secondary", stage.secondary);
+  document.body.dataset.journeyStage = stage.id;
+
+  const index = STAGES.findIndex((item) => item.id === stage.id);
+  const previous = document.querySelector("[data-stage-previous]");
+  const next = document.querySelector("[data-stage-next]");
+  const counter = document.querySelector("[data-stage-counter]");
+  if (previous) {
+    previous.textContent = `← ${I18N[lang]["stage.previous"]}`;
+    previous.disabled = index === 0;
+  }
+  if (next) {
+    next.textContent = `${I18N[lang]["stage.next"]} →`;
+    next.disabled = index === STAGES.length - 1;
+  }
+  if (counter) {
+    counter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(STAGES.length).padStart(2, "0")}`;
+  }
+  if (updateHash) {
+    window.history.replaceState({}, "", `#stage-${stage.id}`);
+  }
+}
+
+function moveStage(offset) {
+  const index = STAGES.findIndex((stage) => stage.id === activeStageId);
+  const nextIndex = Math.max(0, Math.min(STAGES.length - 1, index + offset));
+  activateStage(STAGES[nextIndex].id, true);
 }
 
 function renderProductReferences() {
@@ -547,6 +583,12 @@ setupReveal();
 updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", sizeDieCanvas);
+window.addEventListener("hashchange", () => {
+  const stageId = window.location.hash.replace("#stage-", "");
+  if (STAGES.some((stage) => stage.id === stageId)) {
+    activateStage(stageId, false);
+  }
+});
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 sizeDieCanvas();
