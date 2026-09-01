@@ -12,7 +12,7 @@
 | 文件 | 内容 |
 | --- | --- |
 | `index.html` | 首页 |
-| `work.html` | 工作面（配图 + 术语说明） |
+| `work.html` | 专业经历（配图 + 术语说明） |
 | `projects.html` | GitHub 自有项目 |
 | `awards.html` | 荣誉 |
 | `about.html` | 关于 / 路径 |
