@@ -1129,6 +1129,10 @@ main {
     justify-content: center;
   }
 
+  .stage-nav {
+    position: static;
+  }
+
   .path-list li {
     grid-template-columns: 1fr;
   }
