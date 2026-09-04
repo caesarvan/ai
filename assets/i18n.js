@@ -14,6 +14,10 @@ const I18N = {
     "home.lede": "当前在 NVIDIA 从事 GPU / 芯片功耗验证，关注功耗与性能交互、时钟与电源域、功耗状态、门控、遥测及负载驱动的功耗行为。",
     "home.cta.work": "浏览完整时间轴",
     "home.cta.projects": "GitHub 项目",
+    "hero.telemetry": "功耗遥测",
+    "hero.metric.power": "功耗",
+    "hero.metric.clock": "频率",
+    "hero.metric.state": "状态",
     "home.overview.title": "专业领域",
     "home.card.work.title": "芯片与系统验证",
     "home.card.work.body": "NPU 多芯片互连、系统级压力测试与流片前验证。",
@@ -80,6 +84,10 @@ const I18N = {
       "Currently working at NVIDIA on GPU and chip power verification, with a focus on power/performance interactions, clock and power domains, power states, gating, telemetry, and workload-driven power behavior.",
     "home.cta.work": "Explore the timeline",
     "home.cta.projects": "GitHub projects",
+    "hero.telemetry": "Power telemetry",
+    "hero.metric.power": "Power",
+    "hero.metric.clock": "Clock",
+    "hero.metric.state": "State",
     "home.overview.title": "Areas of expertise",
     "home.card.work.title": "Chip and system verification",
     "home.card.work.body": "NPU multi-chip interconnects, system stress testing, and pre-silicon verification.",
@@ -245,6 +253,7 @@ const STAGES = [
           en: "Designed triboelectric sensors and a smart glove, applied machine-learning and deep-neural-network models to gesture recognition, and demonstrated real-time motion in Unity AR.",
         },
         tags: ["TENG", "Machine Learning", "Unity AR"],
+        metric: { zh: "95% 手势识别", en: "95% gesture recognition" },
       },
       {
         when: "2019.10 – 2021.05",
@@ -255,6 +264,7 @@ const STAGES = [
           en: "Improved a portable electronic pneumatic gauge using gas as the measurement medium and WirelessHART for data transmission; the project resulted in one software copyright registration and one paper.",
         },
         tags: ["WirelessHART", "Embedded", "0.1 μm"],
+        metric: { zh: "0.1 μm 测量精度", en: "0.1 μm measurement accuracy" },
       },
       {
         when: "2019.01 – 2020.01",
@@ -265,6 +275,7 @@ const STAGES = [
           en: "Built an STM32-based integrated hardware platform with Wi-Fi, Bluetooth, and Zigbee control plus a mobile client; the work resulted in four mobile software copyright registrations.",
         },
         tags: ["STM32", "Wi-Fi", "Bluetooth", "Zigbee"],
+        metric: { zh: "4 项移动端软著", en: "4 mobile software copyrights" },
       },
       {
         when: "2017.12 – 2018.12",
@@ -275,6 +286,7 @@ const STAGES = [
           en: "Performed and optimized retinal-vessel segmentation and image registration for computer-aided diagnosis; the project resulted in three software copyright registrations and one paper.",
         },
         tags: ["Medical Imaging", "Segmentation", "Registration"],
+        metric: { zh: "3 项软著 + 1 篇论文", en: "3 copyrights + 1 paper" },
       },
     ],
     awards: {
@@ -284,7 +296,7 @@ const STAGES = [
   },
   {
     id: "graduate",
-    when: { zh: "2021.08 – 2022", en: "2021.08 – 2022" },
+    when: { zh: "2021.08 – 2022.06", en: "2021.08 – 2022.06" },
     theme: "nus",
     accent: "#ef7c00",
     secondary: "#003d7c",
@@ -299,7 +311,7 @@ const STAGES = [
     skills: ["BLE", "iOS", "Firebase", "On-device ML", "Healthcare"],
     projects: [
       {
-        when: "2021.08 – 2022",
+        when: "2021.08 – 2022.06",
         title: { zh: "触觉反馈医用矫正背心及辅助医疗平台", en: "Haptic-feedback medical vest and care platform" },
         role: { zh: "研究员 · NUS Lab of Sensors, MEMS and NEMS", en: "Research Assistant · NUS Lab of Sensors, MEMS and NEMS" },
         body: {
@@ -307,6 +319,7 @@ const STAGES = [
           en: "Developed a real-time posture-monitoring vest for scoliosis care: posture recognition and vibration feedback on Arduino, BLE/iOS/Firebase data upload, and a web interface for clinicians.",
         },
         tags: ["Arduino", "BLE", "iOS", "Firebase", "Machine Learning"],
+        metric: { zh: "BLE 实时数据链路", en: "Real-time BLE data pipeline" },
         media: [
           { src: "assets/student/posture_running.png", alt: { zh: "背心姿态传感器跑步数据曲线", en: "Running posture sensor traces from the vest project" } },
           { src: "assets/student/posture_confusion.png", alt: { zh: "随机森林姿态识别混淆矩阵", en: "Random Forest confusion matrix for posture recognition" } },
@@ -340,6 +353,7 @@ const STAGES = [
           en: "Led layered verification for Scheduler, DAG Engine, and QDMA IPs, including a dynamic-priority model for concurrency, preemption, resource contention, and scheduling order.",
         },
         tags: ["Scheduler", "Concurrency", "Preemption", "QDMA"],
+        metric: { zh: "8 个死锁风险闭环", en: "8 deadlock risks resolved" },
       },
       {
         when: "2022.08 – 2023.12",
@@ -350,6 +364,7 @@ const STAGES = [
           en: "Verified Scheduler IP, traffic paths, and SoC/HAC/Core integration across functional, exception, boundary, and feature-interaction scenarios.",
         },
         tags: ["FPGA", "SoC Integration", "PG", "Traffic Paths"],
+        metric: { zh: "1000+ 用例执行", en: "1000+ test cases executed" },
       },
       {
         when: "2022 – 2023",
@@ -360,6 +375,7 @@ const STAGES = [
           en: "The résumé covers baseband SoC scheduler verification and support for 4G/5G scheduling redesign. The image shows public Huawei UWB AAU and Massive MIMO context; it does not indicate involvement in this AAU product.",
         },
         tags: ["4G / 5G", "Baseband SoC", "Massive MIMO"],
+        metric: { zh: "公开行业背景", en: "Public industry context" },
         media: [
           { src: "assets/img/huawei-uwb-aau-mimo.png", alt: { zh: "Huawei UWB AAU 与 Massive MIMO 基站场景", en: "Huawei UWB AAU and Massive MIMO base-station context" } },
         ],
@@ -376,7 +392,7 @@ const STAGES = [
   },
   {
     id: "ascend",
-    when: { zh: "2024 – 近期", en: "2024 – Recent" },
+    when: { zh: "2024.03 – 2026.08", en: "2024.03 – 2026.08" },
     theme: "ascend",
     companyGroup: { zh: "华为公司经历 · 2 / 2", en: "Huawei experience · 2 / 2" },
     accent: "#cf0a2c",
@@ -392,7 +408,7 @@ const STAGES = [
     skills: ["NPU Networking", "IO / UB", "FPGA / EMU / ESL", "PVT", "Verification Platforms"],
     projects: [
       {
-        when: { zh: "2024 – 近期", en: "2024 – Recent" },
+        when: { zh: "2024.03 – 2026.08", en: "2024.03 – 2026.08" },
         title: { zh: "NPU 组网与超节点验证", en: "NPU networking and super-node validation" },
         role: { zh: "芯片验证经理 / PL", en: "Chip Verification Manager / PL" },
         body: {
@@ -400,9 +416,10 @@ const STAGES = [
           en: "Worked on high-speed IO/UB and multi-chip networking through topology decomposition, interface definitions, and system-level stress and concurrency validation.",
         },
         tags: ["NPU Networking", "IO / UB", "Super-node", "PVT"],
+        metric: { zh: "100+ RTL / 集成问题闭环", en: "100+ RTL / integration issues resolved" },
       },
       {
-        when: { zh: "2024 – 近期", en: "2024 – Recent" },
+        when: { zh: "2024.03 – 2026.08", en: "2024.03 – 2026.08" },
         title: { zh: "多层流片前验证体系", en: "Multi-level pre-silicon validation" },
         role: { zh: "原型验证团队建设", en: "Prototyping team development" },
         body: {
@@ -410,9 +427,10 @@ const STAGES = [
           en: "Established FPGA (VTOF), emulation (Palladium), and ESL (FastModel/QEMU) validation platforms.",
         },
         tags: ["VTOF", "Palladium", "FastModel", "QEMU"],
+        metric: { zh: "3 层流片前平台", en: "3 pre-silicon platform layers" },
       },
       {
-        when: { zh: "2025 – 近期", en: "2025 – Recent" },
+        when: { zh: "2025.02 – 2026.08", en: "2025.02 – 2026.08" },
         title: { zh: "验证平台工程", en: "Verification platform engineering" },
         role: { zh: "验证平台工程负责人", en: "Verification Platform Engineering Lead" },
         body: {
@@ -420,6 +438,7 @@ const STAGES = [
           en: "Led test automation, precise CI, performance observability, stress-load monitoring, register systems, and debug toolchains.",
         },
         tags: ["CVA", "Precise CI", "PerfInsight", "URegister / UDB"],
+        metric: { zh: "3× 验证效率提升", en: "3× verification efficiency" },
       },
     ],
     awards: {
@@ -429,7 +448,7 @@ const STAGES = [
   },
   {
     id: "nvidia",
-    when: { zh: "现阶段", en: "Current" },
+    when: { zh: "2026.09 – 至今", en: "2026.09 – Present" },
     phase: { zh: "职业阶段 III", en: "Professional stage III" },
     theme: "nvidia",
     accent: "#76b900",
@@ -444,7 +463,7 @@ const STAGES = [
     skills: ["GPU Power", "Power × Performance", "Clock / Voltage Domains", "Gating", "Telemetry"],
     projects: [
       {
-        when: { zh: "现阶段", en: "Current" },
+        when: { zh: "2026.09 – 至今", en: "2026.09 – Present" },
         title: { zh: "功耗与性能交互", en: "Power and performance interactions" },
         role: { zh: "GPU / 芯片功耗验证", en: "GPU / chip power verification" },
         body: {
@@ -452,9 +471,10 @@ const STAGES = [
           en: "Verifying relationships among workloads, frequency, voltage, and power states, including how power policies affect performance behavior.",
         },
         tags: ["Power × Performance", "Workloads", "DVFS"],
+        metric: { zh: "功耗 × 性能联合验证", en: "Joint power × performance verification" },
       },
       {
-        when: { zh: "现阶段", en: "Current" },
+        when: { zh: "2026.09 – 至今", en: "2026.09 – Present" },
         title: { zh: "时钟、电压与功耗域", en: "Clock, voltage, and power domains" },
         role: { zh: "电源状态与门控", en: "Power states and gating" },
         body: {
@@ -462,9 +482,10 @@ const STAGES = [
           en: "Focusing on power-state transitions, clock and power gating, isolation, retention, and cross-domain timing and state consistency.",
         },
         tags: ["Clock Gating", "Power Gating", "Isolation", "Retention"],
+        metric: { zh: "状态 / 门控 / 跨域一致性", en: "State, gating, and cross-domain consistency" },
       },
       {
-        when: { zh: "现阶段", en: "Current" },
+        when: { zh: "2026.09 – 至今", en: "2026.09 – Present" },
         title: { zh: "遥测与负载驱动验证", en: "Telemetry and workload-driven verification" },
         role: { zh: "可观测性", en: "Observability" },
         body: {
@@ -472,6 +493,7 @@ const STAGES = [
           en: "Aligning hardware state, telemetry, and workload behavior to build decidable and regressable evidence for power verification.",
         },
         tags: ["Telemetry", "Counters", "Regression", "Observability"],
+        metric: { zh: "可判定 · 可回归证据", en: "Decidable, regressable evidence" },
       },
     ],
   },

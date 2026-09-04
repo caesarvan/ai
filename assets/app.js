@@ -12,6 +12,7 @@ let lang = urlLang === "en" || urlLang === "zh"
     ? "en"
     : "zh";
 let dieAnim = 0;
+let telemetryAnim = 0;
 let activeStageId = window.location.hash.replace("#stage-", "");
 let stageScrollHandler = null;
 let stageRevealObserver = null;
@@ -79,7 +80,7 @@ function renderChrome() {
         <span class="brand-monogram" aria-hidden="true">CF</span>
         <span class="brand-text">
           <span class="brand-name">Caesar Fan</span>
-          <span class="brand-tag">CHIP · VERIFY</span>
+          <span class="brand-tag">GPU Power Verification</span>
         </span>
       </a>
       <nav class="nav" aria-label="Primary">${navHtml}</nav>
@@ -239,6 +240,12 @@ function createStageProject(project) {
     tags.append(tag);
   });
   article.append(meta, title, body, tags);
+  if (project.metric) {
+    const metric = document.createElement("div");
+    metric.className = "stage-metric";
+    metric.textContent = project.metric[lang];
+    article.append(metric);
+  }
 
   if (project.media?.length) {
     const media = document.createElement("div");
@@ -603,6 +610,98 @@ function drawDie(time) {
   ctx.stroke();
 }
 
+function sizeTelemetryCanvas() {
+  const canvas = document.getElementById("telemetry-canvas");
+  if (!canvas) {
+    return;
+  }
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const bounds = canvas.getBoundingClientRect();
+  canvas.width = Math.floor(bounds.width * dpr);
+  canvas.height = Math.floor(bounds.height * dpr);
+}
+
+function drawTelemetry(time) {
+  const canvas = document.getElementById("telemetry-canvas");
+  if (!canvas) {
+    return;
+  }
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return;
+  }
+  const { width, height } = canvas;
+  const t = time * 0.001;
+  ctx.clearRect(0, 0, width, height);
+
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 1;
+  for (let y = 0; y <= 4; y += 1) {
+    const py = (height / 4) * y;
+    ctx.beginPath();
+    ctx.moveTo(0, py);
+    ctx.lineTo(width, py);
+    ctx.stroke();
+  }
+
+  const points = [];
+  for (let i = 0; i <= 120; i += 1) {
+    const x = (i / 120) * width;
+    const base = height * 0.55;
+    const wave = Math.sin(i * 0.12 + t * 2.2) * height * 0.1
+      + Math.sin(i * 0.035 + t * 0.8) * height * 0.16;
+    const pulse = Math.max(0, Math.sin(i * 0.02 + t * 1.3)) * height * 0.08;
+    points.push([x, base - wave - pulse]);
+  }
+
+  ctx.beginPath();
+  points.forEach(([x, y], index) => {
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+  ctx.lineTo(width, height);
+  ctx.lineTo(0, height);
+  ctx.closePath();
+  const fill = ctx.createLinearGradient(0, 0, 0, height);
+  fill.addColorStop(0, "rgba(118,185,0,0.32)");
+  fill.addColorStop(1, "rgba(118,185,0,0.01)");
+  ctx.fillStyle = fill;
+  ctx.fill();
+
+  ctx.beginPath();
+  points.forEach(([x, y], index) => {
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+  ctx.strokeStyle = "#76b900";
+  ctx.lineWidth = Math.max(2, width * 0.005);
+  ctx.shadowColor = "rgba(118,185,0,0.65)";
+  ctx.shadowBlur = 14;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  const cursorX = ((t * 90) % width);
+  ctx.strokeStyle = "rgba(255,255,255,0.28)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cursorX, 0);
+  ctx.lineTo(cursorX, height);
+  ctx.stroke();
+}
+
+function loopTelemetry(time) {
+  drawTelemetry(time);
+  if (!reduceMotion) {
+    telemetryAnim = requestAnimationFrame(loopTelemetry);
+  }
+}
+
 function setupReveal() {
   const nodes = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) {
@@ -679,7 +778,10 @@ bindChrome();
 setupReveal();
 updateProgress();
 window.addEventListener("scroll", updateProgress, { passive: true });
-window.addEventListener("resize", sizeDieCanvas);
+window.addEventListener("resize", () => {
+  sizeDieCanvas();
+  sizeTelemetryCanvas();
+});
 themeMedia.addEventListener("change", (event) => {
   if (!localStorage.getItem("color-theme")) {
     setTheme(event.matches ? "dark" : "light", false);
@@ -705,6 +807,7 @@ window.addEventListener("hashchange", () => {
 });
 
 sizeDieCanvas();
+sizeTelemetryCanvas();
 function loopDie(time) {
   drawDie(time);
   if (!reduceMotion) {
@@ -713,4 +816,7 @@ function loopDie(time) {
 }
 if (document.getElementById("die-canvas")) {
   dieAnim = requestAnimationFrame(loopDie);
+}
+if (document.getElementById("telemetry-canvas")) {
+  telemetryAnim = requestAnimationFrame(loopTelemetry);
 }
