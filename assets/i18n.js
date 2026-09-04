@@ -417,6 +417,13 @@ const STAGES = [
         },
         tags: ["NPU Networking", "IO / UB", "Super-node", "PVT"],
         metric: { zh: "100+ RTL / 集成问题闭环", en: "100+ RTL / integration issues resolved" },
+        media: [
+          { src: "https://pic2.zhimg.com/v2-985a250ba1e77631f519fa05e85d5517_1440w.jpg", alt: { zh: "UB 高速互连与超节点组网示意", en: "UB high-speed interconnect and super-node networking context" } },
+        ],
+        mediaSource: {
+          url: "https://pic2.zhimg.com/v2-985a250ba1e77631f519fa05e85d5517_1440w.jpg",
+          label: { zh: "图片来源：知乎图片服务", en: "Image source: Zhihu image service" },
+        },
       },
       {
         when: { zh: "2024.03 – 2026.08", en: "2024.03 – 2026.08" },
