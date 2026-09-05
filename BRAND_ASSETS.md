@@ -27,6 +27,7 @@ included at `assets/fonts/LICENSE.txt`.
 | --- | --- |
 | Atlas 950 SuperPoD | Public product image linked from ifeng.com; product description links to [Huawei's official announcement](https://www.huawei.com/cn/news/2026/7/atlas-950-superpod). |
 | Huawei UWB AAU | Image supplied by the site owner; original direct URL: [`H2_7834trt2.jpg`](https://assets.mobileworldlive.com/wp-content/uploads/2025/11/26105706/H2_7834trt2.jpg), from the requested [Mobile World Live Huawei press release](https://www.mobileworldlive.com/huawei-uwb-aau-series-boosts-performance-and-efficiency-to-accelerate-the-widespread-deployment-of-massive-mimo/). Stored locally as `assets/img/huawei-uwb-aau-mimo.png` to avoid runtime hotlink failures. |
+| UB high-speed interconnect | User-supplied image URL: [`pic2.zhimg.com/v2-985a250ba1e77631f519fa05e85d5517_1440w.jpg`](https://pic2.zhimg.com/v2-985a250ba1e77631f519fa05e85d5517_1440w.jpg). Referenced directly because the environment cannot download Zhihu-hosted assets. |
 
 The product-reference section labels these as public context. It does not imply
 that the photographs depict non-public projects or the author's workplace.
